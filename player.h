@@ -9,7 +9,7 @@ typedef struct _Player Player;
 typedef void(*bet_function_type)(Player*);
 
 
-/* initialize a player */
+/* initialize a player with only one hand */
 Player* player_ini(bet_function_type);
 
 /* destroy a player */
@@ -19,7 +19,7 @@ void player_destroy(Player*);
 Player* player_play(Player*);
 
 /* adds a card to the hand */
-Player* player_addCard(Player*, int rank);
+Player* player_addCardToHand(Player*,int numHand, int rank);
 
 /* adds cash to the player */
 Player* player_addCash(Player*, int);
