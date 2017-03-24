@@ -10,7 +10,6 @@ Deck* deck_ini(unsigned int);
 void deck_destroy(Deck*);
 
 /* draw a card, return rank */
-
 int deck_draw(Deck*);
 
 #endif

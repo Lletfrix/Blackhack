@@ -13,10 +13,16 @@ void hand_destroy (Hand* );
 Hand* hand_insertCards (int rank);
 
 /* get the value of the Hand */
-int hand_getValue(Hand* );
+int* hand_getValues(Hand* );
 
 /* divide the hand */
 Hand* hand_divide(Hand* original);
+
+/* gets the current number of cards */
+int hand_getNumCards(Hand*);
+
+/* gets the array of cards */
+int* hand_getCards(Hand*);
 
 #endif
 
