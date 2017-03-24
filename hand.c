@@ -77,25 +77,25 @@ int* hand_getValues(Hand*h) {
     return values;
 }
 
-Hand* hand_divide(Hand* original){
-    Hand* new=NULL;
-    int i, aux=-1;
-    if(!original){
+Hand* hand_divide(Hand* original) {
+    Hand* new = NULL;
+    int i, aux = -1;
+    if (!original) {
         fprintf(stderr, "hand_divide: invalid argument.\n");
         return NULL;
     }
     new = hand_ini();
-    if(!new){
+    if (!new) {
         fprintf(stderr, "hand_divide: error in hand_ini.\n");
         return NULL;
     }
-    for (i=0;i<N_RANKS;i++){
-        if(original->cards[i]==2){
-            aux=i;
+    for (i = 0; i < N_RANKS; i++) {
+        if (original->cards[i] == 2) {
+            aux = i;
             break;
         }
     }
-    if(aux==-1){
+    if (aux == -1) {
         fprintf(stderr, "hand_divide: no double card found.\n");
         return NULL;
     }
@@ -104,17 +104,17 @@ Hand* hand_divide(Hand* original){
     return new;
 }
 
-int hand_getNumCards(Hand* h){
-    if(!h){
-        fprintf(stderr,"hand_getNumCards: invalid arguments.\n");
+int hand_getNumCards(Hand* h) {
+    if (!h) {
+        fprintf(stderr, "hand_getNumCards: invalid arguments.\n");
         return -1;
     }
     return h->nCurrentCards;
 }
 
-int* hand_getCards(Hand*h){
-    if(!h){
-        fprintf(stderr,"hand_getCards: invalid arguments.\n");
+int* hand_getCards(Hand*h) {
+    if (!h) {
+        fprintf(stderr, "hand_getCards: invalid arguments.\n");
         return NULL;
     }
     return h->cards;
