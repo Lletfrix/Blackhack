@@ -1,8 +1,4 @@
 #include "hand.h"
-#include <stdlib.h>
-#include <stdio.h>
-
-#define N_RANKS 10
 
 struct _Hand {
     int cards[10];
@@ -47,7 +43,7 @@ int* hand_getValues(Hand*h) {
         fprintf(stderr, "hand_getValues: invalid argument.\n");
         return NULL;
     }
-    if (h->cards > 0 && h->cards < 12) {
+    if (*h->cards > 0 && *h->cards < 12) {
         values = (int*) malloc(2 * sizeof (int));
 
         if (!values) {

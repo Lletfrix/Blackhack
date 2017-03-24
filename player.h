@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <stdbool.h>
 #include "hand.h"
+#include "macros.h"
 
 typedef struct _Player Player;
 /* function pointer type */

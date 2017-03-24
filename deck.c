@@ -1,14 +1,13 @@
 #include "deck.h"
-#include <stdlib.h>
-#include <stdio.h>
+
 
 struct _Deck {
-    int cards[N_RANK];
+    int cards[N_RANKS];
     int size;
     int nCurrentCards;
 };
 
-Deck* deck_ini(unsigned int N_DECKS){
+Deck* deck_ini(){
     Deck *d;
     int i;
 
@@ -18,11 +17,11 @@ Deck* deck_ini(unsigned int N_DECKS){
       return NULL;
     }
     for(i=0;i<N_RANKS-1;i++){
-      cards[i]=4*N_DECKS; /*inicializa los palos del As al 9*/
+      d->cards[i]=4*N_DECKS; /*inicializa los palos del As al 9*/
     }
-    cards[N_RANKS]=4*4*N_DECKS; /*inicializa los palos del 10 a la K*/
-    size=13*4*N_DECKS;
-    nCurrentCards=size;
+    d->cards[N_RANKS]=4*4*N_DECKS; /*inicializa los palos del 10 a la K*/
+    d->size=13*4*N_DECKS;
+    d->nCurrentCards=d->size;
 
     return d;
 }
@@ -34,7 +33,7 @@ void deck_destroy(Deck *d){
 int deck_draw(Deck *d){
   if(!d){
     fprintf(stderr, "deck_draw: deck pointing NULL");
-    return NULL;
+    return -1;
   }
   /*
   1º funcion que devuelve aleatoriamente el valor de la carta a sacar

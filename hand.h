@@ -1,6 +1,8 @@
 #ifndef HAND_H
 #define HAND_H
 
+#include "macros.h"
+
 typedef struct _Hand Hand;
 
 /* initialize a hand, return NULL if error */

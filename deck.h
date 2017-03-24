@@ -1,12 +1,12 @@
 #ifndef DECK_H
 #define DECK_H
 
+#include "macros.h"
+
 typedef struct _Deck Deck;
-define N_DECKS 6
-define N_RANKS 10
 
 /* initialize deck */
-Deck* deck_ini(unsigned int);
+Deck* deck_ini();
 
 /* destroy deck */
 void deck_destroy(Deck*);

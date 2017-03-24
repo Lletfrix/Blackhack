@@ -1,5 +1,7 @@
-#define MAX_HANDS 4
+
 #include "player.h"
+#include "hand.h"
+
 
 struct _Player {
     Hand *hand[MAX_HANDS];
@@ -14,21 +16,22 @@ struct _Player {
 
 Player* player_ini(bet_function_type fBet){
   Player *p;
-  if(!fbet){
-    fprintf(stderr, "player_ini: bet_function_type pointing NULL\n")
+  if(!fBet){
+    fprintf(stderr, "player_ini: bet_function_type pointing NULL\n");
     return NULL;
   }
   p->hand[0]=hand_ini();
+  
   if(!(p->hand[0])){
     fprintf(stderr, "player_ini: hand_ini error allocating memory\n");
     player_destroy(p);
     return NULL;
   }
-  p->bet_function_type=fBet;
+  p->f1=fBet;
   p->nTotalCards=0;
   p->cash=0;
   p->lastBet=0;
-  p->lastPlayWin=TRUE;
+  p->lastPlayWin=true;
   p->nWin=0;
   p->nPlay=0;
 
@@ -46,7 +49,7 @@ void player_destroy(Player *p){
       hand_destroy(p->hand[i]);
     }
   }
-  free p;
+  free (p);
 }
 
 Player* player_play(Player *p){
@@ -67,7 +70,7 @@ Player* player_addCardToHand(Player *p,int numHand,int rank){
     return NULL;
   }
 
-  hand_insertCards(p->hand[numHand], rank);
+  hand_insertCard(p->hand[numHand], rank);
   p->nTotalCards++;
 
   return p;
@@ -78,7 +81,7 @@ Player* player_addCash(Player *p, int cash){
     fprintf(stderr, "player_addCash: player pointing NULL\n");
     return NULL;
   }
-  if(money<0){
+  if(cash<0){
     fprintf(stderr, "player_addCash: incorrect value of cash\n");
     return NULL;
   }
@@ -92,7 +95,7 @@ Player* player_removeCash(Player *p, int cash){
     fprintf(stderr, "player_removeCash: player pointing NULL\n");
     return NULL;
   }
-  if(money<0){
+  if(cash<0){
     fprintf(stderr, "player_removeCash: incorrect value of cash\n");
     return NULL;
   }
@@ -104,7 +107,7 @@ Player* player_removeCash(Player *p, int cash){
 int player_getTotalCards(Player *p){
   if(!p){
     fprintf(stderr, "player_getTotalCards: player pointing NULL\n");
-    return NULL;
+    return -1;
   }
   return p->nTotalCards;
 }
@@ -112,15 +115,15 @@ int player_getTotalCards(Player *p){
 int player_getCash(Player *p){
   if(!p){
     fprintf(stderr, "player_getCash: player pointing NULL\n");
-    return NULL;
+    return -1;
   }
-  return p->Cash;
+  return p->cash;
 }
 
 int player_getLastBet(Player *p){
   if(!p){
     fprintf(stderr, "player_getLastBet: player pointing NULL\n");
-    return NULL;
+    return -1;
   }
   return p->lastBet;
 }
@@ -128,7 +131,7 @@ int player_getLastBet(Player *p){
 bool player_lastPlayWin(Player *p){
   if(!p){
     fprintf(stderr, "player_getLastPlayWin: player pointing NULL\n");
-    return NULL;
+    return false;
   }
   return p->lastPlayWin;
 }
@@ -136,7 +139,7 @@ bool player_lastPlayWin(Player *p){
 int player_getNumWin(Player *p){
   if(!p){
     fprintf(stderr, "player_getNumWin: player pointing NULL\n");
-    return NULL;
+    return -1;
   }
   return p->nWin;
 }
@@ -144,7 +147,7 @@ int player_getNumWin(Player *p){
 int player_getNumPlayed(Player *p){
   if(!p){
     fprintf(stderr, "player_getNumPlayed: player pointing NULL\n");
-    return NULL;
+    return -1;
   }
   return p->nPlay;
 }
