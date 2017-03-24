@@ -2,6 +2,8 @@
 #define DECK_H
 
 typedef struct _Deck Deck;
+define N_DECKS 6
+define N_RANKS 10
 
 /* initialize deck */
 Deck* deck_ini(unsigned int);
@@ -13,4 +15,3 @@ void deck_destroy(Deck*);
 int deck_draw(Deck*);
 
 #endif
-
