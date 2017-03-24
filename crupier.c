@@ -9,7 +9,7 @@ Crupier *crupier_ini(){
   c->hand=hand_ini();
   if(!(c->hand)){
     fprintf(stderr, "crupier_ini: hand_ini error allocating memory\n");
-    player_destroy(c);
+    crupier_destroy(c);
     return NULL;
   }
   return c;
@@ -42,7 +42,7 @@ Crupier* crupier_addCard(Crupier *c, int rank){
     return NULL;
   }
 
-  hand_insertCards(c->hand, rank);
+  hand_insertCard(c->hand, rank);
 
   return c;
 }
