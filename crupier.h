@@ -2,6 +2,7 @@
 #define CRUPIER_H
 
 #include "hand.h"
+#include "macros.h"
 
 typedef struct _Crupier Crupier;
 
@@ -13,7 +14,7 @@ Crupier* crupier_ini();
 void crupier_destroy(Crupier*);
 
 /* make a play */
-Crupier* crupiyer_play (Crupier*);
+Crupier* crupier_play (Crupier*);
 
 /* adds a card to the hand */
 Crupier* crupier_addCard(Crupier*, int rank);
@@ -22,4 +23,3 @@ Crupier* crupier_addCard(Crupier*, int rank);
 Hand* crupier_getHand(Crupier*);
 
 #endif
-
