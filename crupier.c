@@ -28,8 +28,35 @@ void crupier_destroy(Crupier *c){
   free (c);
 }
 
-Crupier* crupier_play (Crupier *c){
+Crupier* crupier_play (Crupier *c, Deck *d){
+  int *handValues;
+  if(!c){
+    fprintf(stderr, "crupier_play: crupier pointing NULL\n");
+    return;
+  }
+  /*Suponiendo que el crupier ya tiene la primera carta*/
 
+  /*Pide otra carta*/
+  c=crupier_addCard(c, d);
+  handValues=hand_getValues(crupier_getHand(c));
+  if(!handValues){
+    fprintf(stderr, "crupier_play: handValues pointing NULL\n");
+    return NULL;
+  }
+  while(handValues[0]<17){
+    c=crupier_addCard(c, d);
+  }
+  if(handValues[0]>21){
+    if(handValues[1]>0){
+      while(handValues[1]<17){
+        c=crupier_addCard(c, d);
+      }
+      return c;
+    }
+  }
+  else{
+    return c;
+  }
 }
 
 Crupier* crupier_addCard(Crupier *c, int rank){
