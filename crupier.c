@@ -9,7 +9,7 @@ Crupier *crupier_ini(){
   c->hand=hand_ini();
   if(!(c->hand)){
     fprintf(stderr, "crupier_ini: hand_ini error allocating memory\n");
-    crupier_destroy(c);
+    free(c);
     return NULL;
   }
   return c;
@@ -37,19 +37,22 @@ Crupier* crupier_play (Crupier *c, Deck *d){
   /*Suponiendo que el crupier ya tiene la primera carta*/
 
   /*Pide otra carta*/
-  c=crupier_addCard(c, d);
+  c=crupier_addCard(c, deck_draw(d));
   handValues=hand_getValues(crupier_getHand(c));
   if(!handValues){
     fprintf(stderr, "crupier_play: handValues pointing NULL\n");
     return NULL;
   }
+  /*Añade cartas a la mano mientras el primer valor(As=11) sea menor que 17*/
   while(handValues[0]<17){
-    c=crupier_addCard(c, d);
+    c=crupier_addCard(c, deck_draw(d));
   }
+  /*Si no sobrepasa 21 devuelve c, si se pasa, comprueba que existe el segundo
+   valor, (As=1) y pide cartas igual que antes*/
   if(handValues[0]>21){
     if(handValues[1]>0){
       while(handValues[1]<17){
-        c=crupier_addCard(c, d);
+        c=crupier_addCard(c, deck_draw(d));
       }
       return c;
     }
