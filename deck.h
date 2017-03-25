@@ -5,13 +5,13 @@
 
 typedef struct _Deck Deck;
 
-/* initialize deck */
+/* initialize deck, NULL if error */
 Deck* deck_ini();
 
 /* destroy deck */
 void deck_destroy(Deck*);
 
-/* draw a card, return rank */
+/* draw a card, return rank, -1 if error */
 int deck_draw(Deck*);
 
 #endif

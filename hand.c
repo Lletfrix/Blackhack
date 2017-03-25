@@ -43,33 +43,32 @@ int* hand_getValues(Hand*h) {
         fprintf(stderr, "hand_getValues: invalid argument.\n");
         return NULL;
     }
-    if (*h->cards > 0 && *h->cards < 12) {
-        values = (int*) malloc(2 * sizeof (int));
 
-        if (!values) {
-            fprintf(stderr, "hand_getValues: error allocating memory.\n");
-            return NULL;
-        }
-        *values = *h->cards;
-        values[1] = *h->cards + 10;
+    values = (int*) malloc(2 * sizeof (int));
 
-        for (i = 1; i < N_RANKS; i++) {
-            *values += h->cards[i];
-            values[1] += h->cards[i];
-        }
-        return values;
-
-    }
-
-    values = (int*) sizeof (int);
     if (!values) {
         fprintf(stderr, "hand_getValues: error allocating memory.\n");
         return NULL;
     }
+    
+    if (*h->cards > 0 && *h->cards < 12) {
+        *values = *h->cards + 10;
+        values[1] = *h->cards;
+
+        for (i = 1; i < N_RANKS; i++) {
+            *values += i*h->cards[i];
+            values[1] += i*h->cards[i];
+        }
+        
+        return values;
+
+    }
 
     for (i = 0, *values = 0; i < N_RANKS; i++) {
-        *values += h->cards[i];
+        *values += i*h->cards[i];
     }
+    values[1] = -1;
+
     return values;
 }
 
