@@ -15,7 +15,7 @@ struct _Player {
 };
 
 Player* player_ini(bet_function_type fBet){
-  Player *p;
+  Player *p = malloc(sizeof(Player));
   if(!fBet){
     fprintf(stderr, "player_ini: bet_function_type pointing NULL\n");
     return NULL;
@@ -53,7 +53,7 @@ void player_destroy(Player *p){
 }
 
 Player* player_play(Player *p){
-
+    return NULL;
 }
 
 Player* player_addCardToHand(Player *p,int numHand,int rank){

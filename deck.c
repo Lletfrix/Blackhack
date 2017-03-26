@@ -18,7 +18,7 @@ Deck* deck_ini() {
     for (i = 0; i < N_RANKS - 1; i++) {
         d->cards[i] = 4 * N_DECKS; /*inicializa los palos del As al 9*/
     }
-    d->cards[N_RANKS] = 4 * 4 * N_DECKS; /*inicializa los palos del 10 a la K*/
+    d->cards[N_RANKS - 1] = 4 * 4 * N_DECKS; /*inicializa los palos del 10 a la K*/
     d->maxSize = 13 * 4 * N_DECKS;
     d->nCurrentCards = d->maxSize;
 
@@ -36,6 +36,8 @@ int deck_draw(Deck *d) {
         fprintf(stderr, "deck_draw: deck pointing NULL.\n");
         return -1;
     }
+
+    t = time(NULL); // seed with the current time
     srand(t);
     ran = rand();
     ran %= d->nCurrentCards;
