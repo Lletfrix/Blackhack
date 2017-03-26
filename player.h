@@ -5,8 +5,10 @@
 #include "macros.h"
 
 typedef struct _Player Player;
+
 /* function pointer type */
-typedef void(*bet_function_type)(Player*);
+typedef Player *(*bet_function_type)(Player *);
+typedef Player *(*strategy_function_type)(Player *);
 
 
 /* initialize a player with only one hand */
@@ -41,6 +43,5 @@ int player_getNumWin(Player*);
 int player_getNumPlayed(Player*);
 
 Hand* player_getHand(Player*, int numHand);
-
 
 #endif
