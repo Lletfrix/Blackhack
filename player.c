@@ -11,23 +11,26 @@ struct _Player {
     bool lastPlayWin;
     int nWin;
     int nPlay;
-    bet_function_type f1;
+    bet_function_type decide_bet;
+    play_function_type decide_play;
 };
 
-Player* player_ini(bet_function_type fBet){
+Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   Player *p = malloc(sizeof(Player));
-  if(!fBet){
+  if(!fBet || !fPlay){
     fprintf(stderr, "player_ini: bet_function_type pointing NULL\n");
     return NULL;
   }
-  p->hand[0]=hand_ini();
+
+  p->hand[0] = hand_ini();
   
   if(!(p->hand[0])){
     fprintf(stderr, "player_ini: hand_ini error allocating memory\n");
     player_destroy(p);
     return NULL;
   }
-  p->f1=fBet;
+  p->decide_bet = fBet;
+  f->decide_play = fPlay;
   p->nTotalCards=0;
   p->cash=0;
   p->lastBet=0;
@@ -44,7 +47,7 @@ void player_destroy(Player *p){
     fprintf(stderr, "player_destroy: player pointing NULL\n");
     return;
   }
-  for(i=0;i<MAX_HANDS;i++){
+  for(i=0; i<MAX_HANDS; i++){
     if(p->hand[i]!=NULL){
       hand_destroy(p->hand[i]);
     }
@@ -52,8 +55,9 @@ void player_destroy(Player *p){
   free (p);
 }
 
-Player* player_play(Player *p){
-    return NULL;
+Player *player_play(Player *p){
+    if (!p) return NULL;
+    return p->decide_play(p);
 }
 
 Player* player_addCardToHand(Player *p,int numHand,int rank){
@@ -152,7 +156,7 @@ int player_getNumPlayed(Player *p){
   return p->nPlay;
 }
 
-Hand* player_getHand(Player *p, int numHand){
+Hand *player_getHand(Player *p, int numHand){
   if(!p){
     fprintf(stderr, "player_getHand: player pointing NULL\n");
     return NULL;
@@ -162,5 +166,5 @@ Hand* player_getHand(Player *p, int numHand){
     return NULL;
   }
 
-  return p->hand[numHand];  
+  return p->hand[numHand];
 }
