@@ -32,7 +32,7 @@ Crupier* crupier_play (Crupier *c, Deck *d){
   int *handValues;
   if(!c){
     fprintf(stderr, "crupier_play: crupier pointing NULL\n");
-    return;
+    return NULL;
   }
   /*Suponiendo que el crupier ya tiene la primera carta*/
 
