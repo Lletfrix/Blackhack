@@ -5,7 +5,9 @@ struct _Crupier{
 };
 
 Crupier *crupier_ini(){
-  Crupier *c;
+  Crupier *c = malloc(sizeof(Crupier));
+  if (!c) return NULL;
+
   c->hand=hand_ini();
   if(!(c->hand)){
     fprintf(stderr, "crupier_ini: hand_ini error allocating memory\n");
@@ -30,7 +32,7 @@ void crupier_destroy(Crupier *c){
 
 Crupier* crupier_play (Crupier *c, Deck *d){
   int *handValues;
-  if(!c){
+  if(!c) {
     fprintf(stderr, "crupier_play: crupier pointing NULL\n");
     return NULL;
   }
@@ -57,9 +59,8 @@ Crupier* crupier_play (Crupier *c, Deck *d){
       return c;
     }
   }
-  else{
-    return c;
-  }
+
+  return c;
 }
 
 Crupier* crupier_addCard(Crupier *c, int rank){
