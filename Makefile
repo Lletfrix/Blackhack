@@ -37,4 +37,4 @@ play_do_nothing.o: play_strategies/play_do_nothing.c
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJECTS) *.dSYM *.o
+	rm -rf $(OBJECTS) *.dSYM *.o main
