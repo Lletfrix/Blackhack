@@ -67,11 +67,11 @@ int main(){
   crupier=crupier_play(crupier, deck);
 
   /*comparar manos y repartir premios*/
-  Hand *crupier_hand = crupier_getHand(crupier);
+  Hand *crupierHand = crupier_getHand(crupier);
 
   // de momento asumimos que cada jugador solo tiene una mano
   for (int i = 0; i < NUMPLAYERS; i++) {
-      Hand *player_hand = player_getHand(players[i], 0);
-      printf("player %d, %d", i, (int)hand_compare(crupier_hand, player_hand));
+      Hand *playerHand = player_getHand(players[i], 0);
+      printf("player %d, %d", i, (int)hand_compare(crupierHand, playerHand));
   }
 }
