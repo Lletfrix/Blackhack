@@ -14,4 +14,11 @@ void deck_destroy(Deck*);
 /* draw a card, return rank, -1 if error */
 int deck_draw(Deck*);
 
+/* check if deck is empty, return false if error */
+bool deck_isEmpty (Deck* );
+
+/* gets current number of cards in a deck, returns -1 if error */
+int deck_getNCurrentCards(Deck* d);
+
+
 #endif

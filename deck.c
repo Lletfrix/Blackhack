@@ -36,6 +36,10 @@ int deck_draw(Deck *d) {
         fprintf(stderr, "deck_draw: deck pointing NULL.\n");
         return -1;
     }
+    if(d->nCurrentCards==0){
+        fprintf(stderr, "deck_draw: deck is empty.\n");
+        return -1;
+    }
 
     t = time(NULL); // seed with the current time
     srand(t);
@@ -45,6 +49,7 @@ int deck_draw(Deck *d) {
     for (i = 0, aux = d->cards[0]; i < N_RANKS; i++) {
         if (ran < aux) {
             d->cards[i]--;
+            d->nCurrentCards--;
             return i + 1;
         }
         aux += d->cards[i + 1];
@@ -52,4 +57,24 @@ int deck_draw(Deck *d) {
 
     fprintf(stderr, "deck_draw: error drawing card.\n");
     return -1;
+}
+
+bool deck_isEmpty (Deck* d){
+    if (!d) {
+        fprintf(stderr, "deck_isEmpty: deck pointing NULL.\n");
+        return false;
+    }
+    if(d->nCurrentCards==0){
+        fprintf(stderr, "deck_isEmpty: deck is empty.\n");
+        return true;
+    }
+    return false;
+}
+
+int deck_getNCurrentCards(Deck* d){
+    if (!d){
+        fprintf(stderr, "deck_getNCurrentCards: deck pointing NULL");
+        return -1;
+    }
+    return d->nCurrentCards;
 }
