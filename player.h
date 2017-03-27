@@ -8,11 +8,11 @@ typedef struct _Player Player;
 
 /* function pointer type */
 typedef Player *(*bet_function_type)(Player *);
-typedef Player *(*strategy_function_type)(Player *);
+typedef Player *(*play_function_type)(Player *);
 
 
 /* initialize a player with only one hand */
-Player* player_ini(bet_function_type);
+Player* player_ini(bet_function_type, play_function_type);
 
 /* destroy a player */
 void player_destroy(Player*);
@@ -38,10 +38,11 @@ int player_getLastBet(Player*);
 
 bool player_lastPlayWin(Player*);
 
-int player_getNumWin(Player*);
+int player_getNWin(Player*);
 
-int player_getNumPlayed(Player*);
+int player_getNPlayed(Player*);
 
 Hand* player_getHand(Player*, int numHand);
 
+int player_getNHands(Player*);
 #endif

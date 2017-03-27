@@ -5,6 +5,7 @@
 
 struct _Player {
     Hand *hand[MAX_HANDS];
+    int nTotalHands;
     int nTotalCards;
     int cash;
     int lastBet;
@@ -30,7 +31,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
     return NULL;
   }
   p->decide_bet = fBet;
-  f->decide_play = fPlay;
+  p->decide_play = fPlay;
   p->nTotalCards=0;
   p->cash=0;
   p->lastBet=0;
@@ -140,17 +141,17 @@ bool player_lastPlayWin(Player *p){
   return p->lastPlayWin;
 }
 
-int player_getNumWin(Player *p){
+int player_getNWin(Player *p){
   if(!p){
-    fprintf(stderr, "player_getNumWin: player pointing NULL\n");
+    fprintf(stderr, "player_getNWin: player pointing NULL\n");
     return -1;
   }
   return p->nWin;
 }
 
-int player_getNumPlayed(Player *p){
+int player_getNPlayed(Player *p){
   if(!p){
-    fprintf(stderr, "player_getNumPlayed: player pointing NULL\n");
+    fprintf(stderr, "player_getNPlayed: player pointing NULL\n");
     return -1;
   }
   return p->nPlay;
@@ -167,4 +168,11 @@ Hand *player_getHand(Player *p, int numHand){
   }
 
   return p->hand[numHand];
+}
+
+int player_getNHands(Player*p){
+    if(!p){
+        return -1;
+}
+    return p->nTotalHands;
 }
