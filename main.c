@@ -39,8 +39,20 @@ int main() {
         }
     }
 
-    for (int k = 0; k < 1; k++) {
+    for (int k = 0; k < 100; k++) {
 
+        if(deck_getNCurrentCards(deck)<N_CARDS_DECK*2){
+            deck_destroy(deck);
+            deck=deck_ini();
+            if (!deck){ /*TODO: Error handling*/
+                fprintf(stderr, "main: error reinizialiting decks.\n");
+                return EXIT_FAILURE;
+            }
+        }
+        
+        /*TODO: reiniciar partidas, asignar dinero...*/
+        
+        
         /* apostar*/
         for (int i = 0; i < NUMPLAYERS; i++) {
             players[i] = player_bet(players[i]);
