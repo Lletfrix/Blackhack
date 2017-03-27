@@ -17,6 +17,11 @@ Player* player_ini(bet_function_type, play_function_type);
 /* destroy a player */
 void player_destroy(Player*);
 
+/*
+ * Make a bet.
+ */
+Player* player_bet(Player*);
+
 /* make a play */
 Player* player_play(Player*);
 

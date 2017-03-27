@@ -56,6 +56,12 @@ void player_destroy(Player *p){
   free (p);
 }
 
+// TODO: error handling
+Player *player_bet(Player *p) {
+    if (!p) return NULL;
+    return p->decide_bet(p);
+}
+
 Player *player_play(Player *p){
     if (!p) return NULL;
     return p->decide_play(p);

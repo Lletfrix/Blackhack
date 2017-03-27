@@ -5,6 +5,8 @@
 
 typedef struct _Hand Hand;
 
+typedef enum {crupier_wins, tie, player_wins, compare_error} hand_compare_result;
+
 /* initialize a hand, return NULL if error */
 Hand* hand_ini();
 
@@ -30,6 +32,12 @@ int hand_getNumCards(Hand*);
 
 /* gets the array of cards,return NULL if error */
 int* hand_getCards(Hand*);
+
+
+/*
+ * Compara las manos de un crupier y un jugador.
+ */
+hand_compare_result hand_compare(Hand *crupier_hand, Hand *player_hand);
 
 #endif
 

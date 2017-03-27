@@ -4,13 +4,18 @@
 #include "hand.h"
 #include "deck.h"
 
+// load strategies
+#include "bet_strategies.h"
+#include "play_strategies.h"
+
 #define NUMPLAYERS 4
 
 int main(){
   int i,j;
   Player *players[NUMPLAYERS];
   for (int i = 0; i < NUMPLAYERS; i++){
-    players[i] = player_ini(NULL); // TODO: pasar estrategia
+    // pasar funciones vacías para que de momento compile
+    players[i] = player_ini(never_bets, play_do_nothing);
     if(!players[i]){
       fprintf(stderr, "main: player_ini: error allocating memory of player %d\n", i);
       for(j=0;j<i;j++){
@@ -46,7 +51,7 @@ int main(){
   	players[i]=player_addCardToHand(players[i], 0, deck_draw(deck));
   }
     /* repartir 1 carta al crupier */
-  crupier=crupier_addCard(c, deck_draw(deck));
+  crupier=crupier_addCard(crupier, deck_draw(deck));
 
     /*repartir segunda carta*/
 
@@ -63,20 +68,11 @@ int main(){
   crupier=crupier_play(crupier, deck);
 
   /*comparar manos y repartir premios*/
-  int crupier_hand_values = hand_getValues(crupier_getHand(crupier));
+  Hand *crupier_hand = crupier_getHand(crupier);
 
+  // de momento asumimos que cada jugador solo tiene una mano
   for (int i = 0; i < NUMPLAYERS; i++) {
-    for (int j = 0; j < player_getNhands(players[i]); j++) {
-      int *hand_values = hand_getValues(player_getHand(players[i], j));
-      if (hand_values[0] <= 21) {
-        // empate
-        // gana jugador
-        // gana casa
-
-
-
-
-        }
-    }
+      Hand *player_hand = player_getHand(players[i], 0);
+      printf("player %d, %d", i, (int)hand_compare(crupier_hand, player_hand));
   }
 }
