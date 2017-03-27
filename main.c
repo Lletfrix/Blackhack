@@ -11,6 +11,7 @@
 #define NUMPLAYERS 4
 
 int main(){
+  int cardAux;
   Player *players[NUMPLAYERS];
   for (int i = 0; i < NUMPLAYERS; i++){
     // pasar funciones vacías para que de momento compile
@@ -50,7 +51,12 @@ int main(){
   	players[i]=player_addCardToHand(players[i], 0, deck_draw(deck));
   }
     /* repartir 1 carta al crupier */
-  crupier=crupier_addCard(crupier, deck_draw(deck));
+  cardAux=deck_draw(deck);
+  if(cardAux==-1){
+    fprintf(stderr, "cardAux failure");
+    return EXIT_FAILURE;
+  }
+  crupier=crupier_addCard(crupier, cardAux);
 
     /*repartir segunda carta*/
 
