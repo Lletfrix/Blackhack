@@ -6,7 +6,10 @@ struct _Crupier{
 
 Crupier *crupier_ini(){
   Crupier *c = malloc(sizeof(Crupier));
-  if (!c) return NULL;
+  if (!c){
+    fprintf(stderr, "crupier_ini: malloc error allocating memory\n");
+    return NULL;
+  }
 
   c->hand=hand_ini();
   if(!(c->hand)){
