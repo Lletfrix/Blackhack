@@ -11,6 +11,7 @@ struct _Player {
     int lastBet;
     bool lastPlayWin;
     int nWin;
+    int nTie;
     int nPlay;
     bet_function_type decide_bet;
     play_function_type decide_play;
@@ -18,16 +19,20 @@ struct _Player {
 
 Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   Player *p = malloc(sizeof(Player));
+  if(!p){
+    fprintf(stderr, "player_ini: malloc error allocating memory\n");
+    return NULL;
+  }
   if(!fBet || !fPlay){
     fprintf(stderr, "player_ini: bet_function_type pointing NULL\n");
     return NULL;
   }
 
   p->hand[0] = hand_ini();
-  
+
   if(!(p->hand[0])){
     fprintf(stderr, "player_ini: hand_ini error allocating memory\n");
-    player_destroy(p);
+    free(p);
     return NULL;
   }
   p->decide_bet = fBet;
@@ -37,6 +42,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->lastBet=0;
   p->lastPlayWin=true;
   p->nWin=0;
+  p->nTie=0;
   p->nPlay=0;
 
   return p;

@@ -11,14 +11,13 @@
 #define NUMPLAYERS 4
 
 int main(){
-  int i,j;
   Player *players[NUMPLAYERS];
   for (int i = 0; i < NUMPLAYERS; i++){
     // pasar funciones vacías para que de momento compile
     players[i] = player_ini(never_bets, play_do_nothing);
     if(!players[i]){
       fprintf(stderr, "main: player_ini: error allocating memory of player %d\n", i);
-      for(j=0;j<i;j++){
+      for(int j=0;j<i;j++){
         player_destroy(players[j]);
       }
     }
@@ -26,7 +25,7 @@ int main(){
   Crupier *crupier = crupier_ini();
   if(!crupier){
     fprintf(stderr, "main: crupier_ini: error allocating memory of crupier\n");
-    for(i=0;i<NUMPLAYERS;i++){
+    for(int i=0;i<NUMPLAYERS;i++){
       player_destroy(players[i]);
     }
   }
@@ -34,12 +33,12 @@ int main(){
   if(!deck){
     fprintf(stderr, "main: deck_ini: error allocating memory of deck\n");
     crupier_destroy(crupier);
-    for(i=0;i<NUMPLAYERS;i++){
+    for(int i=0;i<NUMPLAYERS;i++){
       player_destroy(players[i]);
     }
   }
 
-  while (true) {
+  for (int k=0;k<1;k++) {
 
     /* apostar*/
     for (int i = 0; i < NUMPLAYERS; i++) {
