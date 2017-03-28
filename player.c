@@ -63,19 +63,19 @@ void player_destroy(Player *p){
   free (p);
 }
 
-Player *player_bet(Player *p) {
-	if (!p) {
+Player *player_bet(Player *p, Table *t) {
+	if (!p || !t) {
 	fprintf(stderr, "player_bet: invalid arguments.\n");
 		return NULL;
 		}
-	return p->decide_bet(p);
+	return p->decide_bet(p, t);
 }
 
-Player *player_play(Player *p){
-    if (!p){
+Player *player_play(Player *p, Table *t){
+    if (!p || !t){
         fprintf(stderr, "player_play: invalid arguments.\n");
         return NULL; }
-    return p->decide_play(p);
+    return p->decide_play(p, t);
 }
 
 Player* player_addCardToHand(Player *p,int numHand,int rank){

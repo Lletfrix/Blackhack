@@ -11,101 +11,81 @@
 #define NUMPLAYERS 4
 
 int main() {
-    int cardAux, compareValue;
-    Player * players[NUMPLAYERS];
+    Table *table = table_ini();
+    if(!table)
+    {
+        fprintf(stderr, "main: error: failed to initialize table\n");
+        return 1;
+    }
+
+    // initialize players
     for (int i = 0; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
-        players[i] = player_ini(never_bets, play_like_crupier);
-        if (!players[i]) {
-            fprintf(stderr, "main: player_ini: error allocating memory of player %d\n", i);
-            for (int j = 0; j < i; j++) {
-                player_destroy(players[j]);
-            }
+        Player *p = player_ini(never_bets, play_like_crupier);
+        if (!p) {
+            fprintf(stderr, "main: player_ini: error allocating memory for player %d\n", i);
+            table_destroy(table);
+            return 2;
         }
+
+        table = table_addPlayer(table, p);
     }
+
+    // initialize crupier
     Crupier *crupier = crupier_ini();
     if (!crupier) {
-        fprintf(stderr, "main: crupier_ini: error allocating memory of crupier\n");
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            player_destroy(players[i]);
-        }
+        fprintf(stderr, "main: crupier_ini: error allocating memory for crupier\n");
+        table_destroy(table);
+        return 3;
     }
+    table = table_setCrupier(table, crupier);
+
+    // initialize deck
     Deck *deck = deck_ini();
     if (!deck) {
         fprintf(stderr, "main: deck_ini: error allocating memory of deck\n");
-        crupier_destroy(crupier);
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            player_destroy(players[i]);
-        }
+        table_destroy(table);
+        return 4;
     }
+    table = table_setDeck(table, deck);
 
+    // play a hundred times
     for (int k = 0; k < 100; k++) {
-
-        if(deck_getNCurrentCards(deck)<N_CARDS_DECK*2){
+        // if less than two decks are remaining, reshuffle
+        if (deck_getNCurrentCards(deck) < 2 * N_CARDS_DECK){
             deck_destroy(deck);
-            deck=deck_ini();
-            if (!deck){ /*TODO: Error handling*/
+            deck = deck_ini();
+            if (!deck) {
                 fprintf(stderr, "main: error reinizialiting decks.\n");
-                return EXIT_FAILURE;
+                table_destroy(table);
+                return 5;
             }
+
+            table = table_setDeck(table, deck);
         }
 
         /*TODO: reiniciar partidas, asignar dinero...*/
 
 
         /* apostar*/
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            players[i] = player_bet(players[i]);
-        }
+        table = table_makeBets(table);
 
         /* repartir primera carta */
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            cardAux = deck_draw(deck);
-            if (cardAux == -1) {
-                fprintf(stderr, "cardAux failure");
-                return EXIT_FAILURE;
-            }
-            players[i] = player_addCardToHand(players[i], 0, cardAux);
-        }
+        table = table_dealCard(table);
+
         /* repartir 1 carta al crupier */
-        cardAux = deck_draw(deck);
-        if (cardAux == -1) {
-            fprintf(stderr, "cardAux failure");
-            return EXIT_FAILURE;
-        }
-        crupier = crupier_addCard(crupier, cardAux);
+        table = table_dealCardToCrupier(table);
 
         /*repartir segunda carta*/
-
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            cardAux = deck_draw(deck);
-            if (cardAux == -1) {
-                fprintf(stderr, "cardAux failure");
-                return EXIT_FAILURE;
-            }
-            players[i] = player_addCardToHand(players[i], 0, cardAux);
-        }
+        table = table_dealCard(table);
 
         /* juegan los jugadores */
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            players[i] = player_play(players[i]);
-        }
+        table = table_makePlays(table);
 
-        /*juega el crupier*/
+        /*juega el crupier*/ // TODO: should we only touch the crupier thorugh table?
         crupier = crupier_play(crupier, deck);
 
-        /*comparar manos y repartir premios*/
-        Hand *crupierHand = crupier_getHand(crupier);
-
-        // de momento asumimos que cada jugador solo tiene una mano
-        for (int i = 0; i < NUMPLAYERS; i++) {
-            Hand *playerHand = player_getHand(players[i], 0);
-            compareValue=(int) hand_compare(crupierHand, playerHand);
-            printf("player %d, %d\n", i, compareValue);
-            player_addGame(players[i], compareValue);
-            
-        }
-
+        table = table_distributeEarnings(table);
     }
 return EXIT_SUCCESS;
 }

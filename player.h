@@ -22,10 +22,10 @@ void player_destroy(Player*);
 /*
  * Make a bet.
  */
-Player* player_bet(Player*);
+Player* player_bet(Player*, Table*);
 
 /* make a play */
-Player* player_play(Player*);
+Player* player_play(Player*, Table*);
 
 /* adds a card to the hand */
 Player* player_addCardToHand(Player*,int numHand, int rank);

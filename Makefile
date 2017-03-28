@@ -1,12 +1,12 @@
 CC=gcc
 CFLAGS=-g -Wall
 
-OBJECTS=deck.o hand.o crupier.o player.o
+OBJECTS=deck.o hand.o crupier.o player.o table.o
 BET_STRATEGIES=never_bets.o
 PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o
 
 .PHONY: all
-all: main clean
+all: main
 
 main: main.c $(OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 	$(CC) $(CFLAGS) -o main main.c $(OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
@@ -42,4 +42,4 @@ play_like_crupier.o: play_strategies/play_like_crupier.c
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJECTS) *.dSYM *.o main
+	rm -rf $(OBJECTS) *.dSYM *.o

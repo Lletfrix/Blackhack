@@ -1,6 +1,7 @@
 #include "deck.h"
 #include "crupier.h"
 #include "player.h"
+#include "hand.h"
 
 typedef struct _Table Table;
 
@@ -53,3 +54,29 @@ int table_getNPlayers(const Table *);
  * Returns the ith player on the table. Modifications to that player will affect the rest of the game.
  */
 Player *table_getPlayer(const Table *, int player_index);
+
+/*
+ * Calls on each player to bet.
+ */
+Table *table_makeBets(Table *);
+
+/*
+ * Calls on each player to play.
+ */
+Table *table_makePlays(Table *);
+
+/*
+ * Deals a card to each player.
+ */
+Table *table_dealCard(Table *);
+
+/*
+ * Deals a card to the crupier.
+ */
+Table *table_dealCardToCrupier(Table *);
+
+/*
+ * Calculates outcomes for each player and distributes earnings.
+ * TODO: completar la función
+ */
+Table *table_distributeEarnings(Table *);
