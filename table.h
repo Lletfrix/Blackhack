@@ -86,3 +86,6 @@ Table *table_distributeEarnings(Table *);
  */
 
 Table *table_restartHands(Table *);
+
+/* Print all players percentages */
+int table_printPlayersPercentages(FILE *, Table *);

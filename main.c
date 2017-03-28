@@ -81,6 +81,6 @@ int main() {
 
         table = table_restartHands(table);
     }
-
+table_printPlayersPercentages(stdout, table);
 return EXIT_SUCCESS;
 }

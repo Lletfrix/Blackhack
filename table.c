@@ -221,3 +221,21 @@ Table *table_restartHands(Table * t){
         }
         return t;
 }
+
+int table_printPlayersPercentages(FILE *pf, Table *t){
+  int nCharPrinted=0;
+
+  if(!pf || !t){
+    fprintf(stderr, "table_printPlayersPercentages: error FILE or Table pointing null\n");
+    return -1;
+  }
+
+  for(int i=0; i<t->nPlayers; i++){
+    nCharPrinted+=fprintf(pf, "Player %d:\n", i);
+    nCharPrinted+=fprintf(pf, "\tWin Ratio: %lf\n", player_getWinRatio(t->players[i]));
+    nCharPrinted+=fprintf(pf, "\tTie Ratio: %lf\n", player_getTieRatio(t->players[i]));
+    nCharPrinted+=fprintf(pf, "\tLost Ratio: %lf\n", player_getLostRatio(t->players[i]));
+  }
+
+  return nCharPrinted;
+}

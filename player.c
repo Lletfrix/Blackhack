@@ -226,27 +226,39 @@ int player_getNPlayed(Player *p){
 }
 
 double player_getWinRatio(Player *p){
+    double nwin, nplayed, ratio;
   if(!p){
     fprintf(stderr, "player_getWinRatio: player pointing NULL\n");
     return -1;
   }
-  return (player_getNWin(p)/player_getNPlayed(p))*100.0;
+  nwin=(double)player_getNWin(p);
+  nplayed=(double)player_getNPlayed(p);
+  ratio=(nwin/nplayed);
+  return ratio*100.0;
 }
 
 double player_getTieRatio(Player *p){
+    double ntie, nplayed, ratio;
   if(!p){
     fprintf(stderr, "player_getTieRatio: player pointing NULL\n");
     return -1;
   }
-  return (player_getNTie(p)/player_getNPlayed(p))*100.0;
+  ntie=(double)player_getNTie(p);
+  nplayed=(double)player_getNPlayed(p);
+  ratio=(ntie/nplayed);
+  return ratio*100.0;
 }
 
 double player_getLostRatio(Player *p){
-  if(!p){
+    double nlost, nplayed, ratio;
+    if(!p){
     fprintf(stderr, "player_getLostRatio: player pointing NULL\n");
     return -1;
-  }
-  return (player_getNLost(p)/player_getNPlayed(p))*100.0;
+    }
+    nlost=(double)player_getNLost(p);
+    nplayed=(double)player_getNPlayed(p);
+    ratio=(nlost/nplayed);
+    return ratio*100.0;
 }
 
 Hand *player_getHand(Player *p, int numHand){
