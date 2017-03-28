@@ -27,6 +27,9 @@ int* hand_getValues(Hand*);
  * return NULL if error */
 Hand* hand_divide(Hand* original);
 
+/* restart the Hand, null if error */
+Hand* hand_restartHand (Hand* );
+
 /* gets the current number of cards, return -1 if error */
 int hand_getNumCards(Hand*);
 

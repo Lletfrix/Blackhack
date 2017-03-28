@@ -99,6 +99,18 @@ Hand* hand_divide(Hand* original) {
     return new;
 }
 
+Hand* hand_restartHand (Hand* h){
+    if(!h){
+        fprintf(stderr, "hand_restartHand: invalid arguments");
+        return NULL;
+    }
+    for(i=0;i<N_RANKS;i++){
+        h->cards[i]=0;
+    }
+    h->nCurrentCards=0;
+    return h;
+}
+
 int hand_getNumCards(Hand* h) {
     if (!h) {
         fprintf(stderr, "hand_getNumCards: invalid arguments.\n");

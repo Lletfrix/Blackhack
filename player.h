@@ -34,6 +34,12 @@ Player* player_addCash(Player*, int);
 /* removes cash from the player */
 Player* player_removeCash(Player*, int);
 
+/* increase win, tie or lose and num played, cmpValue=0 (crupier wins), cmpValue=1(tie) cmpValue=2(player wins) */
+Player* player_addGame (Player* , int cmpValue);
+
+/* restart player hands */
+Player* player_restartHands (Player*);
+
 /* next functions allow access to different fields of Player */
 int player_getTotalCards(Player*);
 

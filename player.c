@@ -37,6 +37,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   }
   p->decide_bet = fBet;
   p->decide_play = fPlay;
+  p->nTotalHands=1;
   p->nTotalCards=0;
   p->cash=0;
   p->lastBet=0;
@@ -62,14 +63,18 @@ void player_destroy(Player *p){
   free (p);
 }
 
-// TODO: error handling
 Player *player_bet(Player *p) {
-    if (!p) return NULL;
-    return p->decide_bet(p);
+	if (!p) {
+	fprintf(stderr, "player_bet: invalid arguments.\n");
+		return NULL;
+		}
+	return p->decide_bet(p);
 }
 
 Player *player_play(Player *p){
-    if (!p) return NULL;
+    if (!p){
+        fprintf(stderr, "player_play: invalid arguments.\n");
+        return NULL; }
     return p->decide_play(p);
 }
 
@@ -119,6 +124,41 @@ Player* player_removeCash(Player *p, int cash){
   p->cash-=cash;
 
   return p;
+}
+
+Player* player_addGame (Player* , int cmpValue){
+    
+    if(!p || cmpValue<0 || cmpValue>2){
+        fprintf(stderr,"player_addGame: invalid arguments.\n");
+        return NULL;
+    }
+    p->nPlay++;
+    if(cmpValue==1){
+        p->nTie++;
+    }
+    if(cmpValue==2){
+        p->nWin++;
+    }
+    return p;
+}
+
+
+Player* player_restartHands (Player*){
+    int i;
+    if(!p){
+        fprintf(stderr, "player_restarHands: invalid arguments.\n");
+        return NULL;
+    }
+    for (i=0;i<p->nTotalHands;i++){
+        p->hand[i]=hand_restartHand(p->hand[i]);
+        if (!p->hand[i]){
+            fprintf(stderr, "player_restartHands: error restarting hand %d", i);
+            return NULL;
+        }
+    }
+    p->nTotalHands=1;
+    p->nTotalCards=0;
+    return p;
 }
 
 int player_getTotalCards(Player *p){
