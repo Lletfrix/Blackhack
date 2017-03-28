@@ -18,7 +18,10 @@ int deck_draw(Deck*);
 bool deck_isEmpty (Deck* );
 
 /* gets current number of cards in a deck, returns -1 if error */
-int deck_getNCurrentCards(Deck* d);
+int deck_getNCurrentCards(Deck* );
+
+/*restart all the cards and info of a deck*/
+Deck* deck_restartDeck(Deck *);
 
 
 #endif

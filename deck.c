@@ -78,3 +78,18 @@ int deck_getNCurrentCards(Deck* d){
     }
     return d->nCurrentCards;
 }
+
+Deck* deck_restartDeck(Deck *d){
+  if(!d){
+    fprintf(stderr, "deck_restartDeck: deck pointing NULL");
+    return NULL;
+  }
+  for (int i = 0; i < N_RANKS - 1; i++) {
+      d->cards[i] = 4 * N_DECKS; /*inicializa los palos del As al 9*/
+  }
+  d->cards[N_RANKS - 1] = 4 * 4 * N_DECKS; /*inicializa los palos del 10 a la K*/
+  d->maxSize = 13 * 4 * N_DECKS;
+  d->nCurrentCards = d->maxSize;
+
+  return d;
+}

@@ -53,15 +53,7 @@ int main() {
     for (int k = 0; k < 100; k++) {
         // if less than two decks are remaining, reshuffle
         if (deck_getNCurrentCards(deck) < 2 * N_CARDS_DECK){
-            deck_destroy(deck);
-            deck = deck_ini();
-            if (!deck) {
-                fprintf(stderr, "main: error reinizialiting decks.\n");
-                table_destroy(table);
-                return 5;
-            }
-
-            table = table_setDeck(table, deck);
+            deck_restartDeck(deck);
         }
 
         /*TODO: reiniciar partidas, asignar dinero...*/
