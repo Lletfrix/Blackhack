@@ -41,8 +41,8 @@ Player *play_like_crupier(Player *p, Table *t){
                   return NULL;
               }
           }
-          return c;
+          return p;
       }
-
+    }
   return p;
 }
