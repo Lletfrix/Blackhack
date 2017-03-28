@@ -100,6 +100,7 @@ Hand* hand_divide(Hand* original) {
 }
 
 Hand* hand_restartHand (Hand* h){
+    int i;
     if(!h){
         fprintf(stderr, "hand_restartHand: invalid arguments");
         return NULL;

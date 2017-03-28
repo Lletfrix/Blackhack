@@ -15,7 +15,7 @@ int main() {
     Player * players[NUMPLAYERS];
     for (int i = 0; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
-        players[i] = player_ini(never_bets, play_do_nothing);
+        players[i] = player_ini(never_bets, play_like_crupier);
         if (!players[i]) {
             fprintf(stderr, "main: player_ini: error allocating memory of player %d\n", i);
             for (int j = 0; j < i; j++) {
