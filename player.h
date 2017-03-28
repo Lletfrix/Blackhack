@@ -59,6 +59,12 @@ int player_getNLost(Player*);
 
 int player_getNPlayed(Player*);
 
+double player_getWinRatio(Player *);
+
+double player_getTieRatio(Player *);
+
+double player_getLostRatio(Player *);
+
 Hand* player_getHand(Player*, int numHand);
 
 int player_getNHands(Player*);
