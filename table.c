@@ -232,9 +232,9 @@ int table_printPlayersPercentages(FILE *pf, Table *t){
 
   for(int i=0; i<t->nPlayers; i++){
     nCharPrinted+=fprintf(pf, "Player %d:\n", i);
-    nCharPrinted+=fprintf(pf, "\tWin Ratio: %lf\n", player_getWinRatio(t->players[i]));
-    nCharPrinted+=fprintf(pf, "\tTie Ratio: %lf\n", player_getTieRatio(t->players[i]));
-    nCharPrinted+=fprintf(pf, "\tLost Ratio: %lf\n", player_getLostRatio(t->players[i]));
+    nCharPrinted+=fprintf(pf, "\tWin Ratio: %.3lf %%\n", player_getWinRatio(t->players[i]));
+    nCharPrinted+=fprintf(pf, "\tTie Ratio: %.3lf %%\n", player_getTieRatio(t->players[i]));
+    nCharPrinted+=fprintf(pf, "\tLost Ratio: %.3lf %%\n", player_getLostRatio(t->players[i]));
   }
 
   return nCharPrinted;
