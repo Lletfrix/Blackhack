@@ -1,11 +1,14 @@
 #include "../play_strategies.h"
 
-Player play_like_crupier(Player *p, Deck *d){
+Player *play_like_crupier(Player *p, Table *t){
   int *handValues;
-  if (!p || !d) {
-      fprintf(stderr, "play_like_crupier: player or deck pointing NULL\n");
+  if (!p || !t) {
+      fprintf(stderr, "play_like_crupier: player or table pointing NULL\n");
       return NULL;
   }
+  // get Deck from table
+  Deck *d = table_getDeck(t);
+
   /*Suponiendo que el jugador ya tiene las dos primeras cartas*/
 
   /*Suponiendo que el jugador solo tiene una mano*/
@@ -40,4 +43,6 @@ Player play_like_crupier(Player *p, Deck *d){
           }
           return c;
       }
+
+  return p;
 }

@@ -126,8 +126,8 @@ Player* player_removeCash(Player *p, int cash){
   return p;
 }
 
-Player* player_addGame (Player* , int cmpValue){
-    
+Player* player_addGame (Player* p, int cmpValue){
+
     if(!p || cmpValue<0 || cmpValue>2){
         fprintf(stderr,"player_addGame: invalid arguments.\n");
         return NULL;
@@ -143,7 +143,7 @@ Player* player_addGame (Player* , int cmpValue){
 }
 
 
-Player* player_restartHands (Player*){
+Player* player_restartHands (Player*p){
     int i;
     if(!p){
         fprintf(stderr, "player_restarHands: invalid arguments.\n");

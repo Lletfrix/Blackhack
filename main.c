@@ -100,7 +100,7 @@ int main() {
         // de momento asumimos que cada jugador solo tiene una mano
         for (int i = 0; i < NUMPLAYERS; i++) {
             Hand *playerHand = player_getHand(players[i], 0);
-            compareValue=(int) hand_compare(crupierHand, playerHand)
+            compareValue=(int) hand_compare(crupierHand, playerHand);
             printf("player %d, %d\n", i, compareValue);
             player_addGame(players[i], compareValue);
             

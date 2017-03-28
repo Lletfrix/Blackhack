@@ -6,9 +6,11 @@
 
 typedef struct _Player Player;
 
+#include "table.h"
+
 /* function pointer type */
-typedef Player *(*bet_function_type)(Player *);
-typedef Player *(*play_function_type)(Player *);
+typedef Player *(*bet_function_type)(Player *, Table *);
+typedef Player *(*play_function_type)(Player *, Table *);
 
 
 /* initialize a player with only one hand */
