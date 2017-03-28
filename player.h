@@ -53,6 +53,10 @@ bool player_lastPlayWin(Player*);
 
 int player_getNWin(Player*);
 
+int player_getNTie(Player*);
+
+int player_getNLost(Player*);
+
 int player_getNPlayed(Player*);
 
 Hand* player_getHand(Player*, int numHand);

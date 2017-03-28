@@ -56,7 +56,7 @@ int main() {
             deck_restartDeck(deck);
         }
 
-        /*TODO: reiniciar partidas, asignar dinero...*/
+        /*TODO: asignar dinero...*/
 
 
         /* apostar*/
@@ -78,8 +78,9 @@ int main() {
         crupier = crupier_play(crupier, deck);
 
         table = table_distributeEarnings(table);
-        
+
         table = table_restartHands(table);
     }
+
 return EXIT_SUCCESS;
 }

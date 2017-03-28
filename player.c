@@ -201,6 +201,22 @@ int player_getNWin(Player *p){
   return p->nWin;
 }
 
+int player_getNTie(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getNTie: player pointing NULL\n");
+    return -1;
+  }
+  return p->nTie;
+}
+
+int player_getNLost(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getNLost: player pointing NULL\n");
+    return -1;
+  }
+  return p->nPlay-(p->nWin+p->nTie);
+}
+
 int player_getNPlayed(Player *p){
   if(!p){
     fprintf(stderr, "player_getNPlayed: player pointing NULL\n");

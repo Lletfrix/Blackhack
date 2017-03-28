@@ -83,7 +83,6 @@ Table *table_distributeEarnings(Table *);
 
 /*
  * Restart all the hands from crupier and players
- *
  */
 
 Table *table_restartHands(Table *);
