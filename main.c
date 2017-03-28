@@ -11,7 +11,7 @@
 #define NUMPLAYERS 4
 
 int main() {
-    int cardAux;
+    int cardAux, compareValue;
     Player * players[NUMPLAYERS];
     for (int i = 0; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
@@ -49,10 +49,10 @@ int main() {
                 return EXIT_FAILURE;
             }
         }
-        
+
         /*TODO: reiniciar partidas, asignar dinero...*/
-        
-        
+
+
         /* apostar*/
         for (int i = 0; i < NUMPLAYERS; i++) {
             players[i] = player_bet(players[i]);
@@ -100,9 +100,12 @@ int main() {
         // de momento asumimos que cada jugador solo tiene una mano
         for (int i = 0; i < NUMPLAYERS; i++) {
             Hand *playerHand = player_getHand(players[i], 0);
-            printf("player %d, %d\n", i, (int) hand_compare(crupierHand, playerHand));
+            compareValue=(int) hand_compare(crupierHand, playerHand)
+            printf("player %d, %d\n", i, compareValue);
+            player_addGame(players[i], compareValue);
+            
         }
-        
+
     }
 return EXIT_SUCCESS;
 }
