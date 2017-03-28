@@ -121,7 +121,7 @@ Table *table_dealCard(Table *t)
         cardAux = deck_draw(t->deck);
 
         if (cardAux == -1) {
-            fprintf(stderr, "cardAux failure");
+            fprintf(stderr, "cardAux failure\n");
             return NULL;
         }
         t->players[i] = player_addCardToHand(t->players[i], 0, cardAux);
@@ -136,7 +136,7 @@ Table *table_dealCardToCrupier(Table *t)
 
     int cardAux = deck_draw(t->deck);
     if (cardAux == -1) {
-        fprintf(stderr, "cardAux failure");
+        fprintf(stderr, "cardAux failure\n");
         return NULL;
     }
 
@@ -207,17 +207,17 @@ Table *table_restartHands(Table * t){
     for (i=0; i<t->nPlayers;i++){
         t->players[i]=player_restartHands(t->players[i]);
         if(!t->players[i]){
-            fprintf(stderr, "table_restartHands: error restarting player hands");
+            fprintf(stderr, "table_restartHands: error restarting player hands\n");
             return NULL;
         }
     }
     hCrupier=crupier_getHand(t->crupier);
         if(!hCrupier){
-            fprintf(stderr, "table_restartHands: error getting crupier hand");
+            fprintf(stderr, "table_restartHands: error getting crupier hand\n");
         }
     hCrupier=hand_restartHand(hCrupier);
     if(!hCrupier){
-            fprintf(stderr, "table_restartHands: error restarting crupier hand");
+            fprintf(stderr, "table_restartHands: error restarting crupier hand\n");
         }
         return t;
 }
