@@ -78,6 +78,8 @@ int main() {
         crupier = crupier_play(crupier, deck);
 
         table = table_distributeEarnings(table);
+        
+        table = table_restartHands(table);
     }
 return EXIT_SUCCESS;
 }

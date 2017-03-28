@@ -196,3 +196,28 @@ bool table_isWorking(Table *t)
 
     return true;
 }
+
+Table *table_restartHands(Table * t){
+    int i;
+    Hand* hCrupier;
+    if(!t){
+        fprintf(stderr, "table_restartHands: invalid arguments.\n");
+        return NULL;
+    }
+    for (i=0; i<t->nPlayers;i++){
+        t->players[i]=player_restartHands(t->players[i]);
+        if(!t->players[i]){
+            fprintf(stderr, "table_restartHands: error restarting player hands");
+            return NULL;
+        }
+    }
+    hCrupier=crupier_getHand(t->crupier);
+        if(!hCrupier){
+            fprintf(stderr, "table_restartHands: error getting crupier hand");
+        }
+    hCrupier=hand_restartHand(hCrupier);
+    if(!hCrupier){
+            fprintf(stderr, "table_restartHands: error restarting crupier hand");
+        }
+        return t;
+}

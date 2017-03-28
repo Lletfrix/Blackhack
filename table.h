@@ -80,3 +80,10 @@ Table *table_dealCardToCrupier(Table *);
  * TODO: completar la función
  */
 Table *table_distributeEarnings(Table *);
+
+/*
+ * Restart all the hands from crupier and players
+ *
+ */
+
+Table *table_restartHands(Table *);
