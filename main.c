@@ -19,7 +19,8 @@ int main() {
     }
 
     // initialize players
-    for (int i = 0; i < NUMPLAYERS; i++) {
+    table = table_addPlayer(table, player_ini(never_bets, play_random));
+    for (int i = 1; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
         Player *p = player_ini(never_bets, play_like_crupier);
         if (!p) {
@@ -50,7 +51,7 @@ int main() {
     table = table_setDeck(table, deck);
 
     // play a hundred times
-    for (int k = 0; k < 100; k++) {
+    for (int k = 0; k < 100000; k++) {
         // if less than two decks are remaining, reshuffle
         if (deck_getNCurrentCards(deck) < 2 * N_CARDS_DECK){
             deck_restartDeck(deck);

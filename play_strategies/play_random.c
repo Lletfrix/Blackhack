@@ -1,6 +1,6 @@
 #include "../play_strategies.h"
 
-Player *play_random(Player p, Table *t){
+Player *play_random(Player *p, Table *t){
   int *handValues, yOnCard=1;
   if (!p || !t) {
       fprintf(stderr, "play_random: player or table pointing NULL\n");
