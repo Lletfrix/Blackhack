@@ -11,5 +11,11 @@
 #define N_RANKS 10
 #define MAX_HANDS 4
 
+
+/*
+ * Si está definida, compilamos con control de errores.
+ */
+#define DEBUG
+
 #endif
 

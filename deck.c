@@ -11,10 +11,14 @@ Deck* deck_ini() {
     int i;
 
     d = (Deck *) malloc(sizeof (Deck));
+
+#ifdef DEBUG
     if (!d) {
         fprintf(stderr, "hand_ini: error allocating memory.\n");
         return NULL;
     }
+#endif
+
     for (i = 0; i < N_RANKS - 1; i++) {
         d->cards[i] = 4 * N_DECKS; /*inicializa los palos del As al 9*/
     }
@@ -26,12 +30,14 @@ Deck* deck_ini() {
 }
 
 void deck_destroy(Deck *d) {
-    if (d) free(d);
+    free(d);
 }
 
 int deck_draw(Deck *d) {
     int i, ran, aux;
     time_t t;
+
+#ifdef DEBUG
     if (!d) {
         fprintf(stderr, "deck_draw: deck pointing NULL.\n");
         return -1;
@@ -40,6 +46,7 @@ int deck_draw(Deck *d) {
         fprintf(stderr, "deck_draw: deck is empty.\n");
         return -1;
     }
+#endif
 
     t = time(NULL); // seed with the current time
     srand(t);
@@ -60,10 +67,12 @@ int deck_draw(Deck *d) {
 }
 
 bool deck_isEmpty (Deck* d){
+#ifdef DEBUG
     if (!d) {
         fprintf(stderr, "deck_isEmpty: deck pointing NULL.\n");
         return false;
     }
+#endif
     if(d->nCurrentCards==0){
         fprintf(stderr, "deck_isEmpty: deck is empty.\n");
         return true;
@@ -72,18 +81,22 @@ bool deck_isEmpty (Deck* d){
 }
 
 int deck_getNCurrentCards(Deck* d){
+#ifdef DEBUG
     if (!d){
         fprintf(stderr, "deck_getNCurrentCards: deck pointing NULL");
         return -1;
     }
+#endif
     return d->nCurrentCards;
 }
 
 Deck* deck_restartDeck(Deck *d){
+#ifdef DEBUG
   if(!d){
     fprintf(stderr, "deck_restartDeck: deck pointing NULL");
     return NULL;
   }
+#endif
   for (int i = 0; i < N_RANKS - 1; i++) {
       d->cards[i] = 4 * N_DECKS; /*inicializa los palos del As al 9*/
   }

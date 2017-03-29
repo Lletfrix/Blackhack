@@ -156,6 +156,7 @@ Table *table_distributeEarnings(Table *t)
         int compareValue=(int) hand_compare(crupierHand, playerHand);
         /*printf("player %d, %d\n", i, compareValue);*/
         player_addGame(t->players[i], compareValue);
+        /*TODO: asignar dinero...*/
     }
 
     return t;

@@ -19,6 +19,8 @@ int main() {
     }
 
     // initialize players
+    //
+    // set the first player to use a random strategy
     table = table_addPlayer(table, player_ini(never_bets, play_random));
     for (int i = 1; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
@@ -57,9 +59,6 @@ int main() {
             deck_restartDeck(deck);
         }
 
-        /*TODO: asignar dinero...*/
-
-
         /* apostar*/
         table = table_makeBets(table);
 
@@ -82,6 +81,7 @@ int main() {
 
         table = table_restartHands(table);
     }
+
 table_printPlayersPercentages(stdout, table);
 return EXIT_SUCCESS;
 }
