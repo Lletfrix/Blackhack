@@ -154,7 +154,7 @@ Table *table_distributeEarnings(Table *t)
     for (int i = 0; i < t->nPlayers; i++) {
         Hand *playerHand = player_getHand(t->players[i], 0);
         int compareValue=(int) hand_compare(crupierHand, playerHand);
-        printf("player %d, %d\n", i, compareValue);
+        /*printf("player %d, %d\n", i, compareValue);*/
         player_addGame(t->players[i], compareValue);
     }
 

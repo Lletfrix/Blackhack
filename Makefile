@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -Wall
+CFLAGS=-Wall -g
 
 OBJECTS=deck.o hand.o crupier.o player.o table.o
 BET_STRATEGIES=never_bets.o
