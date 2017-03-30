@@ -13,6 +13,9 @@ struct _Player {
     int nWin;
     int nTie;
     int nPlay;
+    int nWinStreak;
+    int nLoseStreak;
+    int nTieStreak;
     bet_function_type decide_bet;
     play_function_type decide_play;
 };
@@ -45,6 +48,9 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->nWin=0;
   p->nTie=0;
   p->nPlay=0;
+  p->nWinStreak=0;
+  p->nLoseStreak=0;
+  p->nTieStreak=0;
 
   return p;
 }
@@ -144,17 +150,17 @@ Peg* player_handsCondition(Crupier*c, Player* p){
     return condition;
 }
 
-Player* player_addGame (Player* p, Peg cmpValue){
+Player* player_addGame (Player* p, Peg condition){
 
-    if(!p || cmpValue<0 || cmpValue>2){
+    if(!p || condition<0 || condition>2){
         fprintf(stderr,"player_addGame: invalid arguments.\n");
         return NULL;
     }
     p->nPlay++;
-    if(cmpValue==TIE){
+    if(condition==TIE){
         p->nTie++;
     }
-    if(cmpValue==WIN){
+    if(condition==WIN){
         p->nWin++;
     }
     return p;
