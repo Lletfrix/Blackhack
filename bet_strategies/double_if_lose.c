@@ -1,7 +1,8 @@
 #include "../bet_strategies.h"
 
-Player *double_if_lose(Player *p, Table *t){
+#define AMOUNT 0
 
+Player *double_if_lose(Player *p, Table *t){
 
   if(!p || !t){
     fprintf(stderr, "double_if_lose: error arguments pointin NULL");
@@ -13,7 +14,7 @@ Player *double_if_lose(Player *p, Table *t){
    *funcion que diga si se ha perdido, empatado o perdido
    */
 
-  //Ver si en la ultima partida se ha perdidom ganado o empatado
+  //Ver si en la ultima partida se ha perdido, ganado o empatado
 
   //Si se ha ganado, se apuesta la cantidad inicial: (amount)
 

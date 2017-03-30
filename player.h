@@ -37,7 +37,7 @@ Player* player_addCash(Player*, int);
 Player* player_removeCash(Player*, int);
 
 /* increase win, tie or lose and num played, cmpValue=0 (crupier wins), cmpValue=1(tie) cmpValue=2(player wins) */
-Player* player_addGame (Player* , int cmpValue);
+Player* player_addGame (Player* , Peg);
 
 /* restart player hands */
 Player* player_restartHands (Player*);
@@ -49,7 +49,7 @@ int player_getCash(Player*);
 
 int player_getLastBet(Player*);
 
-bool player_lastPlayWin(Player*);
+Peg player_lastPlay(Player*);
 
 int player_getNWin(Player*);
 

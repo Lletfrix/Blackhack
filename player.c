@@ -9,7 +9,7 @@ struct _Player {
     int nTotalCards;
     int cash;
     int lastBet;
-    bool lastPlayWin;
+    Peg lastPlay;
     int nWin;
     int nTie;
     int nPlay;
@@ -41,7 +41,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->nTotalCards=0;
   p->cash=0;
   p->lastBet=0;
-  p->lastPlayWin=true;
+  p->lastPlay=Gana;
   p->nWin=0;
   p->nTie=0;
   p->nPlay=0;
@@ -126,17 +126,17 @@ Player* player_removeCash(Player *p, int cash){
   return p;
 }
 
-Player* player_addGame (Player* p, int cmpValue){
+Player* player_addGame (Player* p, Peg cmpValue){
 
     if(!p || cmpValue<0 || cmpValue>2){
         fprintf(stderr,"player_addGame: invalid arguments.\n");
         return NULL;
     }
     p->nPlay++;
-    if(cmpValue==1){
+    if(cmpValue==Empata){
         p->nTie++;
     }
-    if(cmpValue==2){
+    if(cmpValue==Gana){
         p->nWin++;
     }
     return p;
@@ -185,12 +185,12 @@ int player_getLastBet(Player *p){
   return p->lastBet;
 }
 
-bool player_lastPlayWin(Player *p){
+Peg player_lastPlay(Player *p){
   if(!p){
-    fprintf(stderr, "player_getLastPlayWin: player pointing NULL\n");
-    return false;
+    fprintf(stderr, "player_getlastPlay: player pointing NULL\n");
+    return Error;
   }
-  return p->lastPlayWin;
+  return p->lastPlay;
 }
 
 int player_getNWin(Player *p){
