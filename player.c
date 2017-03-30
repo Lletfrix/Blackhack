@@ -185,6 +185,16 @@ Player* player_restartHands (Player*p){
     return p;
 }
 
+Player *player_setLastBet(Player *p, int cash){
+  if(!p || cash<0){
+    fprintf(stderr, "player_setLastBet: invalid arguments\n");
+    return NULL;
+  }
+  p->lastBet=cash;
+
+  return p;
+}
+
 int player_getTotalCards(Player *p){
   if(!p){
     fprintf(stderr, "player_getTotalCards: player pointing NULL\n");

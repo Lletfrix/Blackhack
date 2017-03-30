@@ -45,6 +45,9 @@ Player* player_addGame (Player* , Peg);
 /* restart player hands */
 Player* player_restartHands (Player*);
 
+/* set the field of player LastBet*/
+Player *player_setLastBet(Player *, int);
+
 /* next functions allow access to different fields of Player */
 int player_getTotalCards(Player*);
 
