@@ -13,9 +13,9 @@ struct _Player {
     int nWin;
     int nTie;
     int nPlay;
-    int nWinStreak;
-    int nLoseStreak;
-    int nTieStreak;
+    int maxWinStreak;
+    int maxLoseStreak;
+    int maxTieStreak;
     bet_function_type decide_bet;
     play_function_type decide_play;
 };
@@ -48,9 +48,9 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->nWin=0;
   p->nTie=0;
   p->nPlay=0;
-  p->nWinStreak=0;
-  p->nLoseStreak=0;
-  p->nTieStreak=0;
+  p->maxWinStreak=0;
+  p->maxLoseStreak=0;
+  p->maxTieStreak=0;
 
   return p;
 }
