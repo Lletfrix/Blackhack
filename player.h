@@ -48,6 +48,9 @@ Player* player_restartHands (Player*);
 /* set the field of player LastBet*/
 Player *player_setLastBet(Player *, int);
 
+/* refresh Win, Tie or Lose streak of a player*/
+Player *player_refreshStreak(Player *, Peg);
+
 /* next functions allow access to different fields of Player */
 int player_getTotalCards(Player*);
 

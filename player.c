@@ -201,6 +201,39 @@ Player *player_setLastBet(Player *p, int cash){
   return p;
 }
 
+Player *player_refreshStreak(Player *p, Peg condition){
+  if(!p || condition < 0 || condition > 2){
+    fprintf(stderr, "player_refreshStreak: error invalid arguments\n");
+    return NULL;
+  }
+	if (cond==WIN){
+  		p->currentWinStreak++;
+      		if (currentWinStreak>maxWinStreak){
+          	p->maxWinStreak=p->currentWinStreak;
+            p->currentTieStreak=0;
+            p->currentLoseStreak=0;
+          }
+  }
+
+  if (cond==TIE){
+  		p->currentTieStreak++;
+      		if (currentTieStreak>maxTieStreak){
+          	p->maxTieStreak=p->currentTieStreak;
+            p->currentWinStreak=0;
+            p->currentLoseStreak=0;
+          }
+  }
+  if (cond==LOSE){
+  		p->currentLoseStreak++;
+      		if (currentLoseStreak>maxLoseStreak){
+          	p->maxLoseStreak=p->currentLoseStreak;
+            p->currentWinStreak=0;
+            p->currentTieStreak=0;
+          }
+  }
+  return p;
+}
+
 int player_getTotalCards(Player *p){
   if(!p){
     fprintf(stderr, "player_getTotalCards: player pointing NULL\n");
