@@ -13,6 +13,9 @@ struct _Player {
     int nWin;
     int nTie;
     int nPlay;
+    int currentWinStreak;
+    int currentTieStreak;
+    int currentLoseStreak;
     int maxWinStreak;
     int maxLoseStreak;
     int maxTieStreak;
@@ -48,6 +51,9 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->nWin=0;
   p->nTie=0;
   p->nPlay=0;
+  p->currentWinStreak=0;
+  p->currentTieStreak=0;
+  p->currentLoseStreak=0;
   p->maxWinStreak=0;
   p->maxLoseStreak=0;
   p->maxTieStreak=0;
