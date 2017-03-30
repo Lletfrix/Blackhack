@@ -146,9 +146,43 @@ Table *table_dealCardToCrupier(Table *t)
 
 Table *table_distributeEarnings(Table *t)
 {
+    //TODO: ERROR HANDLING
+    int value=0;
+    Peg* data, thisGame;
+    Hand* hAux;
     if (!table_isWorking(t)) return NULL;
 
-    //TODO: Comparar manos con la funcion player_handsCondition y distribuir dinero.
+    //Para cada jugador
+    for((int)i=0;i<t->nPlayers;i++){
+        data=player_handsCondition(t->players[i]);
+        hAux=player_getHand(t->players[i], 0);
+        //Se paga a cada mano
+        if((*hand_getValues(hAux)==21)&&hand_getNumCards(hAux)==2){
+            //El jugador tiene BlackJack, no se recorrerán las manos
+            player_addCash(t->players[i],2,5*player_getLastBet(t->players[i]));
+            thisGame=WIN;
+        }
+        else{
+            //Se recorren las manos, y se va balanceando el valor value
+            for((int)i=0;i<player_getNHands(t->players[i]);i++){
+            if(data[i]==WIN){
+                player_addCash(t->players[i],2*player_getLastBet(t->players[i]));
+                value++;
+                continue;
+            }
+            else if (data[i]==TIE){
+                player_addCash(t->players[i],player_getLastBet(t->players[i]));
+                continue;
+            }
+            value--;
+        }
+        //Se añaden las estadisticas
+        if(value>0) thisGame=WIN;
+        else if(value<0) thisGame=LOSE;
+        else thisGame=TIE;
+        player_addGame(t->players[i], thisGame);
+        player_refreshStreak(t->players[i], thisGame);
+    }
 
     return t;
 }
