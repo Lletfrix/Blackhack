@@ -50,7 +50,7 @@ int* hand_getValues(Hand*h) {
         fprintf(stderr, "hand_getValues: error allocating memory.\n");
         return NULL;
     }
-    
+
     if (*h->cards > 0 && *h->cards < 12) {
         *values = *h->cards + 10;
         values[1] = *h->cards;
@@ -59,7 +59,7 @@ int* hand_getValues(Hand*h) {
             *values += i*h->cards[i];
             values[1] += i*h->cards[i];
         }
-        
+
         return values;
 
     }
@@ -128,19 +128,19 @@ int* hand_getCards(Hand*h) {
     return h->cards;
 }
 
-hand_compare_result hand_compare(Hand *crupier_hand, Hand *player_hand)
+Peg hand_compare(Hand *crupier_hand, Hand *player_hand)
 {
     if (!crupier_hand || !player_hand) {
         fprintf(stderr, "hand_compare: invalid arguments.\n");
-        return compare_error;
+        return ERROR;
     }
 
     int *crupier_hand_values = hand_getValues(crupier_hand);
     int *player_hand_values = hand_getValues(player_hand);
 
-    // si el jugador se ha pasado y no tiene segundo valor, gana el crupier
+    // si el jugador se ha pasado y no TIEne segundo valor, gana el crupier
     if (player_hand_values[0] > 21 && player_hand_values[1] < 0) {
-        return crupier_wins;
+        return LOSE;
     }
     // ahora utilizamos el segundo valor de la mano del jugador porque el primero se ha pasado
     else if (player_hand_values[0] > 21 && player_hand_values[1] > 0) {
@@ -148,51 +148,51 @@ hand_compare_result hand_compare(Hand *crupier_hand, Hand *player_hand)
 
         // comprobamos si el crupier se pasa con el primer valor y no existe el segundo valor
         if (crupier_hand_values[0] > 21 && crupier_hand_values[1] < 0) {
-            return player_wins;
+            return WIN;
         }
         // ahora si el crupier se pasa pero sí existe el segundo valor
         else if (crupier_hand_values[0] > 21 && crupier_hand_values[1] > 0) {
             // comparar los segundos valores de las dos manos
             if (player_hand_values[1] > crupier_hand_values[1])
-                return player_wins;
+                return WIN;
             else if (player_hand_values[1] < crupier_hand_values[1])
-                return crupier_wins;
+                return LOSE;
             else
-                return tie;
+                return TIE;
         }
         // si el crupier no se pasa con el primer valor, lo utilizamos
         else {
             if (player_hand_values[1] > crupier_hand_values[0])
-                return player_wins;
+                return WIN;
             else if (player_hand_values[1] < crupier_hand_values[0])
-                return crupier_wins;
+                return LOSE;
             else
-                return tie;
+                return TIE;
         }
     }
     // el jugador no se ha pasado con el primer valor, ignoramos el segundo
     else {
         if (crupier_hand_values[0] > 21 && crupier_hand_values[1] < 0) {
-            return player_wins;
+            return WIN;
         }
         // ahora si el crupier se pasa pero sí existe el segundo
         else if (crupier_hand_values[0] > 21 && crupier_hand_values[1] > 0) {
             // comparar los segundos valores de las dos manos
             if (player_hand_values[0] > crupier_hand_values[1])
-                return player_wins;
+                return WIN;
             else if (player_hand_values[0] < crupier_hand_values[1])
-                return crupier_wins;
+                return LOSE;
             else
-                return tie;
+                return TIE;
         }
         // comparamos el primer valor de la mano del jugador con el primer valor de la mano del crupier
         else {
             if (player_hand_values[0] > crupier_hand_values[0])
-                return player_wins;
+                return WIN;
             else if (player_hand_values[0] < crupier_hand_values[0])
-                return crupier_wins;
+                return LOSE;
             else
-                return tie;
+                return TIE;
         }
     }
 }

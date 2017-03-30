@@ -41,7 +41,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->nTotalCards=0;
   p->cash=0;
   p->lastBet=0;
-  p->lastPlay=Gana;
+  p->lastPlay=WIN;
   p->nWin=0;
   p->nTie=0;
   p->nPlay=0;
@@ -126,6 +126,24 @@ Player* player_removeCash(Player *p, int cash){
   return p;
 }
 
+Peg* player_handsCondition(Crupier*c, Player* p){
+    Peg* condition, aux;
+    if(!p||!c){
+        fprintf(stderr, "player_handsCondition: invalid arguments.\n");
+        return NULL;
+    }
+    condition=(Peg*)malloc(p->nTotalHands*(sizeof(Peg)));
+    if(!condition){
+        fprintf(stderr, "player_handsCondition: error allocating memory.\n");
+        return NULL;
+    }
+    for (int i=0 ; i < p->nTotalHands; i++) {
+        aux = hand_compare(crupier_getHand(c),p->hand[i]);
+        condition[i]=aux;
+    }
+    return condition;
+}
+
 Player* player_addGame (Player* p, Peg cmpValue){
 
     if(!p || cmpValue<0 || cmpValue>2){
@@ -133,10 +151,10 @@ Player* player_addGame (Player* p, Peg cmpValue){
         return NULL;
     }
     p->nPlay++;
-    if(cmpValue==Empata){
+    if(cmpValue==TIE){
         p->nTie++;
     }
-    if(cmpValue==Gana){
+    if(cmpValue==WIN){
         p->nWin++;
     }
     return p;
@@ -185,11 +203,12 @@ int player_getLastBet(Player *p){
   return p->lastBet;
 }
 
-Peg player_lastPlay(Player *p){
+Peg player_getLastPlay(Player *p){
   if(!p){
-    fprintf(stderr, "player_getlastPlay: player pointing NULL\n");
-    return Error;
+    fprintf(stderr, "player_getLastPlay: player pointing NULL\n");
+    return ERROR;
   }
+  //TODO: Decidir si la ultima jugada se considera ganada en funcion del total de manos o si con una mano ya es suficiente
   return p->lastPlay;
 }
 

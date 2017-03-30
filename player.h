@@ -36,6 +36,9 @@ Player* player_addCash(Player*, int);
 /* removes cash from the player */
 Player* player_removeCash(Player*, int);
 
+/* return win condition of each hand, by order */
+Peg* player_handsCondition(Crupier*, Player*);
+
 /* increase win, tie or lose and num played, cmpValue=0 (crupier wins), cmpValue=1(tie) cmpValue=2(player wins) */
 Player* player_addGame (Player* , Peg);
 
@@ -49,7 +52,7 @@ int player_getCash(Player*);
 
 int player_getLastBet(Player*);
 
-Peg player_lastPlay(Player*);
+Peg player_getLastPlay(Player*);
 
 int player_getNWin(Player*);
 

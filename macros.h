@@ -12,7 +12,7 @@
 #define MAX_HANDS 4
 
 typedef enum{
-  (Pierde, Empata, Gana, Error)
+  LOSE, TIE, WIN, ERROR
 }Peg;
 
 /*

@@ -148,16 +148,7 @@ Table *table_distributeEarnings(Table *t)
 {
     if (!table_isWorking(t)) return NULL;
 
-    Hand *crupierHand = crupier_getHand(t->crupier);
-
-    // de momento asumimos que cada jugador solo tiene una mano
-    for (int i = 0; i < t->nPlayers; i++) {
-        Hand *playerHand = player_getHand(t->players[i], 0);
-        int compareValue=(int) hand_compare(crupierHand, playerHand);
-        /*printf("player %d, %d\n", i, compareValue);*/
-        player_addGame(t->players[i], compareValue);
-        /*TODO: asignar dinero...*/
-    }
+    //TODO: Comparar manos con la funcion player_handsCondition y distribuir dinero.
 
     return t;
 }
