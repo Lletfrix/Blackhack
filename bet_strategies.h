@@ -5,3 +5,5 @@
  * Esta estrategia nunca apuesta.
  */
 Player *never_bets(Player *, Table *);
+
+Player *double_if_lose(Player *, Table *);

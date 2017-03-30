@@ -28,7 +28,7 @@ Player *play_random(Player *p, Table *t){
     }
     yOnCard=rand()%2;
   }
-  yOnCard=1;
+  yOnCard=rand()%2;
 
   if (handValues[0] > 21) {
       if (handValues[1] > 0) {
