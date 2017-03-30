@@ -54,10 +54,6 @@ int main() {
 
     // play a hundred times
     for (int k = 0; k < 100000; k++) {
-        // if less than two decks are remaining, reshuffle
-        if (deck_getNCurrentCards(deck) < 2 * N_CARDS_DECK){
-            deck_restartDeck(deck);
-        }
 
         /* apostar*/
         table = table_makeBets(table);
@@ -79,7 +75,7 @@ int main() {
 
         table = table_distributeEarnings(table);
 
-        table = table_restartHands(table);
+        table = table_restartTable(table);
     }
 
 table_printPlayersPercentages(stdout, table);

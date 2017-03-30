@@ -10,6 +10,7 @@
 #define N_DECKS 6
 #define N_RANKS 10
 #define MAX_HANDS 4
+#define MIN_DECK_WEIGHT 2
 
 typedef enum{
   LOSE, TIE, WIN, ERROR

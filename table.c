@@ -153,18 +153,18 @@ Table *table_distributeEarnings(Table *t)
     if (!table_isWorking(t)) return NULL;
 
     //Para cada jugador
-    for((int)i=0;i<t->nPlayers;i++){
-        data=player_handsCondition(t->players[i]);
+    for(int i=0;i<t->nPlayers;i++){
+        data=player_handsCondition(t->crupier,t->players[i]);
         hAux=player_getHand(t->players[i], 0);
         //Se paga a cada mano
         if((*hand_getValues(hAux)==21)&&hand_getNumCards(hAux)==2){
             //El jugador tiene BlackJack, no se recorrerán las manos
-            player_addCash(t->players[i],2,5*player_getLastBet(t->players[i]));
+            player_addCash(t->players[i],2.5*player_getLastBet(t->players[i]));
             thisGame=WIN;
         }
         else{
             //Se recorren las manos, y se va balanceando el valor value
-            for((int)i=0;i<player_getNHands(t->players[i]);i++){
+            for(int i=0;i<player_getNHands(t->players[i]);i++){
             if(data[i]==WIN){
                 player_addCash(t->players[i],2*player_getLastBet(t->players[i]));
                 value++;
@@ -183,7 +183,8 @@ Table *table_distributeEarnings(Table *t)
         player_addGame(t->players[i], thisGame);
         player_refreshStreak(t->players[i], thisGame);
     }
-
+    free(data);
+    }
     return t;
 }
 
@@ -223,7 +224,7 @@ bool table_isWorking(Table *t)
     return true;
 }
 
-Table *table_restartHands(Table * t){
+Table *table_restartTable(Table * t){
     int i;
     Hand* hCrupier;
     if(!t){
@@ -245,6 +246,12 @@ Table *table_restartHands(Table * t){
     if(!hCrupier){
             fprintf(stderr, "table_restartHands: error restarting crupier hand\n");
         }
+
+        // if less than MIN_DECK_WEIGHT decks are remaining, reshuffle
+    if (deck_getNCurrentCards(t->deck) < MIN_DECK_WEIGHT * N_CARDS_DECK){
+        deck_restartDeck(t->deck);
+    }
+
         return t;
 }
 

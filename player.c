@@ -206,26 +206,26 @@ Player *player_refreshStreak(Player *p, Peg condition){
     fprintf(stderr, "player_refreshStreak: error invalid arguments\n");
     return NULL;
   }
-	if (cond==WIN){
+	if (condition==WIN){
   		p->currentWinStreak++;
-      		if (currentWinStreak>maxWinStreak){
+      		if (p->currentWinStreak>p->maxWinStreak){
           	p->maxWinStreak=p->currentWinStreak;
             p->currentTieStreak=0;
             p->currentLoseStreak=0;
           }
   }
 
-  if (cond==TIE){
+  if (condition==TIE){
   		p->currentTieStreak++;
-      		if (currentTieStreak>maxTieStreak){
+      		if (p->currentTieStreak>p->maxTieStreak){
           	p->maxTieStreak=p->currentTieStreak;
             p->currentWinStreak=0;
             p->currentLoseStreak=0;
           }
   }
-  if (cond==LOSE){
+  if (condition==LOSE){
   		p->currentLoseStreak++;
-      		if (currentLoseStreak>maxLoseStreak){
+      		if (p->currentLoseStreak>p->maxLoseStreak){
           	p->maxLoseStreak=p->currentLoseStreak;
             p->currentWinStreak=0;
             p->currentTieStreak=0;

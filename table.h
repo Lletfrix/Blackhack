@@ -77,7 +77,6 @@ Table *table_dealCardToCrupier(Table *);
 
 /*
  * Calculates outcomes for each player and distributes earnings.
- * TODO: completar la función
  */
 Table *table_distributeEarnings(Table *);
 
@@ -85,7 +84,7 @@ Table *table_distributeEarnings(Table *);
  * Restart all the hands from crupier and players
  */
 
-Table *table_restartHands(Table *);
+Table *table_restartTable(Table *);
 
 /* Print all players percentages */
 int table_printPlayersPercentages(FILE *, Table *);
