@@ -77,4 +77,17 @@ double player_getLostRatio(Player *);
 Hand* player_getHand(Player*, int numHand);
 
 int player_getNHands(Player*);
+
+int player_getCurrentWinStreak(Player *);
+
+int player_getCurrentTieStreak(Player *);
+
+int player_getCurrentLoseStreak(Player *);
+
+int player_getMaxWinStreak(Player *);
+
+int player_getMaxTieStreak(Player *);
+
+int player_getMaxLoseStreak(Player *);
+
 #endif

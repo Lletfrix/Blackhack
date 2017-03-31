@@ -45,7 +45,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->decide_play = fPlay;
   p->nTotalHands=1;
   p->nTotalCards=0;
-  p->cash=0;
+  p->cash=INITIAL_CASH;
   p->lastBet=0;
   p->lastPlay=WIN;
   p->nWin=0;
@@ -351,6 +351,54 @@ Hand *player_getHand(Player *p, int numHand){
 int player_getNHands(Player*p){
     if(!p){
         return -1;
-}
+    }
     return p->nTotalHands;
+}
+
+int player_getCurrentWinStreak(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getCurrentWinStreak: player pointing NULL\n");
+    return -1;
+  }
+  return p->currentWinStreak;
+}
+
+int player_getCurrentTieStreak(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getCurrentTieStreak: player pointing NULL\n");
+    return -1;
+  }
+  return p->currentTieStreak;
+}
+
+int player_getCurrentLoseStreak(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getCurrentLoseStreak: player pointing NULL\n");
+    return -1;
+  }
+  return p->currentLoseStreak;
+}
+
+int player_getMaxWinStreak(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getMaxWinStreak: player pointing NULL\n");
+    return -1;
+  }
+  return p->maxWinStreak;
+}
+
+int player_getMaxTieStreak(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getMaxTieStreak: player pointing NULL\n");
+    return -1;
+  }
+  return p->maxTieStreak;
+}
+
+int player_getMaxLoseStreak(Player *p){
+  if(!p){
+    fprintf(stderr, "player_getMaxLoseStreak: player pointing NULL\n");
+    return -1;
+  }
+  return p->maxLoseStreak;
 }
