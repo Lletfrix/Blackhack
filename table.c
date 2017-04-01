@@ -161,6 +161,7 @@ Table *table_distributeEarnings(Table *t)
             //El jugador tiene BlackJack, no se recorrerán las manos
             player_addCash(t->players[i],2.5*player_getLastBet(t->players[i]));
             thisGame=WIN;
+            value++;
         }
         else{
             //Se recorren las manos, y se va balanceando el valor value
@@ -168,20 +169,26 @@ Table *table_distributeEarnings(Table *t)
                 if(data[j]==WIN){
                     player_addCash(t->players[i],2*player_getLastBet(t->players[i]));
                     value++;
-                    continue;
                 }
                 else if (data[j]==TIE){
                     player_addCash(t->players[i],player_getLastBet(t->players[i]));
-                    continue;
                 }
-                value--;
+                else{
+                    value--;
+                }
             }
 
         }
         //Se añaden las estadisticas
-        if(value>0) thisGame=WIN;
-        else if(value<0) thisGame=LOSE;
-        else thisGame=TIE;
+        if(value>0) {
+            thisGame=WIN;
+        }
+        else if(value<0){
+            thisGame = LOSE;
+        }
+        else {
+            thisGame=TIE;
+        }
         player_addGame(t->players[i], thisGame);
         player_refreshStreak(t->players[i], thisGame);
         free(data);
