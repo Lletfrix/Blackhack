@@ -1,6 +1,5 @@
 #include "../bet_strategies.h"
-
-#define AMOUNT 1
+#include "../macros.h"
 #define MAX_ESTIMATED_WIN_STREAK 3
 
 Player *double_if_win(Player *p, Table *t){
@@ -24,7 +23,7 @@ Player *double_if_win(Player *p, Table *t){
   }
 
   //Si se ha ganado, se dobla la apuesta anterior, salvo que la racha de
-  //victorias sea mayor que MAX_ESTIMATED_WIN_STREAK, que apuesta AMOUNT
+  //victorias sea mayor que MAX_ESTIMATED_WIN_STREAK, que apuesta INITIAL_AMOUNT
 
   if(condition==WIN){
     if(player_getCurrentWinStreak(p)<MAX_ESTIMATED_WIN_STREAK){
@@ -32,8 +31,8 @@ Player *double_if_win(Player *p, Table *t){
       player_setLastBet(p, 2*player_getLastBet(p));
         return p;
     }
-    player_removeCash(p, AMOUNT);
-    player_setLastBet(p, AMOUNT);
+    player_removeCash(p, INITIAL_AMOUNT);
+    player_setLastBet(p, INITIAL_AMOUNT);
     return p;
   }
 
@@ -42,10 +41,10 @@ Player *double_if_win(Player *p, Table *t){
     player_removeCash(p, player_getLastBet(p));
     return p;
   }
-    //Si se ha perdido, se apuesta la cantidad inicial: AMOUNT
+    //Si se ha perdido, se apuesta la cantidad inicial: INITIAL_AMOUNT
   if(condition==LOSE){
-    player_removeCash(p, AMOUNT);
-    player_setLastBet(p, AMOUNT);
+    player_removeCash(p, INITIAL_AMOUNT);
+    player_setLastBet(p, INITIAL_AMOUNT);
     return p;
   }
 

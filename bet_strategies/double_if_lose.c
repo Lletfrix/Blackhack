@@ -1,6 +1,6 @@
 #include "../bet_strategies.h"
+#include "../macros.h"
 
-#define AMOUNT 10
 
 Player *double_if_lose(Player *p, Table *t){
   Peg condition;
@@ -24,8 +24,8 @@ Player *double_if_lose(Player *p, Table *t){
 
   //Si se ha ganado, se apuesta la cantidad inicial: (amount)
   if(condition==WIN){
-    player_removeCash(p, AMOUNT);
-    player_setLastBet(p, AMOUNT);
+    player_removeCash(p, INITIAL_AMOUNT);
+    player_setLastBet(p, INITIAL_AMOUNT);
     return p;
   }
 

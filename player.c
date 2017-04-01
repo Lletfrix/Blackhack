@@ -46,7 +46,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->nTotalHands=1;
   p->nTotalCards=0;
   p->cash=INITIAL_CASH;
-  p->lastBet=0;
+  p->lastBet=INITIAL_AMOUNT;
   p->lastPlay=WIN;
   p->nWin=0;
   p->nTie=0;
@@ -165,10 +165,15 @@ Player* player_addGame (Player* p, Peg condition){
     p->nPlay++;
     if(condition==TIE){
         p->nTie++;
+        p->lastPlay = TIE;
+        return p;
     }
     if(condition==WIN){
         p->nWin++;
+        p->lastPlay = WIN;
+        return p;
     }
+    p->lastPlay = LOSE;
     return p;
 }
 
