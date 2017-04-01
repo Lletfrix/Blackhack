@@ -27,7 +27,7 @@ Player *double_if_win(Player *p, Table *t){
   //victorias sea mayor que MAX_ESTIMATED_WIN_STREAK, que apuesta AMOUNT
 
   if(condition==WIN){
-    if(player_getCurrentWinStreak<MAX_ESTIMATED_WIN_STREAK){
+    if(player_getCurrentWinStreak(p)<MAX_ESTIMATED_WIN_STREAK){
       player_removeCash(p, 2*player_getLastBet(p));
       player_setLastBet(p, 2*player_getLastBet(p));
         return p;

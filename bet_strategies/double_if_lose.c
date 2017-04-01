@@ -1,6 +1,6 @@
 #include "../bet_strategies.h"
 
-#define AMOUNT 1
+#define AMOUNT 10
 
 Player *double_if_lose(Player *p, Table *t){
   Peg condition;

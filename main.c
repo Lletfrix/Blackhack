@@ -21,10 +21,11 @@ int main() {
     // initialize players
     //
     // set the first player to use a random strategy
-    table = table_addPlayer(table, player_ini(never_bets, play_random));
+    table = table_addPlayer(table, player_ini(double_if_lose, play_random));
+
     for (int i = 1; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
-        Player *p = player_ini(never_bets, play_like_crupier);
+        Player *p = player_ini(double_if_lose, play_like_crupier);
         if (!p) {
             fprintf(stderr, "main: player_ini: error allocating memory for player %d\n", i);
             table_destroy(table);
@@ -53,7 +54,7 @@ int main() {
     table = table_setDeck(table, deck);
 
     // play a hundred times
-    for (int k = 0; k < 100000; k++) {
+    for (int k = 0; k < 1; k++) {
 
         /* apostar*/
         table = table_makeBets(table);
@@ -79,5 +80,8 @@ int main() {
     }
 
 table_printPlayersPercentages(stdout, table);
+
+table_printPlayersMoney(stdout, table);
+
 return EXIT_SUCCESS;
 }

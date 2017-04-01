@@ -86,5 +86,8 @@ Table *table_distributeEarnings(Table *);
 
 Table *table_restartTable(Table *);
 
+/* Print players money */
+int table_printPlayersMoney(FILE *pf, Table* t);
+
 /* Print all players percentages */
 int table_printPlayersPercentages(FILE *, Table *);
