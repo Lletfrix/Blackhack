@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -g
 
 OBJECTS=deck.o hand.o crupier.o player.o table.o
-BET_STRATEGIES=never_bets.o double_if_win.o double_if_lose.o
+BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o
 PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o
 
 .PHONY: all
@@ -29,6 +29,9 @@ table.o: table.h table.c
 # bet strategies
 never_bets.o: bet_strategies/never_bets.c
 	$(CC) $(CFLAGS) -c bet_strategies/never_bets.c
+
+boring_bet.o: bet_strategies/boring_bet.c
+	$(CC) $(CFLAGS) -c bet_strategies/boring_bet.c
 
 double_if_win.o: bet_strategies/double_if_win.c
 	$(CC) $(CFLAGS) -c bet_strategies/double_if_win.c
