@@ -10,7 +10,13 @@
 
 #define NUMPLAYERS 4
 
-int main() {
+int main(int argc, char** argv) {
+    int numPartidas;
+    if (argc < 2){
+    fprintf(stderr, "Playing a hundred games as default.\n");
+    numPartidas=100;    
+    }
+    else numPartidas=atoi(argv[1]);
     Table *table = table_ini();
     if(!table)
     {
@@ -54,7 +60,7 @@ int main() {
     table = table_setDeck(table, deck);
 
     // play a hundred times
-    for (int k = 0; k < 100000; k++) {
+    for (int k = 0; k < numPartidas; k++) {
 
         /* apostar*/
         table = table_makeBets(table);
