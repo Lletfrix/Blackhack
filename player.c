@@ -215,26 +215,27 @@ Player *player_refreshStreak(Player *p, Peg condition){
   		p->currentWinStreak++;
       		if (p->currentWinStreak>p->maxWinStreak){
           	p->maxWinStreak=p->currentWinStreak;
-            p->currentTieStreak=0;
-            p->currentLoseStreak=0;
           }
+      p->currentTieStreak=0;
+      p->currentLoseStreak=0;
   }
 
   if (condition==TIE){
   		p->currentTieStreak++;
       		if (p->currentTieStreak>p->maxTieStreak){
           	p->maxTieStreak=p->currentTieStreak;
-            p->currentWinStreak=0;
-            p->currentLoseStreak=0;
           }
+      p->currentWinStreak=0;
+      p->currentLoseStreak=0;
   }
+  
   if (condition==LOSE){
   		p->currentLoseStreak++;
       		if (p->currentLoseStreak>p->maxLoseStreak){
           	p->maxLoseStreak=p->currentLoseStreak;
-            p->currentWinStreak=0;
-            p->currentTieStreak=0;
           }
+      p->currentWinStreak=0;
+      p->currentTieStreak=0;
   }
   return p;
 }
