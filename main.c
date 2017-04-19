@@ -25,7 +25,6 @@ int main(int argc, char** argv) {
     }
 
     // initialize players
-    //
     // set the first player to use a random strategy
     table = table_addPlayer(table, player_ini(double_if_lose, play_random));
 
@@ -84,8 +83,9 @@ int main(int argc, char** argv) {
 
         table = table_restartTable(table);
 
-        /*table_printLastGame(stdout, table, k);*/
+        table_printLastGame(stdout, table, k);
     }
+
 
 table_printPlayersPercentages(stdout, table);
 fprintf(stdout, "\n");

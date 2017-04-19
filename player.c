@@ -228,7 +228,7 @@ Player *player_refreshStreak(Player *p, Peg condition){
       p->currentWinStreak=0;
       p->currentLoseStreak=0;
   }
-  
+
   if (condition==LOSE){
   		p->currentLoseStreak++;
       		if (p->currentLoseStreak>p->maxLoseStreak){
@@ -260,6 +260,10 @@ int player_getLastBet(Player *p){
   if(!p){
     fprintf(stderr, "player_getLastBet: player pointing NULL\n");
     return -1;
+  }
+  if(p->lastBet<0){
+      fprintf(stderr,"player_getLastBet: last bet < 0.\n" );
+      return -1;
   }
   return p->lastBet;
 }
