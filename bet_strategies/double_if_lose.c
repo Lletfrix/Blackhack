@@ -4,7 +4,7 @@
 
 Player *double_if_lose(Player *p, Table *t){
   Peg condition;
-  int cash;
+  long cash;
 
   if(!p || !t){
     fprintf(stderr, "double_if_lose: error arguments pointin NULL");

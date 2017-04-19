@@ -292,7 +292,7 @@ int table_printPlayersPercentages(FILE *pf, Table *t){
 int table_printPlayersMoney(FILE *pf, Table* t){
     int nCharPrinted=0;
     for (int i=0;i<t->nPlayers; i++){
-        nCharPrinted+=fprintf(pf, "Player %d : %d\n",i, player_getCash(t->players[i]));
+        nCharPrinted+=fprintf(pf, "Player %d : %ld\n",i, player_getCash(t->players[i]));
     }
     return nCharPrinted;
 }
@@ -311,17 +311,17 @@ int table_printLastGame (FILE *pf, Table*t, int numGame){
     for(int i=0; i<t->nPlayers;i++){
         if (WIN==player_getLastPlay(t->players[i])){
             nCharPrinted+=fprintf(pf, "\tPlayer %d: WIN\n",i);
-            nCharPrinted+=fprintf(pf, "\t\t Current cash: %d\n",player_getCash(t->players[i]));
+            nCharPrinted+=fprintf(pf, "\t\t Current cash: %ld\n",player_getCash(t->players[i]));
             continue;
         }
         if(TIE==player_getLastPlay(t->players[i])){
             nCharPrinted+=fprintf(pf, "\tPlayer %d: TIE\n",i);
-            nCharPrinted+=fprintf(pf, "\t\t Current cash: %d\n",player_getCash(t->players[i]));
+            nCharPrinted+=fprintf(pf, "\t\t Current cash: %ld\n",player_getCash(t->players[i]));
             continue;
         }
         if(LOSE==player_getLastPlay(t->players[i])){
             nCharPrinted+=fprintf(pf, "\tPlayer %d: LOSE\n",i);
-            nCharPrinted+=fprintf(pf, "\t\t Current cash: %d\n",player_getCash(t->players[i]));
+            nCharPrinted+=fprintf(pf, "\t\t Current cash: %ld\n",player_getCash(t->players[i]));
             continue;
         }
     }

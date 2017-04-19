@@ -1,4 +1,3 @@
-
 #include "player.h"
 #include "hand.h"
 
@@ -7,8 +6,8 @@ struct _Player {
     Hand *hand[MAX_HANDS];
     int nTotalHands;
     int nTotalCards;
-    int cash;
-    int lastBet;
+    long cash;
+    long lastBet;
     Peg lastPlay;
     int nWin;
     int nTie;
@@ -110,7 +109,7 @@ Player* player_addCardToHand(Player *p,int numHand,int rank){
   return p;
 }
 
-Player* player_addCash(Player *p, int cash){
+Player* player_addCash(Player *p, long cash){
   if(!p){
     fprintf(stderr, "player_addCash: player pointing NULL\n");
     return NULL;
@@ -124,7 +123,7 @@ Player* player_addCash(Player *p, int cash){
   return p;
 }
 
-Player* player_removeCash(Player *p, int cash){
+Player* player_removeCash(Player *p, long cash){
   if(!p){
     fprintf(stderr, "player_removeCash: player pointing NULL\n");
     return NULL;
@@ -196,7 +195,7 @@ Player* player_restartHands (Player*p){
     return p;
 }
 
-Player *player_setLastBet(Player *p, int cash){
+Player *player_setLastBet(Player *p, long cash){
   if(!p || cash<0){
     fprintf(stderr, "player_setLastBet: invalid arguments\n");
     return NULL;
@@ -248,7 +247,7 @@ int player_getTotalCards(Player *p){
   return p->nTotalCards;
 }
 
-int player_getCash(Player *p){
+long player_getCash(Player *p){
   if(!p){
     fprintf(stderr, "player_getCash: player pointing NULL\n");
     return -1;
@@ -256,7 +255,7 @@ int player_getCash(Player *p){
   return p->cash;
 }
 
-int player_getLastBet(Player *p){
+long player_getLastBet(Player *p){
   if(!p){
     fprintf(stderr, "player_getLastBet: player pointing NULL\n");
     return -1;

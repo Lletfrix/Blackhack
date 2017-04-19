@@ -31,10 +31,10 @@ Player* player_play(Player*, Table*);
 Player* player_addCardToHand(Player*,int numHand, int rank);
 
 /* adds cash to the player */
-Player* player_addCash(Player*, int);
+Player* player_addCash(Player*, long);
 
 /* removes cash from the player */
-Player* player_removeCash(Player*, int);
+Player* player_removeCash(Player*, long);
 
 /* return win condition of each hand, by order */
 Peg* player_handsCondition(Crupier*, Player*);
@@ -46,7 +46,7 @@ Player* player_addGame (Player* , Peg);
 Player* player_restartHands (Player*);
 
 /* set the field of player LastBet*/
-Player *player_setLastBet(Player *, int);
+Player *player_setLastBet(Player *, long);
 
 /* refresh Win, Tie or Lose streak of a player*/
 Player *player_refreshStreak(Player *, Peg);
@@ -54,9 +54,9 @@ Player *player_refreshStreak(Player *, Peg);
 /* next functions allow access to different fields of Player */
 int player_getTotalCards(Player*);
 
-int player_getCash(Player*);
+long player_getCash(Player*);
 
-int player_getLastBet(Player*);
+long player_getLastBet(Player*);
 
 Peg player_getLastPlay(Player*);
 
