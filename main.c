@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 
         table = table_restartTable(table);
 
-        /*table_printLastGame(stdout, table, k);*/
+        table_printLastGame(stdout, table, k);
     }
 
 table_printPlayersPercentages(stdout, table);

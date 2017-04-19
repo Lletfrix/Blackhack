@@ -4,6 +4,7 @@
 
 Player *double_if_lose(Player *p, Table *t){
   Peg condition;
+  int cash;
 
   if(!p || !t){
     fprintf(stderr, "double_if_lose: error arguments pointin NULL");
@@ -31,13 +32,23 @@ Player *double_if_lose(Player *p, Table *t){
 
   //Si se ha empatado, se apuesta lo mismo que en la apuesta anterior
   if(condition==TIE){
-    player_removeCash(p, player_getLastBet(p));
+    cash=player_getLastBet(p);
+    if(cash<0){
+      fprintf(stderr, "double_if_lose: ERROR player get last bet return cash<0\n");
+      return NULL;
+    }
+    player_removeCash(p, cash);
     return p;
   }
     //Si se ha perdido, se dobla la apuesta anterior
   if(condition==LOSE){
-    player_removeCash(p, 2*player_getLastBet(p));
-    player_setLastBet(p, 2*player_getLastBet(p));
+    cash=2*player_getLastBet(p);
+    if(cash<0){
+      fprintf(stderr, "double_if_lose: ERROR player get last bet return cash<0\n");
+      return NULL;
+    }
+    player_removeCash(p, cash);
+    player_setLastBet(p, cash);
     return p;
   }
 
