@@ -47,8 +47,16 @@ Player *double_if_lose(Player *p, Table *t){
       fprintf(stderr, "double_if_lose: ERROR player get last bet return cash<0\n");
       return NULL;
     }
-    player_removeCash(p, cash);
-    player_setLastBet(p, cash);
+    p=player_removeCash(p, cash);
+    if(!p){
+        fprintf(stderr, "double_if_lose: ERROR removing cash");
+        return NULL;
+    }
+    p=player_setLastBet(p, cash);
+    if(!p){
+        fprintf(stderr, "double_if_lose: ERROR setting last bet");
+        return NULL;
+    }
     return p;
   }
 

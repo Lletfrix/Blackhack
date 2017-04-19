@@ -96,8 +96,13 @@ Table *table_makeBets(Table *t)
 {
     if (!t) return NULL;
 
-    for (int i = 0; i < t->nPlayers; i++)
-        player_bet(t->players[i], t);
+    for (int i = 0; i < t->nPlayers; i++){
+        t->players[i]=player_bet(t->players[i], t);
+        if(!t->players[i]){
+            fprintf(stderr, "table_makeBets: ERROR in player_bet.\n");
+            return NULL;
+        }
+    }
 
     return t;
 }
