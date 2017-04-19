@@ -80,26 +80,48 @@ int main(int argc, char** argv) {
 
         /* apostar*/
         table = table_makeBets(table);
+        if(!table){
+            fprintf(stderr, "Error in makeBets.\n");
+            return EXIT_FAILURE;
+        }
 
         /* repartir primera carta */
         table = table_dealCard(table);
-
+        if(!table){
+            fprintf(stderr, "Error in dealCard.\n");
+            return EXIT_FAILURE;
+        }
         /* repartir 1 carta al crupier */
         table = table_dealCardToCrupier(table);
-
+        if(!table){
+            fprintf(stderr, "Error in dealCardToCrupier.\n");
+            return EXIT_FAILURE;
+        }
         /*repartir segunda carta*/
         table = table_dealCard(table);
-
+        if(!table){
+            fprintf(stderr, "Error in dealCard2.\n");
+            return EXIT_FAILURE;
+        }
         /* juegan los jugadores */
         table = table_makePlays(table);
-
+        if(!table){
+            fprintf(stderr, "Error in makePlays.\n");
+            return EXIT_FAILURE;
+        }
         /*juega el crupier*/ // TODO: should we only touch the crupier thorugh table?
         crupier = crupier_play(crupier, deck);
 
         table = table_distributeEarnings(table);
-
+        if(!table){
+            fprintf(stderr, "Error in distributeEarnings.\n");
+            return EXIT_FAILURE;
+        }
         table = table_restartTable(table);
-
+        if(!table){
+            fprintf(stderr, "Error in restartTable.\n");
+            return EXIT_FAILURE;
+        }
         table_printLastGame(stdout, table, k);
     }
 
