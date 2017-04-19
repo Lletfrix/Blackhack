@@ -6,7 +6,7 @@
 typedef struct _Deck Deck;
 
 /* initialize deck, NULL if error */
-Deck* deck_ini();
+Deck* deck_ini(unsigned seed);
 
 /* destroy deck */
 void deck_destroy(Deck*);

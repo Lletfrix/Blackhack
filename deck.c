@@ -4,12 +4,14 @@ struct _Deck {
     int cards[N_RANKS];
     int maxSize;
     int nCurrentCards;
+    unsigned seed;
 };
 
-Deck* deck_ini() {
+Deck* deck_ini(unsigned seed) {
     Deck *d;
     int i;
 
+    /*  TODO: replantearse no hacer el caso de seed vacío aquí */
     d = (Deck *) malloc(sizeof (Deck));
 
 #ifdef DEBUG
@@ -25,6 +27,7 @@ Deck* deck_ini() {
     d->cards[N_RANKS - 1] = 4 * 4 * N_DECKS; /*inicializa los palos del 10 a la K*/
     d->maxSize = 13 * 4 * N_DECKS;
     d->nCurrentCards = d->maxSize;
+    d->seed = seed;
 
     return d;
 }
@@ -35,7 +38,6 @@ void deck_destroy(Deck *d) {
 
 int deck_draw(Deck *d) {
     int i, ran, aux;
-    time_t t;
 
 #ifdef DEBUG
     if (!d) {
@@ -48,8 +50,7 @@ int deck_draw(Deck *d) {
     }
 #endif
 
-    t = time(NULL); // seed with the current time
-    srand(t);
+    srand(d->seed);
     ran = rand();
     ran %= d->nCurrentCards;
 

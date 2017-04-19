@@ -10,8 +10,17 @@
 
 #define NUMPLAYERS 4
 
+void usage() {
+    printf("usage: ./main [games] [seed]\n");
+}
+
 int main(int argc, char** argv) {
     int numPartidas;
+
+    if (argc > 3) {
+        usage();
+        return -1;
+    }
     if (argc < 2){
     fprintf(stderr, "Playing a hundred games as default.\n");
     numPartidas=100;
@@ -49,8 +58,16 @@ int main(int argc, char** argv) {
     }
     table = table_setCrupier(table, crupier);
 
-    // initialize deck
-    Deck *deck = deck_ini();
+    // initialize deck, seeding with seed if provided
+    unsigned seed;
+    if (argc == 3) {
+        seed = (unsigned) atoi(argv[2]);
+    } else {
+        seed = time(NULL);
+    }
+    printf("seeded game with %u\n", seed);
+
+    Deck *deck = deck_ini(seed);
     if (!deck) {
         fprintf(stderr, "main: deck_ini: error allocating memory of deck\n");
         table_destroy(table);
