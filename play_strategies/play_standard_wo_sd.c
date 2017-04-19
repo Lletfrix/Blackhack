@@ -22,7 +22,7 @@ Player *play_standard_wo_sd(Player *p, Table *t){
     }
 
     /* Pedir carta hasta 9 */
-    while (handValues[0] < 9) {
+    while (handValues[0] <= 9) {
         /* Pedir carta */
         p = player_addCardToHand(p,0, deck_draw(d));
         free(handValues);
@@ -41,7 +41,7 @@ Player *play_standard_wo_sd(Player *p, Table *t){
             return NULL;
         }
         cHandValues=hand_getValues(cHand);
-        if(cHandValues[0]==10 || cHandValues[0]==11){
+        if(cHandValues[0]!=10 && cHandValues[0]!=11){
             /* Pedir carta */
             p = player_addCardToHand(p,0, deck_draw(d));
             free(handValues);
@@ -53,8 +53,14 @@ Player *play_standard_wo_sd(Player *p, Table *t){
             }
         }
         else{
-            /*Se planta*/
-            return p;
+            p = player_addCardToHand(p,0, deck_draw(d));
+            free(handValues);
+            handValues = hand_getValues(player_getHand(p, 0));
+            if (!handValues) {
+                fprintf(stderr, "play_standard_wo_sd: handValues pointing NULL\n");
+                free(handValues);
+                return NULL;
+            }
         }
     }
     /* Se planta con 12 si hay 4, 5 o 6*/
@@ -71,7 +77,7 @@ Player *play_standard_wo_sd(Player *p, Table *t){
         }
     }
     /* Con 13, 14, 15 o 16 se planta contra 2,3,4,5,6 pide en otro caso*/
-    if(handValues[0]<17 && handValues[0]>12){
+    while(handValues[0]<17 && handValues[0]>12){
         if(cHandValues[0]<7){
             /* Se planta*/
             return p;
@@ -127,7 +133,7 @@ Player *play_standard_wo_sd(Player *p, Table *t){
     }
     if (handValues[1]>0){
         /* Pedir carta hasta 9 */
-        while (handValues[1] < 9) {
+        while (handValues[1] <= 9) {
             /* Pedir carta */
             p = player_addCardToHand(p,0, deck_draw(d));
             free(handValues);
@@ -146,7 +152,7 @@ Player *play_standard_wo_sd(Player *p, Table *t){
                 return NULL;
             }
             cHandValues=hand_getValues(cHand);
-            if(cHandValues[1]==10 || cHandValues[1]==11){
+            if(cHandValues[0]!=10 && cHandValues[0]!=11){
                 /* Pedir carta */
                 p = player_addCardToHand(p,0, deck_draw(d));
                 free(handValues);
@@ -158,13 +164,20 @@ Player *play_standard_wo_sd(Player *p, Table *t){
                 }
             }
             else{
-                /*Se planta*/
-                return p;
+                /* Pedir carta */
+                p = player_addCardToHand(p,0, deck_draw(d));
+                free(handValues);
+                handValues = hand_getValues(player_getHand(p, 0));
+                if (!handValues) {
+                    fprintf(stderr, "play_standard_wo_sd: handValues pointing NULL\n");
+                    free(handValues);
+                    return NULL;
+                }
             }
         }
         /* Se planta con 12 si hay 4, 5 o 6*/
         if (handValues[1]==12){
-            if (cHandValues[1]==4 || cHandValues[1]==5 || cHandValues[1]==6){
+            if (cHandValues[0]==4 || cHandValues[0]==5 || cHandValues[0]==6){
                 /* Se planta */
                 return p;
             }
@@ -176,8 +189,8 @@ Player *play_standard_wo_sd(Player *p, Table *t){
             }
         }
         /* Con 13, 14, 15 o 16 se planta contra 2,3,4,5,6 pide en otro caso*/
-        if(handValues[1]<17 && handValues[1]>12){
-            if(cHandValues[1]<7){
+        while(handValues[1]<17 && handValues[1]>12){
+            if(cHandValues[0]<7){
                 /* Se planta*/
                 return p;
             }
@@ -198,5 +211,5 @@ Player *play_standard_wo_sd(Player *p, Table *t){
             return p;
         }
     }
-    return p;
+    return NULL;
   }
