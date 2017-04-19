@@ -24,6 +24,7 @@ Player *play_random(Player *p, Table *t){
     handValues = hand_getValues(player_getHand(p, 0));
     if (!handValues) {
         fprintf(stderr, "play_randomr: handValues pointing NULL\n");
+        free(handValues);
         return NULL;
     }
     yOnCard=rand()%2;
@@ -38,13 +39,15 @@ Player *play_random(Player *p, Table *t){
               handValues = hand_getValues(player_getHand(p, 0));
               if (!handValues) {
                   fprintf(stderr, "play_random: handValues pointing NULL\n");
+                  free(handValues);
                   return NULL;
               }
               yOnCard=rand()%2;
           }
+          free(handValues);
           return p;
       }
     }
-
+  free(handValues);
   return p;
 }

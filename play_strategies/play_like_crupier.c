@@ -25,6 +25,7 @@ Player *play_like_crupier(Player *p, Table *t){
       handValues = hand_getValues(player_getHand(p, 0));
       if (!handValues) {
           fprintf(stderr, "play_like_crupier: handValues pointing NULL\n");
+          free(handValues);
           return NULL;
       }
   }
@@ -38,11 +39,14 @@ Player *play_like_crupier(Player *p, Table *t){
               handValues = hand_getValues(player_getHand(p, 0));
               if (!handValues) {
                   fprintf(stderr, "play_like_crupier: handValues pointing NULL\n");
+                  free(handValues);
                   return NULL;
               }
           }
+          free(handValues);
           return p;
       }
     }
+  free(handValues);
   return p;
 }
