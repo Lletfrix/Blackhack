@@ -16,6 +16,7 @@ void usage() {
 
 int main(int argc, char** argv) {
     int numPartidas;
+    Table* tableError;
 
     if (argc > 3) {
         usage();
@@ -41,20 +42,20 @@ int main(int argc, char** argv) {
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    for (int i = 1; i < NUMPLAYERS; i++) {
-        // pasar funciones vacías para que de momento compile
-        Player *p = player_ini(double_if_lose, play_like_crupier);
-        if (!p) {
-            fprintf(stderr, "main: player_ini: ERROR allocating memory for player %d\n", i);
-            table_destroy(table);
-            return EXIT_FAILURE;
-        }
-
-        table = table_addPlayer(table, p);
-        if(!table){
-            fprintf(stderr, "main: ERROR in table_addPlayer. Iteration: %d\n", i);
-            return EXIT_FAILURE;
-        }
+    table = table_addPlayer(table, player_ini(double_if_lose, play_like_crupier));
+    if(!table){
+        fprintf(stderr, "main: ERROR in table_addPlayer.\n");
+        return EXIT_FAILURE;
+    }
+    table = table_addPlayer(table, player_ini(double_if_lose, play_standard_wo_sd));
+    if(!table){
+        fprintf(stderr, "main: ERROR in table_addPlayer.\n");
+        return EXIT_FAILURE;
+    }
+    table = table_addPlayer(table, player_ini(double_if_lose, play_standard_wo_sd));
+    if(!table){
+        fprintf(stderr, "main: ERROR in table_addPlayer.\n");
+        return EXIT_FAILURE;
     }
 
     // initialize crupier
@@ -93,9 +94,10 @@ int main(int argc, char** argv) {
     for (int k = 0; k < numPartidas; k++) {
 
         /* apostar*/
-        table = table_makeBets(table);
-        if(!table){
+        tableError = table_makeBets(table);
+        if(!tableError){
             fprintf(stderr, "Error in makeBets.\n");
+            table_printLastGame(stderr, table, k);
             return EXIT_FAILURE;
         }
 
@@ -136,7 +138,7 @@ int main(int argc, char** argv) {
             fprintf(stderr, "Error in restartTable.\n");
             return EXIT_FAILURE;
         }
-        table_printLastGame(stdout, table, k);
+        /*table_printLastGame(stdout, table, k);*/
     }
 
 

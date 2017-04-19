@@ -50,7 +50,7 @@ int deck_draw(Deck *d) {
     }
 #endif
 
-    srand(d->seed);
+    srand(time(NULL)); // TODO: fix seeding
     ran = rand();
     ran %= d->nCurrentCards;
 

@@ -3,7 +3,7 @@ CFLAGS=-Wall -g
 
 OBJECTS=deck.o hand.o crupier.o player.o table.o
 BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o
-PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o
+PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o
 
 .PHONY: all
 all: main
@@ -51,6 +51,9 @@ play_like_crupier.o: play_strategies/play_like_crupier.c
 
 play_random.o: play_strategies/play_random.c
 	$(CC) $(CFLAGS) -c play_strategies/play_random.c
+
+play_standard_wo_sd.o: play_strategies/play_standard_wo_sd.c
+	$(CC) $(CFLAGS) -c play_strategies/play_standard_wo_sd.c
 
 .PHONY: clean
 clean:

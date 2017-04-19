@@ -12,7 +12,7 @@
 #define MAX_HANDS 4
 #define MIN_DECK_WEIGHT 2
 #define INITIAL_CASH 100
-#define INITIAL_AMOUNT 10
+#define INITIAL_AMOUNT 1
 
 typedef enum{
   LOSE, TIE, WIN, ERROR
