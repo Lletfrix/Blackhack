@@ -71,10 +71,11 @@ Crupier* crupier_play(Crupier *c, Deck *d) {
                     return NULL;
                 }
             }
+            free(handValues);
             return c;
         }
     }
-
+    free(handValues);
     return c;
 }
 

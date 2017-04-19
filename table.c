@@ -163,7 +163,8 @@ Table *table_distributeEarnings(Table *t)
         data=player_handsCondition(t->crupier,t->players[i]);
         hAux=player_getHand(t->players[i], 0);
         //Se paga a cada mano
-        if((*hand_getValues(hAux)==21)&&hand_getNumCards(hAux)==2){
+        int *hand_values_aux = hand_getValues(hAux);
+        if((*hand_values_aux==21)&&hand_getNumCards(hAux)==2){
             //El jugador tiene BlackJack, no se recorrerán las manos
             player_addCash(t->players[i],2.5*player_getLastBet(t->players[i]));
             thisGame=WIN;
@@ -185,6 +186,7 @@ Table *table_distributeEarnings(Table *t)
             }
 
         }
+        free(hand_values_aux);
         //Se añaden las estadisticas
         if(value>0) {
             thisGame=WIN;
