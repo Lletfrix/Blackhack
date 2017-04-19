@@ -147,13 +147,14 @@ Table *table_dealCardToCrupier(Table *t)
 Table *table_distributeEarnings(Table *t)
 {
     //TODO: ERROR HANDLING
-    int value=0;
+
     Peg* data, thisGame;
     Hand* hAux;
     if (!table_isWorking(t)) return NULL;
 
     //Para cada jugador
     for(int i=0;i<t->nPlayers;i++){
+        int value=0;
         data=player_handsCondition(t->crupier,t->players[i]);
         hAux=player_getHand(t->players[i], 0);
         //Se paga a cada mano
@@ -285,6 +286,34 @@ int table_printPlayersMoney(FILE *pf, Table* t){
     int nCharPrinted=0;
     for (int i=0;i<t->nPlayers; i++){
         nCharPrinted+=fprintf(pf, "Player %d : %d\n",i, player_getCash(t->players[i]));
+    }
+    return nCharPrinted;
+}
+
+int table_printPlayersStreakData (FILE *pf, Table*t){
+    int nCharPrinted=0;
+    for(int i=0; i<t->nPlayers;i++){
+        nCharPrinted+=fprintf(pf, "Player %d: MaxWinStreak: %d, MaxTieStreak: %d, MaxLoseStreak: %d.\n",i,player_getMaxWinStreak(t->players[i]),player_getMaxTieStreak(t->players[i]),player_getMaxLoseStreak(t->players[i]));
+    }
+    return nCharPrinted;
+}
+
+int table_printLastGame (FILE *pf, Table*t, int numGame){
+    int nCharPrinted=0;
+    nCharPrinted+=fprintf(pf, "Game: %d\n",numGame);
+    for(int i=0; i<t->nPlayers;i++){
+        if (WIN==player_getLastPlay(t->players[i])){
+            nCharPrinted+=fprintf(pf, "\tPlayer %d: WIN\n",i);
+            continue;
+        }
+        if(TIE==player_getLastPlay(t->players[i])){
+            nCharPrinted+=fprintf(pf, "\tPlayer %d: TIE\n",i);
+            continue;
+        }
+        if(LOSE==player_getLastPlay(t->players[i])){
+            nCharPrinted+=fprintf(pf, "\tPlayer %d: LOSE\n",i);
+            continue;
+        }
     }
     return nCharPrinted;
 }

@@ -91,3 +91,9 @@ int table_printPlayersMoney(FILE *pf, Table* t);
 
 /* Print all players percentages */
 int table_printPlayersPercentages(FILE *, Table *);
+
+/* Print all players Maximum Streaks*/
+int table_printPlayersStreakData (FILE *, Table*);
+
+/*Print all players last game*/
+int table_printLastGame(FILE*, Table*, int);

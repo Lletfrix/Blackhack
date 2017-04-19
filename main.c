@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     int numPartidas;
     if (argc < 2){
     fprintf(stderr, "Playing a hundred games as default.\n");
-    numPartidas=100;    
+    numPartidas=100;
     }
     else numPartidas=atoi(argv[1]);
     Table *table = table_ini();
@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
     // initialize players
     //
     // set the first player to use a random strategy
-    table = table_addPlayer(table, player_ini(boring_bet, play_random));
+    table = table_addPlayer(table, player_ini(double_if_lose, play_random));
 
     for (int i = 1; i < NUMPLAYERS; i++) {
         // pasar funciones vacías para que de momento compile
-        Player *p = player_ini(boring_bet, play_like_crupier);
+        Player *p = player_ini(double_if_lose, play_like_crupier);
         if (!p) {
             fprintf(stderr, "main: player_ini: error allocating memory for player %d\n", i);
             table_destroy(table);
@@ -83,11 +83,15 @@ int main(int argc, char** argv) {
         table = table_distributeEarnings(table);
 
         table = table_restartTable(table);
+
+        table_printLastGame(stdout, table, k);
     }
 
 table_printPlayersPercentages(stdout, table);
-
+fprintf(stdout, "\n");
 table_printPlayersMoney(stdout, table);
+fprintf(stdout, "\n");
+table_printPlayersStreakData(stdout, table);
 
 return EXIT_SUCCESS;
 }
