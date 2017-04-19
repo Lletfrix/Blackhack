@@ -24,7 +24,7 @@ struct _Player {
 };
 
 Player* player_ini(bet_function_type fBet, play_function_type fPlay){
-  Player *p = malloc(sizeof(Player));
+  Player *p = calloc(1, sizeof(Player));
   if(!p){
     fprintf(stderr, "player_ini: malloc error allocating memory\n");
     return NULL;
