@@ -304,14 +304,17 @@ int table_printLastGame (FILE *pf, Table*t, int numGame){
     for(int i=0; i<t->nPlayers;i++){
         if (WIN==player_getLastPlay(t->players[i])){
             nCharPrinted+=fprintf(pf, "\tPlayer %d: WIN\n",i);
+            nCharPrinted+=fprintf(pf, "\t\t Current cash: %d\n",player_getCash(t->players[i]));
             continue;
         }
         if(TIE==player_getLastPlay(t->players[i])){
             nCharPrinted+=fprintf(pf, "\tPlayer %d: TIE\n",i);
+            nCharPrinted+=fprintf(pf, "\t\t Current cash: %d\n",player_getCash(t->players[i]));
             continue;
         }
         if(LOSE==player_getLastPlay(t->players[i])){
             nCharPrinted+=fprintf(pf, "\tPlayer %d: LOSE\n",i);
+            nCharPrinted+=fprintf(pf, "\t\t Current cash: %d\n",player_getCash(t->players[i]));
             continue;
         }
     }
