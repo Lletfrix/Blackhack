@@ -1,15 +1,17 @@
 CC=gcc
 CFLAGS=-Wall -std=c99 -g
+GAMES= simulation real_player_game
 
-OBJECTS=deck.o hand.o crupier.o player.o table.o
+SIM_OBJECTS=deck.o hand.o crupier.o player.o table.o simulation.o
+RPG_OBJECTS=deck.o hand.o crupier.o player.o table.o real_player_game.o
 BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o
 PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o
 
 .PHONY: all
-all: main
+all: $(GAMES)
 
-main: main.c $(OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
-	$(CC) $(CFLAGS) -o main main.c $(OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+#main: main.c $(OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+	#$(CC) $(CFLAGS) -o main main.c $(OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
 deck.o: deck.h deck.c
 	$(CC) $(CFLAGS) -c deck.c
@@ -25,6 +27,18 @@ player.o: hand.h hand.c
 
 table.o: table.h table.c
 	$(CC) $(CFLAGS) -c table.c
+
+real_player_game.o: table.h player.h crupier.h hand.h deck.h bet_strategies.h play_strategies.h
+	$(CC) $(CFLAGS) -c real_player_game.c
+
+simulation.o: table.h player.h crupier.h hand.h deck.h bet_strategies.h play_strategies.h
+	$(CC) $(CFLAGS) -c simulation.c
+
+real_player_game: $(RPG_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+	$(CC) $(CFLAGS) -o real_player_game $(RPG_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+
+simulation: $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+	$(CC) $(CFLAGS) -o simulation $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
 # bet strategies
 never_bets.o: bet_strategies/never_bets.c
@@ -57,4 +71,4 @@ play_standard_wo_sd.o: play_strategies/play_standard_wo_sd.c
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJECTS) *.dSYM *.o
+	rm -rf $(SIM_OBJECTS) $(RPG_OBJECTS) *.dSYM *.o real_player_game simulation
