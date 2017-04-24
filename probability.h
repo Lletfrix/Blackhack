@@ -1,8 +1,11 @@
-#include hand.h
-#include deck.h
-#include player.h
-#include crupier.h
-#include table.h
+#include <stdio.h>
+#include <stdlib.h>
+#include "macros.h"
+#include "hand.h"
+#include "deck.h"
+#include "player.h"
+#include "crupier.h"
+#include "table.h"
 
 /*
  ********************************
@@ -18,6 +21,3 @@ double * probability_listofcards(Deck *);
 
 //return -1, 0, +1 used to count cards
 int probability_countingHiLo(int rank);
-
-//return remaining numbers of ases
-int probability_remainingAses(Deck *);
