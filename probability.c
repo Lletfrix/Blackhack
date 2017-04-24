@@ -47,7 +47,7 @@ int probability_countingHiLo(int rank){
     fprintf(stderr, "probability_countingHiLo: rank<1 or rank>10, return -2\n");
     return -2;
   }
-  if(rank>=1 && rank<=6){
+  if(rank>=2 && rank<=6){
     return +1;
   }
   else if(rank>=7 && rank<=9){
@@ -55,5 +55,30 @@ int probability_countingHiLo(int rank){
   }
   else{
     return -1;
+  }
+}
+
+int probability_countingUstonSS(int rank){
+  if(rank<1 || rank>10){
+    fprintf(stderr, "probability_countingUstonSS: rank<1 or rank>10, return -3\n");
+    return -3;
+  }
+  if(rank==2 || rank==3 || rank==4 || rank==6){
+    return 2;
+  }
+  else if(rank==5){
+    return 3;
+  }
+  else if(rank==7){
+    return 1;
+  }
+  else if(rank==8){
+    return 0;
+  }
+  else if(rank==9){
+    return -1;
+  }
+  else{
+    return -2;
   }
 }
