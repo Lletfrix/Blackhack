@@ -107,3 +107,21 @@ Deck* deck_restartDeck(Deck *d){
 
   return d;
 }
+
+void deck_print(FILE* pf, Deck* d){
+    if(!pf||!d){
+        return NULL;
+    }
+    fprintf(pf, "Current [%d]: [", d->nCurrentCards);
+    for (size_t i = 0; i < N_RANKS; i++) {
+        fprintf(pf, " %d", d->cards[i]);
+    }
+    fprintf(pf, "]\n");
+}
+
+int deck_getNCardsofRank(Deck* d,  int rank){
+    if(!d || rank>10 || rank<1 ){
+        return -1;
+    }
+    return d->cards[rank-1];
+}
