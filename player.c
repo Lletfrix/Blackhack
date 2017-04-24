@@ -431,8 +431,8 @@ void player_print(FILE* fp, Player* p){
         return;
     }
     for (size_t i = 0; i < p->nTotalHands; i++) {
-        fprintf(fp, "Hand %d: ", i);
+        fprintf(fp, "\tHand %ld: ", i);
         hand_print(fp, p->hand[i]);
     }
-    fprintf(fp, "\nTCards: %d, Cash: %lf, lastBet: %lf, W/T/L: %d/%d/%d, cStreaks: %d/%d/%d, mStreaks: %d/%d/%d\n",p->nTotalCards,p->cash,p->lastBet,p->nWin,p->nTie,p->nLose,p->currentWinStreak,p->currentTieStreak,p->currentLoseStreak,p->maxWinStreak,p->maxTieStreak,p->maxLoseStreak);
+    fprintf(fp, "\n\t\tTCards: %d, Cash: %ld, lastBet: %ld, W/T/L: %d/%d/%d, cStreaks: %d/%d/%d, mStreaks: %d/%d/%d\n",p->nTotalCards,p->cash,p->lastBet,p->nWin,p->nTie,p->nPlay-(p->nTie + p->nWin),p->currentWinStreak,p->currentTieStreak,p->currentLoseStreak,p->maxWinStreak,p->maxTieStreak,p->maxLoseStreak);
 }

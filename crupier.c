@@ -102,3 +102,11 @@ Hand* crupier_getHand(Crupier *c) {
 
     return c->hand;
 }
+
+void crupier_print(FILE*fp, Crupier*c){
+    if(!fp || !c){
+        return;
+    }
+    fprintf(fp, "\tCrupier hand: ");
+    hand_print(fp, c->hand);
+}

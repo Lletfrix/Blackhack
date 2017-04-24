@@ -112,7 +112,7 @@ void deck_print(FILE* pf, Deck* d){
     if(!pf||!d){
         return;
     }
-    fprintf(pf, "Current [%d]: [", d->nCurrentCards);
+    fprintf(pf, "\tCurrent [%d]: [", d->nCurrentCards);
     for (size_t i = 0; i < N_RANKS; i++) {
         fprintf(pf, " %d,", d->cards[i]);
     }

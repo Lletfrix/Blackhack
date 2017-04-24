@@ -23,4 +23,6 @@ Crupier* crupier_addCard(Crupier*, int rank);
 /* gets crupier hand */
 Hand* crupier_getHand(Crupier*);
 
+/* print crupier */
+void crupier_print(FILE*, Crupier*);
 #endif

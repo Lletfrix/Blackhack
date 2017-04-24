@@ -1,9 +1,10 @@
 CC=gcc
 CFLAGS=-Wall -std=c99 -g
-GAMES= simulation real_player_game
+GAMES= simulation real_player_game godmode_play
 
 SIM_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o simulation.o
 RPG_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o real_player_game.o
+GMP_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o godmode_play.o
 BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o
 PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o
 
@@ -34,11 +35,17 @@ probability.o: probability.h probability.c
 real_player_game.o: table.h player.h crupier.h hand.h deck.h probability.h bet_strategies.h play_strategies.h
 	$(CC) $(CFLAGS) -c real_player_game.c
 
+godmode_play.o: table.h player.h crupier.h hand.h deck.h probability.h bet_strategies.h play_strategies.h
+	$(CC) $(CFLAGS) -c godmode_play.c
+
 simulation.o: table.h player.h crupier.h hand.h deck.h probability.h bet_strategies.h play_strategies.h
 	$(CC) $(CFLAGS) -c simulation.c
 
 real_player_game: $(RPG_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 	$(CC) $(CFLAGS) -o real_player_game $(RPG_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+
+godmode_play: $(GMP_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+	$(CC) $(CFLAGS) -o godmode_play $(GMP_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
 simulation: $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 	$(CC) $(CFLAGS) -o simulation $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)

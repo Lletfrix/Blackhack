@@ -34,6 +34,7 @@ Hand* hand_insertCard(Hand* h, int rank) {
         return NULL;
     }
     h->cards[rank - 1]++;
+    h->nCurrentCards++;
     return h;
 }
 
@@ -252,12 +253,15 @@ Peg hand_compare(Hand *crupier_hand, Hand *player_hand)
 }
 
 void hand_print(FILE* fp, Hand* h){
+    int *values;
     if(!fp || !h){
         return;
     }
-    fprintf(fp, "Current [%d]: [",h->nCurrentCards);
+    values = hand_getValues(h);
+    fprintf(fp, "\tCurrentCards: %d, Values[%d/%d]: [",h->nCurrentCards,values[0],values[1]);
     for (size_t i = 0; i < N_RANKS; i++) {
         fprintf(fp, " %d,",h->cards[i]);
     }
     fprintf(fp, "]\n");
+    free(values);
 }

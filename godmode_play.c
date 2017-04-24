@@ -16,32 +16,48 @@ void usage(FILE* pf){
 }
 
 void print_currentStatus(FILE *pf, FILE* f_in, Deck *deck, Player *player, Crupier *crupier){
+    char option;
     fprintf(pf, "Would you like to print the current status?\n\t[y]yes\n\t[n]no\nMake your decision: ");
-    option=getc(f_in);
+    fscanf(f_in,"\n%c",&option);
     switch (option) {
         case 'y':
             break;
         case 'n':
             return;
         default:
-            fprintf(pf, "You failed, choosing no as default\n");
+            fprintf(pf, "You failed, choosing no as default.\n");
+            return;
     }
     fprintf(pf, "\n---------------------------\n");
-    fprintf(pf, "Current status:\n");
+    fprintf(pf, "Current status:\n\n");
     fprintf(pf, "\t Deck:\n\t");
     deck_print(pf,deck);
+    fprintf(pf, "\n");
     fprintf(pf, "\t Player:\n\t");
     player_print(pf,player);
+    fprintf(pf, "\n");
     fprintf(pf, "\t Crupier:\n\t");
     crupier_print(pf, crupier);
+    fprintf(pf, "\n");
     fprintf(pf, "\n---------------------------\n");
 }
 
 void test_functions(FILE *pf, FILE *f_in, Deck *deck, Player *player, Crupier *crupier){
     char option;
+    fprintf(pf, "Would you like to test functions?\n\t[y]yes\n\t[n]no\nMake your decision: ");
+    fscanf(f_in,"\n%c",&option);
+    switch (option) {
+        case 'y':
+            break;
+        case 'n':
+            return;
+        default:
+            fprintf(pf, "You failed, choosing no as default.\n");
+            return;
+    }
     while(1){
         fprintf(pf,"Options:\n\t[d]test deck\n\t[p]test player\n\t[h]test hand\n\t[c]test crupier\n\t[n]nothing\nMake yours: ");
-        option=getc(f_in);
+        fscanf(f_in,"\n%c",&option);
         switch (option) {
             case 'd':
                 /* deck functions */
@@ -59,6 +75,7 @@ void test_functions(FILE *pf, FILE *f_in, Deck *deck, Player *player, Crupier *c
                 /*do nothing*/
                 return;
             default:
+            ;
         }
     }
 }
@@ -66,16 +83,18 @@ void test_functions(FILE *pf, FILE *f_in, Deck *deck, Player *player, Crupier *c
 int main (int argc, char** argv){
     FILE *pf=stdout, *f_in=stdin;
     Deck *deck;
-    Player *p1;
+    Player *p1, *pErr;
+    char option;
     Crupier *c;
-    Hand *hAux;
+    //Hand *hAux;
     Table *table;
     int *hv, rank, numPartidas, handNumber;
-    bool split, stop;
-    Peg *condition;
-    double bet, betOrg, beth0, beth1;
+    bool split=false, stop=false;
+    //Peg *condition;
+    long bet, betOrg;//, beth0, beth1;
     if (argc<2){
         fprintf(pf, "Playing 10 games as default");
+        usage(pf);
         numPartidas=10;
     }
     else{
@@ -84,9 +103,9 @@ int main (int argc, char** argv){
 
     //Initializations
 
-    deck=deck_ini();
-    player_ini(&never_bets, &play_do_nothing);
-    crupier_ini();
+    deck=deck_ini(time(NULL));
+    p1=player_ini(&never_bets, &play_do_nothing);
+    c=crupier_ini();
 
     for (size_t i = 0; i < numPartidas; i++) {
         fprintf(pf, "\n*** STARTING NEW GAME ***\n\n");
@@ -106,9 +125,10 @@ int main (int argc, char** argv){
         test_functions(pf, f_in, deck, p1, c);
         fprintf(pf, "\n*** MAKE YOUR BET***\n");
         fprintf(pf, "Input: ");
-        fscanf(f_int, "%lf", &bet);
+        fscanf(f_in, "%ld", &bet);
         betOrg=bet;
-        player_removeCash(p, bet);
+        player_removeCash(p1, bet);
+        player_setLastBet(p1, bet);
         print_currentStatus(pf, f_in, deck, p1, c);
         test_functions(pf, f_in, deck, p1, c);
         /*********************************************************************/
@@ -118,13 +138,13 @@ int main (int argc, char** argv){
         handNumber=0;
         hv=hand_getValues(player_getHand(p1, handNumber));
         while(hv[1]<=21){
-            fprintf("Player hands:\n")
-            hand_print(player_getHand(p1,numHand));
-            fprintf("Crupier hand:\n");
-            hand_print(crupier_getHand(c));
+            fprintf(pf, "Player hands:\n");
+            hand_print(pf,player_getHand(p1,handNumber));
+            fprintf(pf, "Crupier hand:\n");
+            hand_print(pf,crupier_getHand(c));
 
             fprintf(pf, "\nYour turn, what would you like to do?\n\t[h]hit\n\t[s]split\n\t[d]double\n\t[t]stop\nInput: ");
-            option=getc(f_in);
+            fscanf(f_in,"\n%c",&option);
             switch (option) {
                 case 'h':
                     rank=deck_draw(deck);
@@ -142,21 +162,23 @@ int main (int argc, char** argv){
                     break;
                 case 'd':
                     fprintf(pf, "Doubling bet in first hand\n");
-                    player_removeCash(p1, bet);
-                    bet*=2;
+                    player_removeCash(p1, 2*bet);
+                    player_setLastBet(p1, 3*bet);
+                    bet*=3;
                     break;
                 case 't':
                     fprintf(pf, "Ending this hand play\n");
                     stop=true;
                     break;
                 default:
+                ;
             }
             if(stop==true){
                 break;
             }
             free(hv);
-            hv=hand_getValues(player_getHand(p1, handNumber);
-            beth0=bet;
+            hv=hand_getValues(player_getHand(p1, handNumber));
+            //beth0=bet;
             print_currentStatus(pf, f_in, deck, p1, c);
             test_functions(pf, f_in, deck, p1, c);
         }
@@ -167,13 +189,13 @@ int main (int argc, char** argv){
             free(hv);
             hv=hand_getValues(player_getHand(p1, handNumber));
             while(hv[1]<=21){
-                fprintf("Player hand:\n");
-                hand_print(player_getHand(p1,numHand));
-                fprintf("Crupier hand:\n");
-                hand_print(crupier_getHand(c));
+                fprintf(pf, "Player hand:\n");
+                hand_print(pf, player_getHand(p1,handNumber));
+                fprintf(pf, "Crupier hand:\n");
+                hand_print(pf, crupier_getHand(c));
 
                 fprintf(pf, "\nYour turn, what would you like to do?\n\t[h]hit\n\t[d]double\n\t[t]stop\nInput: ");
-                option=getc(f_in);
+                fscanf(f_in,"\n%c",&option);
                 switch (option) {
                     case 'h':
                         rank=deck_draw(deck);
@@ -182,29 +204,35 @@ int main (int argc, char** argv){
                         break;
                     case 'd':
                         fprintf(pf, "Doubling bet in first hand\n");
-                        player_removeCash(p1, bet);
-                        bet*=2;
+                        player_removeCash(p1, 2*bet);
+                        player_setLastBet(p1, 3*bet);
+                        bet*=3;
                         break;
                     case 't':
                         fprintf(pf, "Ending this hand play\n");
                         stop=true;
                         break;
                     default:
+                    ;
                 }
                 if(stop==true){
                     break;
                 }
                 free(hv);
-                hv=hand_getValues(player_getHand(p1, handNumber);
-                beth1=bet;
+                hv=hand_getValues(player_getHand(p1, handNumber));
+                //beth1=bet;
                 print_currentStatus(pf, f_in, deck, p1, c);
                 test_functions(pf, f_in, deck, p1, c);
             }
         }
         free (hv);
         /*********************************************************************/
-        fprintf(pf, "\n***DEALING SECOND CARD TO CRUPIER\n");
+        /*fprintf(pf, "\n***DEALING SECOND CARD TO CRUPIER\n");
         crupier_addCard(c, deck_draw(deck));
+        print_currentStatus(pf, f_in, deck, p1, c);
+        test_functions(pf, f_in, deck, p1, c);*/
+        fprintf(pf, "\n***CRUPIER PLAYS***\n");
+        crupier_play(c, deck);
         print_currentStatus(pf, f_in, deck, p1, c);
         test_functions(pf, f_in, deck, p1, c);
         fprintf(pf, "\n***DISTRIBUTE EARNINGS***\n");
@@ -258,7 +286,7 @@ int main (int argc, char** argv){
 
         fprintf(pf, "\n*** RESTARTING GAME***\n");
         table_restartTable(table);
-        rint_currentStatus(pf, f_in, deck, p1, c);
+        print_currentStatus(pf, f_in, deck, p1, c);
         test_functions(pf, f_in, deck, p1, c);
     }
     deck_destroy(deck);
