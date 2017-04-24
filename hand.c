@@ -56,8 +56,8 @@ int* hand_getValues(Hand*h) {
         values[1] = *h->cards;
 
         for (i = 1; i < N_RANKS; i++) {
-            *values += i*h->cards[i];
-            values[1] += i*h->cards[i];
+            *values += (i+1)*h->cards[i];
+            values[1] += (i+1)*h->cards[i];
         }
 
         return values;
@@ -65,7 +65,7 @@ int* hand_getValues(Hand*h) {
     }
 
     for (i = 0, *values = 0; i < N_RANKS; i++) {
-        *values += i*h->cards[i];
+        *values += (i+1)*h->cards[i];
     }
     values[1] = -1;
 
