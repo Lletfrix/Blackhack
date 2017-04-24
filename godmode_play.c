@@ -33,7 +33,7 @@ void print_currentStatus(FILE *pf, FILE* f_in, Deck *deck, Player *player, Crupi
     fprintf(pf, "\t Deck:\n\t");
     deck_print(pf,deck);
     fprintf(pf, "\n");
-    fprintf(pf, "\t Player:\n\t");
+    fprintf(pf, "\t Player:\n");
     player_print(pf,player);
     fprintf(pf, "\n");
     fprintf(pf, "\t Crupier:\n\t");
@@ -152,6 +152,10 @@ int main (int argc, char** argv){
                     player_addCardToHand(p1, handNumber, rank);
                     break;
                 case 's':
+                    if(split==true){
+                        fprintf(pf, "Already splitted once\n");
+                        break;
+                    }
                     pErr=player_splitHand(p1, handNumber);
                     if(!pErr){
                         fprintf(stderr, "Splitting was impossible\n");
@@ -176,6 +180,7 @@ int main (int argc, char** argv){
             if(stop==true){
                 break;
             }
+            stop=false;
             free(hv);
             hv=hand_getValues(player_getHand(p1, handNumber));
             //beth0=bet;
@@ -183,6 +188,7 @@ int main (int argc, char** argv){
             test_functions(pf, f_in, deck, p1, c);
         }
         if(split==true){
+            split=false;
             fprintf(pf, "\n***HAND NUMBER 1***\n");
             handNumber=1;
             bet=betOrg;
@@ -218,6 +224,7 @@ int main (int argc, char** argv){
                 if(stop==true){
                     break;
                 }
+                stop=false;
                 free(hv);
                 hv=hand_getValues(player_getHand(p1, handNumber));
                 //beth1=bet;
