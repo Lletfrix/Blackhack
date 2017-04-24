@@ -250,3 +250,14 @@ Peg hand_compare(Hand *crupier_hand, Hand *player_hand)
         }
     }
 }
+
+void hand_print(FILE* fp, Hand* h){
+    if(!fp || !h){
+        return;
+    }
+    fprintf(fp, "Current [%d]: [",h->nCurrentCards);
+    for (size_t i = 0; i < N_RANKS; i++) {
+        fprintf(fp, " %d,",h->cards[i]);
+    }
+    fprintf(fp, "]\n");
+}

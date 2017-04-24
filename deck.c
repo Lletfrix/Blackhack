@@ -110,11 +110,11 @@ Deck* deck_restartDeck(Deck *d){
 
 void deck_print(FILE* pf, Deck* d){
     if(!pf||!d){
-        return NULL;
+        return;
     }
     fprintf(pf, "Current [%d]: [", d->nCurrentCards);
     for (size_t i = 0; i < N_RANKS; i++) {
-        fprintf(pf, " %d", d->cards[i]);
+        fprintf(pf, " %d,", d->cards[i]);
     }
     fprintf(pf, "]\n");
 }

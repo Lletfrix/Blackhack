@@ -34,6 +34,8 @@ int hand_getNumCards(Hand*);
 /* gets the array of cards,return NULL if error */
 int* hand_getCards(Hand*);
 
+/* print hand */
+void hand_print(FILE*, Hand*);
 
 /*
  * Compara las manos de un crupier y un jugador.
