@@ -14,7 +14,7 @@
 double probability_card(Deck *, int rank);
 
 //returns the probability of all the cards
-double * probability_listofcards(Table *);
+double * probability_listofcards(Deck *);
 
 //return -1, 0, +1 used to count cards
 int probability_countingHiLo(int rank);
