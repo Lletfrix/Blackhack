@@ -34,6 +34,9 @@ int hand_getNumCards(Hand*);
 /* gets the array of cards,return NULL if error */
 int* hand_getCards(Hand*);
 
+/* check if the hand can be split */
+bool hand_splitIsPossible(Hand* );
+
 /* print hand */
 void hand_print(FILE*, Hand*);
 

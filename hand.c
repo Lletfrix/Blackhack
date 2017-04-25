@@ -252,6 +252,22 @@ Peg hand_compare(Hand *crupier_hand, Hand *player_hand)
     }
 }
 
+bool hand_splitIsPossible(Hand* h){
+    if(!h){
+        fprintf(stderr, "%s\n", "Hand pointing NULL");
+        return false;
+    }
+    if (h->nCurrentCards!=2){
+        return false;
+    }
+    for (size_t i = 0; i < N_RANKS; i++) {
+        if(h->cards[i]==2){
+            return true;
+        }
+    }
+    return false;
+}
+
 void hand_print(FILE* fp, Hand* h){
     int *values;
     if(!fp || !h){

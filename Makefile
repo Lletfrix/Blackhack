@@ -6,7 +6,7 @@ SIM_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o simulation.o
 RPG_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o real_player_game.o
 GMP_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o godmode_play.o
 BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o
-PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o
+PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o play_basic.o
 
 .PHONY: all
 all: $(GAMES)
@@ -78,6 +78,9 @@ play_random.o: play_strategies/play_random.c
 
 play_standard_wo_sd.o: play_strategies/play_standard_wo_sd.c
 	$(CC) $(CFLAGS) -c play_strategies/play_standard_wo_sd.c
+
+play_basic.o: play_strategies/play_basic.c
+	$(CC) $(CFLAGS) -c play_strategies/play_basic.c
 
 .PHONY: clean
 clean:

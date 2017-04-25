@@ -417,6 +417,10 @@ Player *player_splitHand(Player*p, int numHand){
         fprintf(stderr, "player_splitHand: player pointing NULL\n");
         return NULL;
     }
+    if(hand_splitIsPossible(p->hand[numHand])==false){
+        fprintf(stderr, "player_splitHand: splitting was impossible");
+        return NULL;
+    }
     p->hand[p->nTotalHands]=hand_divide(p->hand[numHand]);
     if(!p->hand[p->nTotalHands]){
         fprintf(stderr, "player_splitHand: splitting hand was impossible.\n");

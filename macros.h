@@ -18,6 +18,9 @@ typedef enum{
   LOSE, TIE, WIN, ERROR
 }Peg;
 
+typedef enum{
+    FAIL, OK
+}Status;
 /*
  * Si está definida, compilamos con control de errores.
  */
