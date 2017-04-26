@@ -83,7 +83,7 @@ void test_functions(FILE *pf, FILE *f_in, Deck *deck, Player *player, Crupier *c
 int main (int argc, char** argv){
     FILE *pf=stdout, *f_in=stdin;
     Deck *deck;
-    Player *p1, *pErr;
+    Player *p1;
     char option;
     Crupier *c;
     //Hand *hAux;
@@ -156,8 +156,8 @@ int main (int argc, char** argv){
                         fprintf(pf, "Already splitted once\n");
                         break;
                     }
-                    pErr=player_splitHand(p1, handNumber);
-                    if(!pErr){
+
+                    if(-1==player_splitHand(p1, handNumber)){
                         fprintf(stderr, "Splitting was impossible\n");
                         break;
                     }
