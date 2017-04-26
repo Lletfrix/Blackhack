@@ -412,22 +412,24 @@ int player_getMaxLoseStreak(Player *p){
   return p->maxLoseStreak;
 }
 
-Player *player_splitHand(Player*p, int numHand){
+int player_splitHand(Player*p, int numHand){
+    int ret;
     if(!p){
         fprintf(stderr, "player_splitHand: player pointing NULL\n");
-        return NULL;
+        return -1;
     }
     if(hand_splitIsPossible(p->hand[numHand])==false){
         fprintf(stderr, "player_splitHand: splitting was impossible");
-        return NULL;
+        return -1;
     }
     p->hand[p->nTotalHands]=hand_divide(p->hand[numHand]);
     if(!p->hand[p->nTotalHands]){
         fprintf(stderr, "player_splitHand: splitting hand was impossible.\n");
-        return NULL;
+        return -1;
     }
+    ret=p->nTotalHands;
     p->nTotalHands++;
-    return p;
+    return ret;
 }
 
 void player_print(FILE* fp, Player* p){

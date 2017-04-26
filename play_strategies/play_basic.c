@@ -19,10 +19,15 @@ Status player_hit(Player* p, int currentHand, Deck* deck){
 }
 
 bool player_split(Player* p,int currentHand, Deck* deck){
-    if(NULL==player_splitHand(p, currentHand)){
+    int index;
+    index=player_splitHand(p, currentHand);
+    if(index==-1){
         return false;
     }
     if(NULL==player_addCardToHand(p, currentHand, deck_draw(deck))){
+        return false;
+    }
+    if(NULL==player_addCardToHand(p, index, deck_draw(deck))){
         return false;
     }
     return true;
