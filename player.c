@@ -1,5 +1,4 @@
 #include "player.h"
-#include "hand.h"
 
 
 struct _Player {
@@ -157,7 +156,7 @@ Peg* player_handsCondition(Crupier*c, Player* p){
 
 Player* player_addGame (Player* p, Peg condition){
 
-    if(!p || condition<0 || condition>2){
+    if(!p || condition>2){
         fprintf(stderr,"player_addGame: invalid arguments.\n");
         return NULL;
     }
@@ -206,7 +205,7 @@ Player *player_setLastBet(Player *p, long cash){
 }
 
 Player *player_refreshStreak(Player *p, Peg condition){
-  if(!p || condition < 0 || condition > 2){
+  if(!p || condition > 2){
     fprintf(stderr, "player_refreshStreak: error invalid arguments\n");
     return NULL;
   }

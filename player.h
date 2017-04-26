@@ -1,12 +1,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "hand.h"
-#include "macros.h"
-
 typedef struct _Player Player;
 
+#include "hand.h"
+#include "macros.h"
 #include "table.h"
+
+
 
 /* function pointer type */
 typedef Player *(*bet_function_type)(Player *, Table *);

@@ -1,13 +1,17 @@
+#ifndef TABLE_H
+#define TABLE_H
+
+typedef struct _Table Table;
+
 #include "deck.h"
 #include "crupier.h"
 #include "player.h"
 #include "hand.h"
 
-typedef struct _Table Table;
-
 
 /*
- * Returns a new table. */
+ * Returns a new table.
+ */
 Table *table_ini();
 
 /*
@@ -97,3 +101,4 @@ int table_printPlayersStreakData (FILE *, Table*);
 
 /*Print all players last game*/
 int table_printLastGame(FILE*, Table*, int);
+#endif
