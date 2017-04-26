@@ -96,7 +96,9 @@ Hand* hand_divide(Hand* original) {
         return NULL;
     }
     original->cards[aux]--;
+    original->nCurrentCards--;
     new->cards[aux]++;
+    new->nCurrentCards++;
     return new;
 }
 
