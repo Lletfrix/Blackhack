@@ -18,7 +18,7 @@ Status player_hit(Player* p, int currentHand, Deck* deck){
     return OK;
 }
 
-bool player_split(Player* p,int currentHand, Deck* deck){
+bool player_split(Player* p, int currentHand, Deck* deck){
     int index;
     index=player_splitHand(p, currentHand);
     if(index==-1){
@@ -30,6 +30,7 @@ bool player_split(Player* p,int currentHand, Deck* deck){
     if(NULL==player_addCardToHand(p, index, deck_draw(deck))){
         return false;
     }
+    player_removeCash(p, player_getLastBet(p));
     return true;
 }
 
@@ -37,7 +38,7 @@ bool player_split(Player* p,int currentHand, Deck* deck){
 Player *play_basic(Player* p, Table* t){
     Deck *deck;
     Hand *playerHand, *crupierHand;
-    int *pHandValues, *cHandValues, cCard, hardHand=0, numHands=1, currentHand=0;
+    int *pHandValues, *cHandValues, cCard, hardHand=0, numHands=1, currentHand=0, splitValue;
     bool y_n_doubled=false, y_n_stand=false, y_n_split=false, y_n_hard=true, y_n_over=false;
     if(!p||!t){
         fprintf(stderr, "%s\n", "play_basic: invalid arguments.");
@@ -85,9 +86,19 @@ Player *play_basic(Player* p, Table* t){
 
 
         /* Split possibility */
-        if(((hand_splitIsPossible(player_getHand(p, currentHand))==true) && (numHands < MAX_HANDS))&&y_n_over==false){
-            switch (pHandValues[0]) {
-                case 22: /* A-A */
+        if(((hand_splitIsPossible(player_getHand(p, currentHand))==true) && (numHands < MAX_HANDS))&&(y_n_over==false)){
+
+            /* Calculate Value */
+            if(y_n_hard==false){
+                splitValue=pHandValues[1];
+            }else{
+                splitValue=pHandValues[0];
+            }
+
+            /*if(splitValue%2!=0) return NULL;*/
+
+            switch (splitValue) {
+                case 2: /* A-A */
                     y_n_split=player_split(p, currentHand, deck);
                     if(y_n_split==true){
                         numHands++;
@@ -168,7 +179,7 @@ Player *play_basic(Player* p, Table* t){
                     break;
 
                 default:
-                fprintf(stderr, "%s\n", "Split switch's default reached" );
+              fprintf(stderr, "%s %d\n", "Split switch's default reached with value", pHandValues[0]);
                 y_n_stand=true;
             }
             goto Next;
@@ -253,6 +264,7 @@ Player *play_basic(Player* p, Table* t){
 
         if(y_n_over==false){
             switch (hardHand) {
+                case 4:
                 case 5:
                 case 6:
                 case 7:
@@ -328,6 +340,7 @@ Player *play_basic(Player* p, Table* t){
         Next:
         /* refresh hand value */
         free(pHandValues);
+        playerHand=player_getHand(p, currentHand);
         pHandValues=hand_getValues(playerHand);
         /* When you get over 21, you doubled or you decide to stand you are done with your hand */
         if (((pHandValues[0]>21) && (pHandValues[1]==-1)) || (pHandValues[1]>21) || (y_n_doubled==true) || (y_n_stand==true) || (y_n_over==true)) {

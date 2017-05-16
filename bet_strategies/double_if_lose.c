@@ -18,7 +18,7 @@ Player *double_if_lose(Player *p, Table *t){
 
   //Ver si en la ultima partida se ha perdido, ganado o empatado
   condition=player_getLastPlay(p);
-  if(condition<0 || condition>2){
+  if(condition>2){
     fprintf(stderr, "double_if_lose: error play_getLastPlay return ERROR\n");
     return NULL;
   }
