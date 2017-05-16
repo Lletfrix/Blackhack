@@ -173,52 +173,80 @@ Peg hand_compare(Hand *crupier_hand, Hand *player_hand){
     crup_hard = hand_isHard(crupier_hand);
     play_hard = hand_isHard(player_hand);
 
-    switch (play_hard) {
-        case false: /* Soft hand, 0 position of array will always be 22>x>0, As = 11 */
-            switch (crup_hard) {
-                case false:
-                    if (hValues[0]>21) return LOSE;
-                    else if (cValues[0]>21) return WIN;
-                    else if(hValues[0]>cValues[0]) return WIN;
-                    else if (hValues[0] == cValues[0]) return TIE;
-                    else if (hValues[0] < cValues[0]) return LOSE;
-                    break;
-                case true:
-                    if (cValues[0] > 21 && cValues[0]!=-1) aux = cValues[1];
-                    else aux = cValues[0];
-                    if (hValues[0]>21) return LOSE;
-                    else if (aux>21) return WIN;
-                    else if(hValues[0]>aux) return WIN;
-                    else if (hValues[0] == aux) return TIE;
-                    else if (hValues[0] < aux) return LOSE;
-                    break;
-                default:
-                ;
+    if (play_hard == false){ /* Soft hand, 0 position of array will always be 22>x>0, As = 11 */
+        if (crup_hard == false) {
+
+            if (hValues[0]>21) return LOSE;
+            else if (cValues[0]>21) return WIN;
+            else if(hValues[0]>cValues[0]) return WIN;
+            else if (hValues[0] == cValues[0]) return TIE;
+            else if (hValues[0] < cValues[0]) return LOSE;
+            else{
+                fprintf(stderr, "%s\n", "hand_compare:fatal error");
+                return LOSE;
             }
-        case true: /* Hard hand, 2nd value will only be used if the first one is above 21 and the second one exists */
-            if (hValues[0]>21 && hValues[0]!=-1) aux2 = hValues[1];
-            else aux2 = hValues[0];
-            switch (crup_hard) {
-                case false:
-                    if (aux2>21) return LOSE;
-                    else if (cValues[0]>21) return WIN;
-                    else if(aux2>cValues[0]) return WIN;
-                    else if (aux2 == cValues[0]) return TIE;
-                    else if (aux2 < cValues[0]) return LOSE;
-                    break;
-                case true:
-                    if (cValues[0] > 21 && cValues[0]!=-1) aux = cValues[1];
-                    else aux = cValues[0];
-                    if (aux2>21) return LOSE;
-                    else if (aux>21) return WIN;
-                    else if(aux2>aux) return WIN;
-                    else if (aux2 == aux) return TIE;
-                    else if (aux2 < aux) return LOSE;
-                    break;
-                default:
-                ;
+        }
+        else if (crup_hard==true){
+            if (cValues[0] > 21 && cValues[0]!=-1) aux = cValues[1];
+            else aux = cValues[0];
+            /**********************************************************/
+            if (hValues[0]>21) return LOSE;
+            else if (aux>21) return WIN;
+            else if(hValues[0]>aux) return WIN;
+            else if (hValues[0] == aux) return TIE;
+            else if (hValues[0] < aux) return LOSE;
+            else{
+                fprintf(stderr, "%s\n", "hand_compare:fatal error");
+                return LOSE;
             }
+        }
     }
+    else if (play_hard==true){ /* Hard hand, 2nd value will only be used if the first one is above 21 and the second one exists */
+        if (hValues[0]>21 && hValues[0]!=-1) aux2 = hValues[1];
+        else aux2 = hValues[0];
+        /************************************************************/
+        if (crup_hard == false) {
+
+            if (aux2>21) return LOSE;
+            else if (cValues[0]>21) return WIN;
+            else if(aux2>cValues[0]) return WIN;
+            else if (aux2 == cValues[0]) return TIE;
+            else if (aux2 < cValues[0]) return LOSE;
+            else{
+                fprintf(stderr, "%s\n", "hand_compare:fatal error");
+                return LOSE;
+            }
+        }
+        else if (crup_hard==true){
+            if (cValues[0] > 21 && cValues[0]!=-1) aux = cValues[1];
+            else aux = cValues[0];
+            /**********************************************************/
+            if (aux2 > 21) return LOSE;
+            else if (aux > 21) return WIN;
+            else if(aux2 > aux) return WIN;
+            else if (aux2 == aux) return TIE;
+            else if (aux2 < aux) return LOSE;
+            else{
+                fprintf(stderr, "%s\n", "hand_compare:fatal error");
+                return LOSE;
+            }
+        }
+    }else{
+        fprintf(stderr, "%s\n", "hand_compare:fatal error");
+        return LOSE;
+    }
+    return LOSE;
+}
+
+int hand_getCurrentBet(Hand* h){
+    if(!h) return -1;
+    return h->currentBet;
+}
+
+Hand* hand_setCurrentBet (Hand* h, int bet){
+    if (!h || bet < 0) return NULL;
+    h->currentBet=bet;
+    return h;
 }
 
 bool hand_splitIsPossible(Hand* h){

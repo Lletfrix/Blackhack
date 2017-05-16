@@ -37,11 +37,6 @@ int main(int argc, char** argv) {
 
     // initialize players
     // set the first player to use a random strategy
-    table = table_addPlayer(table, player_ini(boring_bet, play_basic));
-    if(!table){
-        fprintf(stderr, "main: ERROR in table_addPlayer.\n");
-        return EXIT_FAILURE;
-    }
     table = table_addPlayer(table, player_ini(boring_bet, play_like_crupier));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
@@ -52,7 +47,12 @@ int main(int argc, char** argv) {
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    table = table_addPlayer(table, player_ini(boring_bet, play_basic));
+    table = table_addPlayer(table, player_ini(boring_bet, play_like_crupier));
+    if(!table){
+        fprintf(stderr, "main: ERROR in table_addPlayer.\n");
+        return EXIT_FAILURE;
+    }
+    table = table_addPlayer(table, player_ini(boring_bet, play_like_crupier));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
@@ -141,7 +141,7 @@ int main(int argc, char** argv) {
             fprintf(stderr, "Error in restartTable.\n");
             return EXIT_FAILURE;
         }
-        //table_printLastGame(stdout, table, k);
+        table_printLastGame(stdout, table, k);
     }
 
 

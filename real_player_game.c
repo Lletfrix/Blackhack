@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 
     // initialize players
     // set the first player to use a random strategy
-    table = table_addPlayer(table, player_ini(never_bets, play_standard_wo_sd));
+    table = table_addPlayer(table, player_ini(boring_bet, play_standard_wo_sd));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;

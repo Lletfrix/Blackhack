@@ -95,12 +95,15 @@ Player *table_getPlayer(const Table *t, int player_index)
 Table *table_makeBets(Table *t)
 {
     if (!t) return NULL;
-
+    /* for each player */
     for (int i = 0; i < t->nPlayers; i++){
-        t->players[i]=player_bet(t->players[i], t);
-        if(!t->players[i]){
-            fprintf(stderr, "table_makeBets: ERROR in player_bet.\n");
-            return NULL;
+        /* for each hand */
+        for (int j = 0; j < player_getNHands(t->players[i]); j++){
+            t->players[i]=player_bet(t->players[i], t);
+            if(!t->players[i]){
+                fprintf(stderr, "table_makeBets: ERROR in player_bet.\n");
+                return NULL;
+            }
         }
     }
 
@@ -149,58 +152,44 @@ Table *table_dealCardToCrupier(Table *t)
     return t;
 }
 
-Table *table_distributeEarnings(Table *t)
-{
-    //TODO: ERROR HANDLING
-
-    Peg* data, thisGame;
-    Hand* hAux;
-    if (!table_isWorking(t)) return NULL;
-
-    //Para cada jugador
-    for(int i=0;i<t->nPlayers;i++){
-        int value=0;
-        data=player_handsCondition(t->crupier,t->players[i]);
-        hAux=player_getHand(t->players[i], 0);
-        //Se paga a cada mano
-        int *hand_values_aux = hand_getValues(hAux);
-        if((*hand_values_aux==21)&&hand_getNumCards(hAux)==2){
-            //El jugador tiene BlackJack, no se recorrerán las manos
-            player_addCash(t->players[i],2.5*player_getLastBet(t->players[i]));
-            thisGame=WIN;
-            value++;
-        }
-        else{
-            //Se recorren las manos, y se va balanceando el valor value
-            for(int j=0;j<player_getNHands(t->players[i]);j++){
-                if(data[j]==WIN){
-                    player_addCash(t->players[i],2*player_getLastBet(t->players[i]));
-                    value++;
-                }
-                else if (data[j]==TIE){
-                    player_addCash(t->players[i],player_getLastBet(t->players[i]));
-                }
-                else{
-                    value--;
-                }
+Table *table_distributeEarnings(Table *t){
+    Player* p, *pErr;
+    Hand* h, *hCrupier;
+    Peg condition;
+    int* value;
+    int numHands=-1, i, j;
+    hCrupier=crupier_getHand(t->crupier);
+    /* for each player*/
+    for (i=0; i<t->nPlayers;i++){
+        p=t->players[i];
+        numHands=player_getNHands(p);
+        /* for each hand */
+        for (j=0; j<numHands; j++){
+            h=player_getHand(p, j);
+            value=hand_getValues(h);
+            if( value[0]==21 && hand_getNumCards(h)==2){
+                pErr=player_addCash(p, 2.5*hand_getCurrentBet(h));
+                player_addGame(p, WIN);
+                continue;
             }
-
+            condition=hand_compare(hCrupier, h);
+            if (condition==LOSE){
+                player_addGame(p, LOSE);
+            }
+            else if (condition == TIE){
+                pErr=player_addCash(p, hand_getCurrentBet(h));
+                player_addGame(p, TIE);
+            }
+            else if (condition == WIN){
+                pErr=player_addCash(p, 2*hand_getCurrentBet(h));
+                player_addGame(p, WIN);
+            }
+            else{
+                return NULL;
+            }
         }
-        free(hand_values_aux);
-        //Se añaden las estadisticas
-        if(value>0) {
-            thisGame=WIN;
-        }
-        else if(value<0){
-            thisGame = LOSE;
-        }
-        else {
-            thisGame=TIE;
-        }
-        player_addGame(t->players[i], thisGame);
-        player_refreshStreak(t->players[i], thisGame);
-        free(data);
     }
+    if (!pErr) return NULL;
     return t;
 }
 

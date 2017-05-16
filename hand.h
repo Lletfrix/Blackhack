@@ -34,6 +34,12 @@ int hand_getNumCards(Hand*);
 /* gets the array of cards,return NULL if error */
 int* hand_getCards(Hand*);
 
+/* gets the current bet of the hand, return -1 if error */
+int hand_getCurrentBet(Hand*);
+
+/* sets current bet to hand */
+Hand* hand_setCurrentBet (Hand* , int );
+
 /* check if the hand can be split */
 bool hand_splitIsPossible(Hand* );
 

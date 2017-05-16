@@ -17,7 +17,7 @@ void usage(FILE* pf){
 
 void print_currentStatus(FILE *pf, FILE* f_in, Deck *deck, Player *player, Crupier *crupier){
     char option;
-    fprintf(pf, "Would you like to print the current status?\n\t[y]yes\n\t[n]no\nMake your decision: ");
+    fprintf(pf, "Would you like to print the current status?\n\t[y]es\n\t[n]o\nMake your decision: ");
     fscanf(f_in,"\n%c",&option);
     switch (option) {
         case 'y':
@@ -44,7 +44,7 @@ void print_currentStatus(FILE *pf, FILE* f_in, Deck *deck, Player *player, Crupi
 
 void test_functions(FILE *pf, FILE *f_in, Deck *deck, Player *player, Crupier *crupier){
     char option;
-    fprintf(pf, "Would you like to test functions?\n\t[y]yes\n\t[n]no\nMake your decision: ");
+    fprintf(pf, "Would you like to test functions?\n\t[y]es\n\t[n]o\nMake your decision: ");
     fscanf(f_in,"\n%c",&option);
     switch (option) {
         case 'y':
@@ -129,6 +129,7 @@ int main (int argc, char** argv){
         betOrg=bet;
         player_removeCash(p1, bet);
         player_setLastBet(p1, bet);
+        hand_setCurrentBet(player_getHand(p1,0), bet);
         print_currentStatus(pf, f_in, deck, p1, c);
         test_functions(pf, f_in, deck, p1, c);
         /*********************************************************************/
@@ -143,7 +144,7 @@ int main (int argc, char** argv){
             fprintf(pf, "Crupier hand:\n");
             hand_print(pf,crupier_getHand(c));
 
-            fprintf(pf, "\nYour turn, what would you like to do?\n\t[h]hit\n\t[s]split\n\t[d]double\n\t[t]stop\nInput: ");
+            fprintf(pf, "\nYour turn, what would you like to do?\n\t[h]it\n\t[s]plit\n\t[d]ouble\n\ts[t]op\nInput: ");
             fscanf(f_in,"\n%c",&option);
             switch (option) {
                 case 'h':
