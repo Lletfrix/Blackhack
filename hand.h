@@ -40,6 +40,8 @@ bool hand_splitIsPossible(Hand* );
 /* print hand */
 void hand_print(FILE*, Hand*);
 
+/* check if the hand is hard*/
+bool hand_isHard (Hand* h);
 /*
  * Compara las manos de un crupier y un jugador.
  */
