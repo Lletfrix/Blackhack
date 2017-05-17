@@ -115,7 +115,7 @@ Table *table_makePlays(Table *t)
     if (!t) return NULL;
 
     for (int i = 0; i < t->nPlayers; i++)
-        player_play(t->players[i], t);
+        if(NULL==player_play(t->players[i], t)) return NULL;
 
     return t;
 }
@@ -168,7 +168,7 @@ Table *table_distributeEarnings(Table *t){
             h=player_getHand(p, j);
             value=hand_getValues(h);
             if( value[0]==21 && hand_getNumCards(h)==2){
-                pErr=player_addCash(p, 2.5*hand_getCurrentBet(h));
+                /*pErr=player_addCash(p, 2.5*hand_getCurrentBet(h)); no hace falta, se paga en la ejecución de la función "play" en cuestion*/
                 player_addGame(p, WIN);
                 continue;
             }
