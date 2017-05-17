@@ -9,8 +9,8 @@
 #define N_CARDS_DECK 52
 #define N_DECKS 6
 #define N_RANKS 10
-#define MAX_HANDS 5
-#define MIN_DECK_WEIGHT 3
+#define MAX_HANDS 2
+#define MIN_DECK_WEIGHT 2
 #define INITIAL_CASH 1000
 #define INITIAL_AMOUNT 10
 

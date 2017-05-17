@@ -17,6 +17,7 @@ struct _Player {
     int maxWinStreak;
     int maxLoseStreak;
     int maxTieStreak;
+    int nBlackJack;
     bet_function_type decide_bet;
     play_function_type decide_play;
 };
@@ -55,6 +56,7 @@ Player* player_ini(bet_function_type fBet, play_function_type fPlay){
   p->maxWinStreak=0;
   p->maxLoseStreak=0;
   p->maxTieStreak=0;
+  p->nBlackJack=0;
 
   return p;
 }
@@ -174,7 +176,14 @@ Player* player_addGame (Player* p, Peg condition){
     p->lastPlay = LOSE;
     return p;
 }
+Player* player_blackJack(Player* p){
+    p->nBlackJack++;
+    return p;
+}
 
+int player_getNBlackJack(Player*p){
+    return p->nBlackJack;
+}
 
 Player* player_restartHands (Player*p){
     int i;

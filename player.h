@@ -94,6 +94,10 @@ int player_getMaxTieStreak(Player *);
 
 int player_getMaxLoseStreak(Player *);
 
+Player* player_blackJack(Player* );
+
+int player_getNBlackJack(Player*);
+
 void player_print(FILE*, Player*);
 
 #endif

@@ -190,6 +190,17 @@ Player *play_basic_17S_DAS(Player* player, Table* table){
             }else if (hard_hand == false){
                 playerPoints = playerHand_values[0];
                 switch (playerPoints) {
+                    case 12: /*A-A*/
+                        if(crupierCard == 4 ||crupierCard == 5 || crupierCard == 6){
+                            stop = true;
+                        }else if(crupierCard <= 11){
+                            code=strategy_hit(player, currentHand, playerHand, deck);
+                            if (code == FAIL) return NULL;
+                        }else{
+                            fprintf(stderr, "%s\n", "play_basic_17S_DAS: error in switch SOFT, case 12");
+                            return NULL;
+                        }
+                        break;
                     case 13: /* A-2 (11+3) */
                     case 14: /* A-3 (11+3) */
                         if(crupierCard == 5 || crupierCard == 6){

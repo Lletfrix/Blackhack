@@ -170,19 +170,24 @@ Table *table_distributeEarnings(Table *t){
             if( value[0]==21 && hand_getNumCards(h)==2){
                 /*pErr=player_addCash(p, 2.5*hand_getCurrentBet(h)); no hace falta, se paga en la ejecución de la función "play" en cuestion*/
                 player_addGame(p, WIN);
+                player_blackJack(p);
+                player_refreshStreak(p, WIN);
                 continue;
             }
             condition=hand_compare(hCrupier, h);
             if (condition==LOSE){
                 player_addGame(p, LOSE);
+                player_refreshStreak(p, LOSE);
             }
             else if (condition == TIE){
                 pErr=player_addCash(p, hand_getCurrentBet(h));
                 player_addGame(p, TIE);
+                player_refreshStreak(p, TIE);
             }
             else if (condition == WIN){
                 pErr=player_addCash(p, 2*hand_getCurrentBet(h));
                 player_addGame(p, WIN);
+                player_refreshStreak(p, WIN);
             }
             else{
                 return NULL;
@@ -269,7 +274,7 @@ int table_printPlayersPercentages(FILE *pf, Table *t){
   }
 
   for(int i=0; i<t->nPlayers; i++){
-    nCharPrinted+=fprintf(pf, "Player %d:\n", i);
+    nCharPrinted+=fprintf(pf, "\nPlayer: %d\tHands played: %d\tBlackjacks obtained: %d\n", i, player_getNPlayed(t->players[i]), player_getNBlackJack(t->players[i]));
     nCharPrinted+=fprintf(pf, "\tWin Ratio: %lf %%\n", player_getWinRatio(t->players[i]));
     nCharPrinted+=fprintf(pf, "\tTie Ratio: %lf %%\n", player_getTieRatio(t->players[i]));
     nCharPrinted+=fprintf(pf, "\tLost Ratio: %lf %%\n", player_getLostRatio(t->players[i]));
