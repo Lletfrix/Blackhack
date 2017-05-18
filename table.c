@@ -321,3 +321,16 @@ int table_printLastGame (FILE *pf, Table*t, int numGame){
     }
     return nCharPrinted;
 }
+
+int table_printCash(FILE *fp, Table *t){
+    int nCharPrinted=0;
+    if(!fp || !t){
+        return -1;
+    }
+    for (size_t i = 0; i < t->nPlayers; i++) {
+        nCharPrinted+=fprintf(fp, "%ld", player_getCash(t->players[i]));
+        if(i == table_getNPlayers(t)-1) nCharPrinted+=fprintf(fp, "\n");
+        else fprintf(fp, ";");
+    }
+    return nCharPrinted;
+}

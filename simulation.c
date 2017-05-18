@@ -11,14 +11,15 @@
 #define NUMPLAYERS 4
 
 void usage() {
-    printf("usage: ./main [games] [seed]\n");
+    printf("usage: ./main [games] [filetowrite] [seed]\n");
 }
 
 int main(int argc, char** argv) {
     int numPartidas;
     Table* tableError;
+    FILE* output;
 
-    if (argc > 3) {
+    if (argc > 4 || argc < 3) {
         usage();
         return -1;
     }
@@ -72,8 +73,8 @@ int main(int argc, char** argv) {
     }
     // initialize deck, seeding with seed if provided
     unsigned seed;
-    if (argc == 3) {
-        seed = (unsigned) atoi(argv[2]);
+    if (argc == 4) {
+        seed = (unsigned) atoi(argv[3]);
     } else {
         seed = time(NULL);
     }
@@ -90,6 +91,11 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Error setting Deck.\n");
         return EXIT_FAILURE;
     }
+    output=fopen(argv[2], "w");
+    if(!output){
+        return 0;
+    }
+
     // play a hundred times
     for (int k = 0; k < numPartidas; k++) {
 
@@ -142,8 +148,9 @@ int main(int argc, char** argv) {
             return EXIT_FAILURE;
         }
         /*table_printLastGame(stdout, table, k);*/
+        table_printCash(output, table);
     }
-
+    fclose(output);
 
 table_printPlayersPercentages(stdout, table);
 fprintf(stdout, "\n");

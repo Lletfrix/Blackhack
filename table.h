@@ -101,4 +101,8 @@ int table_printPlayersStreakData (FILE *, Table*);
 
 /*Print all players last game*/
 int table_printLastGame(FILE*, Table*, int);
+
+/* Print player cash separated by semi-colon */
+int table_printCash(FILE *, Table *);
+
 #endif
