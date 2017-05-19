@@ -330,7 +330,7 @@ int table_printCash(FILE *fp, Table *t){
     for (size_t i = 0; i < t->nPlayers; i++) {
         nCharPrinted+=fprintf(fp, "%ld", player_getCash(t->players[i]));
         if(i == table_getNPlayers(t)-1) nCharPrinted+=fprintf(fp, "\n");
-        else fprintf(fp, ";");
+        else nCharPrinted+=fprintf(fp, " ");
     }
     return nCharPrinted;
 }

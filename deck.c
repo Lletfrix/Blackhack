@@ -49,8 +49,7 @@ int deck_draw(Deck *d) {
         return -1;
     }
 #endif
-
-    srand(time(NULL)); // TODO: fix seeding
+    // TODO: fix seeding
     ran = rand();
     ran %= d->nCurrentCards;
 
@@ -104,7 +103,8 @@ Deck* deck_restartDeck(Deck *d){
   d->cards[N_RANKS - 1] = 4 * 4 * N_DECKS; /*inicializa los palos del 10 a la K*/
   d->maxSize = 13 * 4 * N_DECKS;
   d->nCurrentCards = d->maxSize;
-
+  d->seed = time(NULL)*clock();
+  srand(d->seed);
   return d;
 }
 

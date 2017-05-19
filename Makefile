@@ -88,3 +88,10 @@ play_basic_17S_DAS.o: play_strategies/play_basic_17S_DAS.c
 .PHONY: clean
 clean:
 	rm -rf $(SIM_OBJECTS) $(RPG_OBJECTS) *.dSYM *.o real_player_game simulation godmode_play
+
+.PHONY: write
+write:
+	for i in `seq 1 10`; do\
+		./simulation 1000 $$i.txt;\
+		sleep 1;\
+	done

@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     Table* tableError;
     FILE* output;
 
-    if (argc > 4 || argc < 3) {
+    if (argc > 4) {
         usage();
         return -1;
     }
@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
     if (argc == 4) {
         seed = (unsigned) atoi(argv[3]);
     } else {
-        seed = time(NULL);
+    seed = time(NULL);
     }
     printf("seeded game with %u\n", seed);
 
@@ -91,9 +91,9 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Error setting Deck.\n");
         return EXIT_FAILURE;
     }
-    output=fopen(argv[2], "w");
-    if(!output){
-        return 0;
+    if (argc > 2){
+        output = fopen(argv[2], "w");
+        if (!output) return 0;
     }
 
     // play a hundred times
@@ -148,9 +148,14 @@ int main(int argc, char** argv) {
             return EXIT_FAILURE;
         }
         /*table_printLastGame(stdout, table, k);*/
-        table_printCash(output, table);
+        if (argc > 2){
+            table_printCash(output, table);
+        }
     }
+
+if (argc > 2){
     fclose(output);
+}
 
 table_printPlayersPercentages(stdout, table);
 fprintf(stdout, "\n");
