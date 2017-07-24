@@ -102,6 +102,10 @@ play_manual.o: play_strategies/play_manual.c
 clean:
 	rm -rf $(SIM_OBJECTS) $(RPG_OBJECTS) $(GMP_OBJECTS) $(MMO_OBJECTS)*.dSYM *.o $(GAMES)
 
+.PHONY: clear
+clear:
+	rm  -rf $(SIM_OBJECTS) $(RPG_OBJECTS) $(GMP_OBJECTS) $(MMO_OBJECTS)*.dSYM *.o
+
 .PHONY: write
 write:
 	for i in `seq 1 10`; do\
