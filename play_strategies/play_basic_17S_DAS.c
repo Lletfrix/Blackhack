@@ -61,7 +61,7 @@ Player *play_basic_17S_DAS(Player* player, Table* table){
     int crupierCard=-1, currentHand=0, numHands=1, playerPoints=-1;
     Status code;
     /* flags */
-    bool split_once=false, split_possible=false, stop=false, hard_hand=true;
+    bool split_once=false, split_current=false, split_possible=false, stop=false, hard_hand=true;
 
     if(!player || !table){
         fprintf(stderr, "%s\n", "play_basic_17S_DAS: invalid arguments\n");
