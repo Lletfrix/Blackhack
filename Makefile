@@ -1,12 +1,13 @@
 CC=gcc
 CFLAGS=-Wall -std=c99 -g
-GAMES= simulation real_player_game godmode_play
+GAMES= simulation real_player_game godmode_play manual_mode
 
 SIM_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o simulation.o
 RPG_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o real_player_game.o
 GMP_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o godmode_play.o
-BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o
-PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o play_basic.o play_basic_17S_DAS.o
+MMO_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o manual_mode.o
+BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o manual_bet.o
+PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o play_basic.o play_basic_17S_DAS.o play_manual.o
 
 .PHONY: all
 all: $(GAMES)
@@ -41,6 +42,9 @@ godmode_play.o: table.h player.h crupier.h hand.h deck.h probability.h bet_strat
 simulation.o: table.h player.h crupier.h hand.h deck.h probability.h bet_strategies.h play_strategies.h
 	$(CC) $(CFLAGS) -c simulation.c
 
+manual_mode.o: table.h player.h crupier.h hand.h deck.h probability.h bet_strategies.h play_strategies.h
+	$(CC) $(CFLAGS) -c manual_mode.c
+
 real_player_game: $(RPG_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 	$(CC) $(CFLAGS) -o real_player_game $(RPG_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
@@ -49,6 +53,9 @@ godmode_play: $(GMP_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
 simulation: $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 	$(CC) $(CFLAGS) -o simulation $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+
+manual_mode: $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+	$(CC) $(CFLAGS) -o manual_mode $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
 # bet strategies
 never_bets.o: bet_strategies/never_bets.c
@@ -63,9 +70,12 @@ double_if_win.o: bet_strategies/double_if_win.c
 double_if_lose.o: bet_strategies/double_if_lose.c
 	$(CC) $(CFLAGS) -c bet_strategies/double_if_lose.c
 
+manual_bet.o: bet_strategies/manual_bet.c
+	$(CC) $(CFLAGS) -c bet_strategies/manual_bet.c
+
 # play strategies
-do_nothing.o: bet_strategies/never_bets.c
-	$(CC) $(CFLAGS) -c bet_strategies/never_bets.c
+do_nothing.o: play_strategies/play_do_nothing.c
+	$(CC) $(CFLAGS) -c play_strategies/play_do_nothing.c
 
 play_do_nothing.o: play_strategies/play_do_nothing.c
 	$(CC) $(CFLAGS) -c play_strategies/play_do_nothing.c
@@ -85,9 +95,12 @@ play_basic.o: play_strategies/play_basic.c
 play_basic_17S_DAS.o: play_strategies/play_basic_17S_DAS.c
 	$(CC) $(CFLAGS) -c play_strategies/play_basic_17S_DAS.c
 
+play_manual.o: play_strategies/play_manual.c
+	$(CC) $(CFLAGS) -c play_strategies/play_manual.c
+
 .PHONY: clean
 clean:
-	rm -rf $(SIM_OBJECTS) $(RPG_OBJECTS) *.dSYM *.o real_player_game simulation godmode_play
+	rm -rf $(SIM_OBJECTS) $(RPG_OBJECTS) $(GMP_OBJECTS) $(MMO_OBJECTS)*.dSYM *.o $(GAMES)
 
 .PHONY: write
 write:
