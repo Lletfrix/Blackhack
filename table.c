@@ -258,9 +258,12 @@ Table *table_restartTable(Table * t){
         }
 
         // if less than MIN_DECK_WEIGHT decks are remaining, reshuffle
+    /*
     if (deck_getNCurrentCards(t->deck) < MIN_DECK_WEIGHT * N_CARDS_DECK){
         deck_restartDeck(t->deck);
     }
+    */
+    deck_restartDeck(t->deck);
 
         return t;
 }
