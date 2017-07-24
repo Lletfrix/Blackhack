@@ -119,6 +119,19 @@ void deck_print(FILE* pf, Deck* d){
     fprintf(pf, "]\n");
 }
 
+double *deck_distribution(Deck *d)
+{
+    double *probs = malloc(sizeof(double) * N_RANKS);
+    double cards = (double) deck_getNCurrentCards(d);
+    if (!probs) return NULL;
+
+    for (int i = 0; i < N_RANKS; i++) {
+        probs[i] = deck_getNCardsofRank(d, i) / cards;
+    }
+
+    return probs;
+}
+
 int deck_getNCardsofRank(Deck* d,  int rank){
     if(!d || rank>10 || rank<1 ){
         return -1;
