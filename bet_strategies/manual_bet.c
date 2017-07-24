@@ -2,15 +2,15 @@
 #include "../macros.h"
 
 Player* manual_bet(Player *p, Table *t){
-  int cash;
+  long cash;
 
   if(!p || !t){
     fprintf(stderr, "manual_bet: error arguments pointing NULL");
     return NULL;
   }
-  fprintf(stdout, "Tienes %d rublos\n", player_getCash(p));
+  fprintf(stdout, "Tienes %ld rublos\n", player_getCash(p));
   fprintf(stdout, "¿Cuantos rublos quieres apostar?\n");
-  fscanf(stdout, "%d", &cash);
+  fscanf(stdout, "%ld", &cash);
 
   p=player_removeCash(p, cash);
   p=player_setLastBet(p, cash);

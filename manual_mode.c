@@ -4,14 +4,14 @@
 #include "deck.h"
 
 int main(){
-  int nplayers;
+  int nplayers=1, rank;
   Table* table=NULL;
 
   table=table_
-
+  /*
   fprintf(stdout, "¿Cuantos jugadores?\n");
   scanf("%d", &nplayers);
-
+  */
   table = table_addPlayer(table, player_ini(manual_bet, play_manual));
   if(!table){
       fprintf(stderr, "main: ERROR in table_addPlayer.\n");
@@ -62,23 +62,18 @@ int main(){
       }
 
       /* repartir primera carta */
-      table = table_dealCard(table);
-      if(!table){
-          fprintf(stderr, "Error in dealCard.\n");
-          return EXIT_FAILURE;
-      }
-      /* repartir 1 carta al crupier */
-      table = table_dealCardToCrupier(table);
-      if(!table){
-          fprintf(stderr, "Error in dealCardToCrupier.\n");
-          return EXIT_FAILURE;
-      }
-      /*repartir segunda carta*/
-      table = table_dealCard(table);
-      if(!table){
-          fprintf(stderr, "Error in dealCard2.\n");
-          return EXIT_FAILURE;
-      }
+      fprintf(stdout, "¿Que PRIMERA carta(rank) tienes?\n");
+      fscanf(stdout, "%d", &rank);
+      deck_removeCard(deck, rank);
+
+      fprintf(stdout, "¿Que SEGUNDA carta(rank) tienes?\n");
+      fscanf(stdout, "%d", &rank);
+      deck_removeCard(deck, rank);
+
+      fprintf(stdout, "¿Que carta(rank) tiene el CRUPIER?\n");
+      fscanf(stdout, "%d", &rank);
+      deck_removeCard(deck, rank);
+
       /* juegan los jugadores */
       table = table_makePlays(table);
       if(!table){
