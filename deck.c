@@ -132,6 +132,23 @@ double *deck_distribution(Deck *d)
     return probs;
 }
 
+
+Deck *deck_removeCard(Deck *d, int rank)
+{
+    if (!d || rank < 1 || rank > 10) {
+        fprintf(stderr, "deck_removeCard: invalid deck or rank given\n");
+        return NULL;
+    }
+
+    if (d->cards[rank - 1] < 1) {
+        fprintf(stderr, "deck_removeCard: no cards of that rank left in deck\n");
+    }
+
+    d->cards[rank - 1]--;
+
+    return d;
+}
+
 int deck_getNCardsofRank(Deck* d,  int rank){
     if(!d || rank>10 || rank<1 ){
         return -1;

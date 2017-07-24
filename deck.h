@@ -17,6 +17,9 @@ int deck_draw(Deck*);
 /* check if deck is empty, return false if error */
 bool deck_isEmpty (Deck* );
 
+/*  Removes the selected card from the deck. Returns NULL if impossible. */
+Deck *deck_removeCard(Deck *d, int rank);
+
 /* gets current number of cards in a deck, returns -1 if error */
 int deck_getNCurrentCards(Deck* );
 
