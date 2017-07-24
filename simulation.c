@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS));
+    table = table_addPlayer(table, player_ini(boring_bet, play_like_crupier));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
