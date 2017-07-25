@@ -10,7 +10,7 @@ Player* manual_bet(Player *p, Table *t){
   }
   fprintf(stdout, "Tienes %ld rublos\n", player_getCash(p));
   fprintf(stdout, "¿Cuantos rublos quieres apostar?\n");
-  fscanf(stdout, "%ld", &cash);
+  fscanf(stdin, "%ld", &cash);
 
   p=player_removeCash(p, cash);
   p=player_setLastBet(p, cash);

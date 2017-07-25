@@ -1,5 +1,6 @@
 #include "player.h"
 #include "table.h"
+#include "probability.h"
 
 /**
  * Esta estrategia no hace nada.
@@ -15,3 +16,5 @@ Player *play_standard_wo_sd(Player*, Table*);
 Player *play_basic(Player*, Table*);
 
 Player *play_basic_17S_DAS(Player*, Table*);
+
+Player *play_manual(Player*, Table*);

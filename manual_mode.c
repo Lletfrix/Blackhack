@@ -3,18 +3,25 @@
 #include "hand.h"
 #include "deck.h"
 
-int main(){
-  int nplayers=1, rank;
-  Table* table=NULL;
 
-  table=table_
+// load strategies
+#include "bet_strategies.h"
+#include "play_strategies.h"
+
+int main(int argc, char **argv){
+  FILE *output = stdout;
+  int nplayers=1, rank;
+  Table* table=NULL, *tableError;
+  Hand *playerHand=NULL, *crupierHand=NULL;
   /*
   fprintf(stdout, "¿Cuantos jugadores?\n");
   scanf("%d", &nplayers);
   */
+  table=table_ini();
+
   table = table_addPlayer(table, player_ini(manual_bet, play_manual));
   if(!table){
-      fprintf(stderr, "main: ERROR in table_addPlayer.\n");
+      fprintf(stderr, "main: ERROR in table_addPlayer 1.\n");
       return EXIT_FAILURE;
   }
 
@@ -38,7 +45,7 @@ int main(){
       return EXIT_FAILURE;
   }
 
-  Deck *deck = deck_ini(seed);
+  Deck *deck = deck_ini(time(NULL));
   if (!deck) {
       fprintf(stderr, "main: deck_ini: error allocating memory of deck\n");
       table_destroy(table);
@@ -51,7 +58,9 @@ int main(){
   }
 
 
-  while(1) {
+  for (int k = 0; k >-1; k++) {
+      playerHand=player_getHand(table_getPlayer(table, 0), 0);
+      crupierHand=crupier_getHand(crupier);
 
       /* apostar*/
       tableError = table_makeBets(table);
@@ -63,15 +72,18 @@ int main(){
 
       /* repartir primera carta */
       fprintf(stdout, "¿Que PRIMERA carta(rank) tienes?\n");
-      fscanf(stdout, "%d", &rank);
+      fscanf(stdin, "%d", &rank);
+      hand_insertCard(playerHand, rank);
       deck_removeCard(deck, rank);
 
       fprintf(stdout, "¿Que SEGUNDA carta(rank) tienes?\n");
-      fscanf(stdout, "%d", &rank);
+      fscanf(stdin, "%d", &rank);
+      hand_insertCard(playerHand, rank);
       deck_removeCard(deck, rank);
 
       fprintf(stdout, "¿Que carta(rank) tiene el CRUPIER?\n");
-      fscanf(stdout, "%d", &rank);
+      fscanf(stdin, "%d", &rank);
+      hand_insertCard(crupierHand, rank);
       deck_removeCard(deck, rank);
 
       /* juegan los jugadores */
