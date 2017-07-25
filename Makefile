@@ -54,8 +54,8 @@ godmode_play: $(GMP_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 simulation: $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 	$(CC) $(CFLAGS) -o simulation $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
-manual_mode: $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
-	$(CC) $(CFLAGS) -o manual_mode $(SIM_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+manual_mode: $(MMO_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
+	$(CC) $(CFLAGS) -o manual_mode $(MMO_OBJECTS) $(BET_STRATEGIES) $(PLAY_STRATEGIES)
 
 # bet strategies
 never_bets.o: bet_strategies/never_bets.c
