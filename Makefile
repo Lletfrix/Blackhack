@@ -7,7 +7,7 @@ RPG_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o real_player_g
 GMP_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o godmode_play.o
 MMO_OBJECTS=deck.o hand.o crupier.o player.o table.o probability.o manual_mode.o
 BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o manual_bet.o
-PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o play_basic.o play_basic_17S_DAS.o play_manual.o
+PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_standard_wo_sd.o play_basic.o play_basic_17S_DAS.o play_manual.o play_basic_17S_DAS_matrix.o
 
 .PHONY: all
 all: $(GAMES)
@@ -94,6 +94,9 @@ play_basic.o: play_strategies/play_basic.c
 
 play_basic_17S_DAS.o: play_strategies/play_basic_17S_DAS.c
 	$(CC) $(CFLAGS) -c play_strategies/play_basic_17S_DAS.c
+
+play_basic_17S_DAS_matrix.o: play_strategies/play_basic_17S_DAS_matrix.c
+	$(CC) $(CFLAGS) -c play_strategies/play_basic_17S_DAS_matrix.c
 
 play_manual.o: play_strategies/play_manual.c
 	$(CC) $(CFLAGS) -c play_strategies/play_manual.c

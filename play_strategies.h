@@ -17,4 +17,6 @@ Player *play_basic(Player*, Table*);
 
 Player *play_basic_17S_DAS(Player*, Table*);
 
+Player *play_basic_17S_DAS_matrix(Player *, Table *);
+
 Player *play_manual(Player*, Table*);
