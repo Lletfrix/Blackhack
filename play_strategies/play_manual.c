@@ -30,7 +30,7 @@ Player *play_manual(Player *p, Table *t){
       player_addCash(p, 2.5*hand_getCurrentBet(playerHand));
       return p;
   }
-  printf("La estrategia recomienda: %c\n", number_strategy[PLAYER_CONVERT(playerHand_values[0])][CRUPIER_CONVERT(crupierHand_values[0])]);
+  printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0]));
 
   printf("¿Que quieres hacer?:\n");
   printf("\t(H)it\n\t(S)tand\n\t(D)ouble\n");
