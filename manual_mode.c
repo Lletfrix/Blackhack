@@ -108,7 +108,7 @@ int main(int argc, char **argv){
           fprintf(stderr, "Error in restartTable.\n");
           return EXIT_FAILURE;
       }
-      /*table_printLastGame(stdout, table, k);*/
+      table_printLastGame(stdout, table, k);
       if (argc > 2){
           table_printCash(output, table);
       }
