@@ -1,37 +1,43 @@
 #include "../play_strategies.h"
 
-#define PLAYER_CONVERT(player_hand) ((player_hand) - 5)
-#define CRUPIER_CONVERT(crupier_hand) ((crupier_hand) - 2)
+char recommendation_17S_DAS(int player_hand, int crupier_hand) {
 
-/*
- * x is for hit, D is for double-down, S is for split, a is for early surrender,
- * - is for stand.
- *
- *   To acces this matrix:
- *   number_strategy[PLAYER_CONVERT(player_hand)][CRUPIER_CONVERT(crupier_hand)]
- */
+    /*
+     * x is for hit, D is for double-down, S is for split, a is for early surrender,
+     * - is for stand.
+     *
+     *   To acces this matrix:
+     *   number_strategy[PLAYER_CONVERT(player_hand)][CRUPIER_CONVERT(crupier_hand)]
+     */
 
-char number_strategy[17][10] = {
-//    2    3    4    5    6    7    8    9    10   A
-    {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 5
-    {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 6
-    {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 7
-    {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}, // 8
-    {'x', 'D', 'D', 'D', 'D', 'x', 'x', 'x', 'x', 'x'}, // 9
-    {'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'x', 'x'}, // 10
-    {'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'x'}, // 11
-    {'x', 'x', '-', '-', '-', 'x', 'x', 'x', 'x', 'a'}, // 12
-    {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'x', 'a'}, // 13
-    {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'a', 'a'}, // 14
-    {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'a', 'a'}, // 15
-    {'-', '-', '-', '-', '-', 'x', 'x', 'a', 'a', 'a'}, // 16
-    {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}, // 17
-    {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 18
-    {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 19
-    {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 20
-    {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 21
-};
+    char number_strategy[17][10] = {
+    //    2    3    4    5    6    7    8    9    10   A
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 5
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 6
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 7
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}, // 8
+        {'x', 'D', 'D', 'D', 'D', 'x', 'x', 'x', 'x', 'x'}, // 9
+        {'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'x', 'x'}, // 10
+        {'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'x'}, // 11
+        {'x', 'x', '-', '-', '-', 'x', 'x', 'x', 'x', 'a'}, // 12
+        {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'x', 'a'}, // 13
+        {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'a', 'a'}, // 14
+        {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'a', 'a'}, // 15
+        {'-', '-', '-', '-', '-', 'x', 'x', 'a', 'a', 'a'}, // 16
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}, // 17
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 18
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 19
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 20
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 21
+    };
 
+    if (player_hand > 21 || player_hand < 5) {
+        fprintf(stderr, "strategy can't recommend anything for that value (%d)\n", player_hand);
+        return 'E';
+    }
+
+    return number_strategy[player_hand - 5][crupier_hand - 2];
+}
 
 Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
 
@@ -69,7 +75,7 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
             return p;
         }
 
-        decision = number_strategy[PLAYER_CONVERT(player_value)][CRUPIER_CONVERT(crupier_hand[0])];
+        decision = recommendation_17S_DAS(player_value, crupier_hand[0]);
         printf("%d vs %d: player choses to %c\n", player_value, crupier_hand[0], decision);
         switch(decision) {
             // hit, ask for another card
