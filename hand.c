@@ -1,7 +1,7 @@
 #include "hand.h"
 
 struct _Hand {
-    int cards[10];
+    int cards[N_RANKS];
     int nCurrentCards;
     int currentBet;
     int lastBet;
@@ -16,10 +16,15 @@ Hand* hand_ini() {
         fprintf(stderr, "hand_ini: error allocating memory.\n");
         return NULL;
     }
-    for (i = 0; i < 10; i++) {
+
+    for (i = 0; i < N_RANKS; i++) {
         h->cards[i] = 0;
     }
+
     h->nCurrentCards = 0;
+    h->currentBet = E_HAND_NO_BET;
+    h->lastBet = E_HAND_NO_BET;
+    h->hardHand = true;
     return h;
 }
 
@@ -41,6 +46,7 @@ Hand* hand_insertCard(Hand* h, int rank) {
     h->nCurrentCards++;
 
     /* Actualización de softHand/hardHand */
+    /*  Hand if soft (not hard) if it has two values under 21. */
     values=hand_getValues(h);
 
     if(values[1]<0){
@@ -55,8 +61,7 @@ Hand* hand_insertCard(Hand* h, int rank) {
         }
     }
 
-    free (values);
-
+    free(values);
 
     return h;
 }
