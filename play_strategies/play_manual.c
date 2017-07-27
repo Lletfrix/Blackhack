@@ -1,7 +1,7 @@
 #include "../play_strategies.h"
 
 Player *play_manual(Player *p, Table *t){
-  double *listofprob;
+  double *listofprob, *probabilities;
   Deck *deck=NULL;
   Crupier *crupier=NULL;
   Hand *playerHand=NULL, *crupierHand=NULL;
@@ -32,18 +32,15 @@ Player *play_manual(Player *p, Table *t){
   }
   printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0]));
 
+  probabilities=probability_goOver(deck, playerHand);
+  printf("Probabilidad de pasarte: %lf (valor 0) (AS=11)\n", probabilities[0]);
+  printf("Probabilidad de pasarte: %lf (valor 1) (AS=1)\n", probabilities[1]);
+
   printf("¿Que quieres hacer?:\n");
   printf("\t(H)it\n\t(S)tand\n\t(D)ouble\n");
   scanf("\n%c", &option);
 
-  if(option=='s' || option=='S'){
-    return p;
-  }
-  else if(option=='d' || option=='D'){
-    fprintf(stdout, "¿Que carta(rank) te ha salido?\n");
-    fscanf(stdin, "%d", &rank);
-    hand_insertCard(playerHand, rank);
-    deck_removeCard(deck, rank);
+  if(option=='s' || option=='S' || option=='d' || option=='D'){
     return p;
   }
   else{
@@ -64,6 +61,12 @@ Player *play_manual(Player *p, Table *t){
         printf("\t%d\t%lf\t%lf%%\n", i+1,listofprob[i],  listofprob[i]*100);
       }
       printf("\tT\t%lf\t%lf%%\n", listofprob[9],  listofprob[9]*100);
+
+      printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0]));
+
+      probabilities=probability_goOver(deck, playerHand);
+      printf("Probabilidad de pasarte: %lf (valor 0) (AS=11)\n", probabilities[0]);
+      printf("Probabilidad de pasarte: %lf (valor 1) (AS=1)\n", probabilities[1]);
 
       printf("¿Que quieres hacer?:\n");
       printf("\t(H)it\n\t(S)tand\n");

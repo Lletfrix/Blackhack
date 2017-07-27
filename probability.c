@@ -82,3 +82,158 @@ int probability_countingUstonSS(int rank){
     return -2;
   }
 }
+
+double *probability_goOver(Deck *d, Hand *h){
+  int *handValues, value0, value1, i;
+  double *listofprob, *probabilities;
+
+  if(!d || !h){
+    fprintf(stderr, "probability_goOver: error arguments pointing NULL\n");
+    return NULL;
+  }
+  handValues=hand_getValues(h);
+  listofprob=probability_listofcards(d);
+  value0=handValues[0];
+  value1=handValues[1];
+
+  probabilities=(double*)malloc(2*sizeof(double));
+
+  probabilities[0]=0;
+  probabilities[1]=0;
+
+  if(value0==21){
+    probabilities[0]=1;
+  }
+  if(value0==20){
+    probabilities[0]=1;
+  }
+  if(value0==19){
+    probabilities[0]=1-listofprob[1];
+  }
+  if(value0==18){
+    for(i=1;i<3;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+  if(value0==17){
+    for(i=1;i<4;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0==16){
+    for(i=1;i<5;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0==15){
+    for(i=1;i<6;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0==14){
+    for(i=1;i<7;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0==13){
+    for(i=1;i<8;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0==12){
+    for(i=1;i<9;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0==11){
+    for(i=1;i<10;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
+  }
+
+  if(value0<11){
+    probabilities[0]=0;
+  }
+
+  /*************************/
+
+  if(value1==21){
+    probabilities[1]=1;
+  }
+  if(value1==20){
+    probabilities[1]=1-listofprob[0];
+  }
+  if(value1==19){
+    for(i=0;i<2;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+  if(value1==18){
+    for(i=0;i<3;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+  if(value1==17){
+    for(i=0;i<4;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+
+  if(value1==16){
+    for(i=0;i<5;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+
+  if(value1==15){
+    for(i=0;i<6;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+
+  if(value1==14){
+    for(i=0;i<7;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+
+  if(value1==13){
+    for(i=0;i<8;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+
+  if(value1==12){
+    for(i=0;i<9;i++){
+      probabilities[1]+=listofprob[i];
+    }
+    probabilities[1]=1-probabilities[1];
+  }
+
+  if(value1<12){
+    probabilities[1]=0;
+  }
+
+  return probabilities;
+}
