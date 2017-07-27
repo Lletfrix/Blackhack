@@ -14,12 +14,10 @@ Deck* deck_ini(unsigned seed) {
     /*  TODO: replantearse no hacer el caso de seed vacío aquí */
     d = (Deck *) malloc(sizeof (Deck));
 
-#ifdef DEBUG
     if (!d) {
         fprintf(stderr, "hand_ini: error allocating memory.\n");
         return NULL;
     }
-#endif
 
     for (i = 0; i < N_RANKS - 1; i++) {
         d->cards[i] = 4 * N_DECKS; /*inicializa los palos del As al 9*/
@@ -126,7 +124,7 @@ double *deck_distribution(Deck *d)
     if (!probs) return NULL;
 
     for (int i = 0; i < N_RANKS; i++) {
-        probs[i] = deck_getNCardsofRank(d, i) / cards;
+        probs[i] = deck_getNCardsofRank(d, i + 1) / cards;
     }
 
     return probs;
