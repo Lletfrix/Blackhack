@@ -19,7 +19,7 @@ int main(int argc, char **argv){
   */
   table=table_ini();
 
-  table = table_addPlayer(table, player_ini(manual_bet, play_manual));
+  table = table_addPlayer(table, player_ini(never_bets, play_manual));
   if(!table){
       fprintf(stderr, "main: ERROR in table_addPlayer 1.\n");
       return EXIT_FAILURE;
@@ -93,6 +93,8 @@ int main(int argc, char **argv){
           return EXIT_FAILURE;
       }
       /*juega el crupier*/ // TODO: should we only touch the crupier thorugh table?
+
+      /*
       printf("¿Cual es la segunda carta del crupier?\n");
       fscanf(stdin, "%d", &rank);
       hand_insertCard(crupierHand, rank);
@@ -108,8 +110,11 @@ int main(int argc, char **argv){
         handValues=hand_getValues(crupierHand);
         printf("Mano del crupier:%d %d\n", handValues[0], handValues[1]);
       }
+      */
       /*Si no sobrepasa 21 devuelve c, si se pasa, comprueba que existe el segundo
        valor, (As=1) y pide cartas igual que antes*/
+
+      /*
       if (handValues[0] > 21) {
           if (handValues[1] > 0) {
               while (handValues[1] < 17) {
@@ -131,15 +136,18 @@ int main(int argc, char **argv){
           fprintf(stderr, "Error in distributeEarnings.\n");
           return EXIT_FAILURE;
       }
+      */
       table = table_restartTable(table);
       if(!table){
           fprintf(stderr, "Error in restartTable.\n");
           return EXIT_FAILURE;
       }
+      /*
       table_printLastGame(stdout, table, k);
       if (argc > 2){
           table_printCash(output, table);
       }
+      */
   }
 
   table_printPlayersPercentages(stdout, table);

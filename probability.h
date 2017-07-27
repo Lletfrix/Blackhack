@@ -24,3 +24,6 @@ int probability_countingHiLo(int rank);
 
 //return -2,-1,0,1,2,3 used to count cards
 int probability_countingUstonSS(int rank);
+
+//return the probability of go over of a hand, return 2 values;
+double *probability_goOver(Deck *, Hand *);
