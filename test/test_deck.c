@@ -5,9 +5,9 @@
 
 void deck_visualize_extraction(unsigned seed);
 
-int main() {
+int main(int argc, char **argv) {
     unsigned seed = time(NULL);
-    printf("This test run's seed is %u.\n", seed);
+    printf("\nThis test run's seed is %u.\n", seed);
 
     printf("Testing a deck...\n");
 
@@ -72,8 +72,10 @@ int main() {
     printf("\n");
     deck_destroy(d);
 
-    /* printf("visualize drawing cards until deck is empty"); */
-    deck_visualize_extraction(seed);
+    if (argc == 2) {
+        printf("visualize drawing cards until deck is empty");
+        deck_visualize_extraction(seed);
+    }
 
 
     return 0;

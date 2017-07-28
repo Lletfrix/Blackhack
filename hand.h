@@ -3,6 +3,9 @@
 
 #include "macros.h"
 
+/* ERRORS */
+#define E_HAND_NO_BET -1
+
 typedef struct _Hand Hand;
 
 /* initialize a hand, return NULL if error */
@@ -31,7 +34,16 @@ Hand* hand_restartHand (Hand* );
 /* gets the current number of cards, return -1 if error */
 int hand_getNumCards(Hand*);
 
-/* gets the array of cards,return NULL if error */
+/*
+ * Returns an array where indices are the value of a cards minus one (zero indexed) and the associated values are the number of cards of that rank the hand currently contains.
+ *
+ * Example: a hand w/ 8, 9, Ace will return the followind cards array:
+            cards[0] == 1 && cards[1] == 0 && cards[2] == 0 &&
+            cards[3] == 0 && cards[4] == 0 && cards[5] == 0 &&
+            cards[6] == 0 && cards[7] == 1 && cards[8] == 1 &&
+            cards[9] == 0
+ *
+ */
 int* hand_getCards(Hand*);
 
 /* gets the current bet of the hand, return -1 if error */
@@ -51,6 +63,6 @@ bool hand_isHard (Hand* h);
 /*
  * Compara las manos de un crupier y un jugador.
  */
- Peg hand_compare(Hand *crupier_hand, Hand *player_hand);
+Peg hand_compare(Hand *crupier_hand, Hand *player_hand);
 
 #endif
