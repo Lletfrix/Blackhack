@@ -105,61 +105,64 @@ double *probability_goOver(Deck *d, Hand *h){
     probabilities[0]=1;
   }
   if(value0==20){
-    probabilities[0]=1;
+    probabilities[0]=1-listofprob[0];
   }
   if(value0==19){
-    probabilities[0]=1-listofprob[1];
+    for(i=0;i<2;i++){
+      probabilities[0]+=listofprob[i];
+    }
+    probabilities[0]=1-probabilities[0];
   }
   if(value0==18){
-    for(i=1;i<3;i++){
+    for(i=0;i<3;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
   if(value0==17){
-    for(i=1;i<4;i++){
+    for(i=0;i<4;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
 
   if(value0==16){
-    for(i=1;i<5;i++){
+    for(i=0;i<5;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
 
   if(value0==15){
-    for(i=1;i<6;i++){
+    for(i=0;i<6;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
 
   if(value0==14){
-    for(i=1;i<7;i++){
+    for(i=0;i<7;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
 
   if(value0==13){
-    for(i=1;i<8;i++){
+    for(i=0;i<8;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
 
   if(value0==12){
-    for(i=1;i<9;i++){
+    for(i=0;i<9;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];
   }
 
   if(value0==11){
-    for(i=1;i<10;i++){
+    for(i=0;i<10;i++){
       probabilities[0]+=listofprob[i];
     }
     probabilities[0]=1-probabilities[0];

@@ -9,8 +9,8 @@
 #include "play_strategies.h"
 
 int main(int argc, char **argv){
-  FILE *output = stdout;
-  int nplayers=1, rank, *handValues;
+  //FILE *output = stdout;
+  int nplayers=1, rank;/*handValues*/
   Table* table=NULL, *tableError;
   Hand *playerHand=NULL, *crupierHand=NULL;
   /*
