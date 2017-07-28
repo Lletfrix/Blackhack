@@ -99,11 +99,31 @@ char recommendation_17S_DAS(int player_hand, int crupier_hand, Hand* h) {
 }
 
 Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
-
     int *player_hand, *crupier_hand, player_value, active_hand=0, numHands=1, index=-1;
     char decision;
     Deck *d;
     Hand *current_hand;
+    int no_split_matrix[18][10] = {
+    //    2    3    4    5    6    7    8    9    10   A
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 4 #0
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 5 #1
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 6
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'a'}, // 7
+        {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}, // 8
+        {'x', 'D', 'D', 'D', 'D', 'x', 'x', 'x', 'x', 'x'}, // 9
+        {'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'x', 'x'}, // 10
+        {'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'x'}, // 11
+        {'x', 'x', '-', '-', '-', 'x', 'x', 'x', 'x', 'a'}, // 12
+        {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'x', 'a'}, // 13
+        {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'a', 'a'}, // 14
+        {'-', '-', '-', '-', '-', 'x', 'x', 'x', 'a', 'a'}, // 15 #11
+        {'-', '-', '-', '-', '-', 'x', 'x', 'a', 'a', 'a'}, // 16
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'}, // 17
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 18
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 19
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 20
+        {'-', '-', '-', '-', '-', '-', '-', '-', '-', 'a'}, // 21
+    };
 
     if (!p || !t) {
         fprintf(stderr, "play_basic_17S_DAS_matrix: invalid parameters\n");
@@ -133,14 +153,28 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
             player_addCash(p, 2.5*hand_getCurrentBet(player_getHand(p, active_hand)));
             return p;
         }
+        if (player_value > 21){
+            active_hand++;
+            continue;
+        }
 
         decision = recommendation_17S_DAS(player_value, crupier_hand[0], player_getHand(p, active_hand));
         /*
-        *
         * Change decision depending on the situation. To be implemented.
+        */
+        /*If splitting is impossible go to the first table*/
+        if(decision=='s' && numHands>=MAX_HANDS){
+            decision = no_split_matrix[player_value-4][crupier_hand[0]-2];
+        }
+        /*If doubling is impossible, hit instead*/
+        if(hand_getNumCards(player_getHand(p, active_hand))>2 && decision=='D'){
+            decision='x';
+        }
+
+        /*
         *
         */
-        printf("%d vs %d: player choses to %c\n", player_value, crupier_hand[0], decision);
+        /*printf("%d vs %d: player choses to %c\n", player_value, crupier_hand[0], decision);*/
         switch(decision) {
             // hit, ask for another card
             case 'x':
@@ -153,7 +187,6 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
                 int current_bet = hand_getCurrentBet(player_getHand(p, active_hand));
                 p = player_removeCash(p, current_bet);
                 hand_setCurrentBet(player_getHand(p, index), current_bet);
-                active_hand--;
                 numHands++;
                 break;
             case 'D': // double
@@ -162,12 +195,12 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
                 current_bet = hand_getCurrentBet(current_hand);
                 p = player_removeCash(p, current_bet);
                 hand_setCurrentBet(current_hand, current_bet * 2);
+                active_hand++;
                 break;
             default: // stay
+                active_hand++;
                 break;
         }
-        active_hand++;
-
     }
 
     return p;

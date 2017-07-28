@@ -16,7 +16,7 @@
 #define MAX_HANDS 2
 #define MIN_DECK_WEIGHT 2
 #define INITIAL_CASH 1000
-#define INITIAL_AMOUNT 10
+#define INITIAL_AMOUNT 20
 
 /*  Type for "Pierde, empata o gana" */
 typedef enum {
