@@ -30,7 +30,7 @@ Player *play_manual(Player *p, Table *t){
       player_addCash(p, 2.5*hand_getCurrentBet(playerHand));
       return p;
   }
-  printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0]));
+  printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0], playerHand));
 
   probabilities=probability_goOver(deck, playerHand);
   printf("Probabilidad de pasarte: %lf (valor 0) (AS=11)\n", probabilities[0]);
@@ -62,7 +62,7 @@ Player *play_manual(Player *p, Table *t){
       }
       printf("\tT\t%lf\t%lf%%\n", listofprob[9],  listofprob[9]*100);
 
-      printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0]));
+      printf("La estrategia recomienda: %c\n", recommendation_17S_DAS(playerHand_values[0], crupierHand_values[0], playerHand));
 
       probabilities=probability_goOver(deck, playerHand);
       printf("Probabilidad de pasarte: %lf (valor 0) (AS=11)\n", probabilities[0]);

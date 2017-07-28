@@ -1,7 +1,7 @@
 #include "../play_strategies.h"
 
 char recommendation_17S_DAS(int player_hand, int crupier_hand, Hand* h) {
-
+    int* handCards, row, column, number_row;
     /*
      * x is for hit, D is for double-down, S is for split, a is for early surrender,
      * - is for stand.
@@ -62,13 +62,37 @@ char recommendation_17S_DAS(int player_hand, int crupier_hand, Hand* h) {
         {17,18,19,20,21,22,23,23,23, 24}, // A
     };
 
-    if (player_hand > 21 || player_hand < 5 || hand_getNumCards(h) < 2) {
+    if (player_hand > 21 || player_hand < 4|| hand_getNumCards(h) < 2) {
         fprintf(stderr, "strategy can't recommend anything for that value (%d)\n", player_hand);
         return 'E';
     }
 
     if (hand_getNumCards(h) == 2){
-        
+        handCards = hand_getCards(h);
+        /*Optimize*/
+        for (int i = 0; i < 10; i++) {
+            if (handCards[i] != 0) {
+                row = i-1;
+                if (row == -1){
+                    row = 9;
+                }
+                handCards[i]--;
+                break;
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            if (handCards[i] != 0) {
+                column = i-1;
+                if (column == -1){
+                    column = 9;
+                }
+                handCards[i]--;
+                break;
+            }
+        }
+        free (handCards);
+        number_row = player_combination[row][column];
+        return number_strategy[number_row][crupier_hand - 2];
     }
 
     return number_strategy[player_hand - 5][crupier_hand - 2];
@@ -129,6 +153,7 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
                 int current_bet = hand_getCurrentBet(player_getHand(p, active_hand));
                 p = player_removeCash(p, current_bet);
                 hand_setCurrentBet(player_getHand(p, index), current_bet);
+                active_hand--;
                 numHands++;
                 break;
             case 'D': // double

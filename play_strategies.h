@@ -21,4 +21,4 @@ Player *play_basic_17S_DAS_matrix(Player *, Table *);
 
 Player *play_manual(Player*, Table*);
 
-char recommendation_17S_DAS(int player_hand, int crupier_hand);
+char recommendation_17S_DAS(int player_hand, int crupier_hand, Hand*);

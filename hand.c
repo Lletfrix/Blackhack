@@ -159,11 +159,16 @@ int hand_getNumCards(Hand* h) {
 }
 
 int* hand_getCards(Hand*h) {
+    int* newHand;
     if (!h) {
         fprintf(stderr, "hand_getCards: invalid arguments.\n");
         return NULL;
     }
-    return h->cards;
+    newHand = calloc (10, sizeof(int));
+    for (size_t i = 0; i < 10; i++) {
+        newHand[i]=h->cards[i];
+    }
+    return newHand;
 }
 
 bool hand_isHard(Hand* h){
