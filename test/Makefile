@@ -6,6 +6,7 @@ TESTS=test_deck test_hand
 run_tests: clean $(TESTS)
 	@./test_deck 2>/dev/null
 	@./test_hand
+	make clean
 
 test_distribution:
 	@./test_deck dist
@@ -21,4 +22,4 @@ test_hand: test_hand.c ../hand.o ../deck.o
 
 .PHONY: clean
 clean:
-	rm -rf $(TESTS)
+	rm -rf $(TESTS) minitest.o
