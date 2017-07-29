@@ -38,3 +38,6 @@ godmode_play
 real_player_game
 simulation
 manual_mode
+
+test/test_deck
+test/test_hand

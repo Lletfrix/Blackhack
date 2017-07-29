@@ -45,9 +45,17 @@ int main(int argc, char **argv) {
     assert("deck can be reinitialized",
             d = deck_restartDeck(d));
 
+    d = deck_removeCard(d, 10);
+    assert("drawing a card updates running count",
+            deck_runningCount(d) == -1);
+
+    assert("can also retrieve real count",
+            round(deck_realCount(d)) == round(-1.0 / N_DECKS));
+
     assert("deck has some cards after reinit",
             !deck_isEmpty(d));
 
+    d = deck_restartDeck(d);
     bool correct_distribution = true;
     double *dist = deck_distribution(d);
     double expected = 4.0 / N_CARDS_DECK;

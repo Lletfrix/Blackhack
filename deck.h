@@ -1,6 +1,11 @@
 #ifndef DECK_H
 #define DECK_H
 
+
+/*  ERRORS */
+#include <math.h>
+#define E_INVALID_DECK NAN
+
 #include "macros.h"
 
 typedef struct _Deck Deck;
@@ -29,8 +34,13 @@ int deck_getNCardsofRank(Deck*,  int rank);
 /*restart all the cards and info of a deck*/
 Deck* deck_restartDeck(Deck *);
 
+/*  Returns an array of the percentage of cards of each rank remaining in the deck. Array must be free'd by the user. */
 double *deck_distribution(Deck *);
 
 void deck_print(FILE*, Deck*);
+
+float deck_runningCount(Deck *d);
+
+float deck_realCount(Deck *d);
 
 #endif

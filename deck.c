@@ -4,8 +4,11 @@ struct _Deck {
     int cards[N_RANKS];
     int maxSize;
     int nCurrentCards;
+    float running_count;
     unsigned seed;
 };
+
+Deck *deck_updateRunningCount(Deck *d, int rank);
 
 Deck* deck_ini(unsigned seed) {
     Deck *d;
@@ -25,6 +28,7 @@ Deck* deck_ini(unsigned seed) {
     d->cards[N_RANKS - 1] = 4 * 4 * N_DECKS; /*inicializa los palos del 10 a la K*/
     d->nCurrentCards = N_CARDS_DECK * N_DECKS;
     d->seed = seed;
+    d->running_count = 0;
 
     return d;
 }
@@ -53,6 +57,7 @@ int deck_draw(Deck *d) {
         if (ran < aux) {
             d->cards[i]--;
             d->nCurrentCards--;
+            d = deck_updateRunningCount(d, i + 1);
             return i + 1;
         }
         aux += d->cards[i + 1];
@@ -94,6 +99,7 @@ Deck* deck_restartDeck(Deck *d){
   d->maxSize = 13 * 4 * N_DECKS;
   d->nCurrentCards = d->maxSize;
   d->seed = time(NULL)*clock();
+  d->running_count = 0;
   srand(d->seed);
   return d;
 }
@@ -136,7 +142,7 @@ Deck *deck_removeCard(Deck *d, int rank)
 
     d->cards[rank - 1]--;
 
-    return d;
+    return deck_updateRunningCount(d, rank);
 }
 
 int deck_getNCardsofRank(Deck* d,  int rank){
@@ -144,4 +150,38 @@ int deck_getNCardsofRank(Deck* d,  int rank){
         return -1;
     }
     return d->cards[rank-1];
+}
+
+float deck_runningCount(Deck *d) {
+    if (!d) {
+        fprintf(stderr, "deck_runningCount: invalid deck given\n");
+        return E_INVALID_DECK;
+    }
+
+    return d->running_count;
+}
+
+float deck_realCount(Deck *d) {
+    if (!d) {
+        fprintf(stderr, "deck_runningCount: invalid deck given\n");
+        return E_INVALID_DECK;
+    }
+
+    return d->running_count / N_DECKS;
+}
+
+Deck *deck_updateRunningCount(Deck *d, int drawn_card) {
+    // TODO: maybe make this a modifiable property of Deck
+    float count_strategy[] = {
+    //  A    2   3   4   5   6  7  8  9   T
+        -1, +1, +1, +1, +1, +1, 0, 0, 0, -1
+    };
+
+    if (drawn_card < 1 || drawn_card > 10) {
+        fprintf(stderr, "deck_updateRunningCount: invalid card drawn given\n");
+        return NULL;
+    }
+
+    d->running_count += count_strategy[drawn_card - 1];
+    return d;
 }
