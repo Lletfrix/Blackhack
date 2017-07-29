@@ -13,10 +13,10 @@
 #define N_RANKS 10
 
 /*  Playing defaults */
-#define MAX_HANDS 2
+#define MAX_HANDS 3
 #define MIN_DECK_WEIGHT 2
 #define INITIAL_CASH 1000
-#define INITIAL_AMOUNT 20
+#define INITIAL_AMOUNT 10
 
 /*  Type for "Pierde, empata o gana" */
 typedef enum {
