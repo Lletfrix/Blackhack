@@ -151,10 +151,11 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
         // Blackjack! Pay immediately;
         if (player_value == 21 && hand_getNumCards(player_getHand(p, active_hand))==2){
             player_addCash(p, 2.5*hand_getCurrentBet(player_getHand(p, active_hand)));
-            return p;
+            active_hand++;
+            continue;
         }
         if (player_value > 21){
-            printf("over 21.\n");
+            /*printf("over 21.\n");*/
             active_hand++;
             continue;
         }
@@ -175,14 +176,14 @@ Player *play_basic_17S_DAS_matrix(Player* p, Table* t){
         /*
         *
         */
-        printf("%d vs %d: player choses to %c\n", player_value, crupier_hand[0], decision);
+        /*printf("%d vs %d: player choses to %c\n", player_value, crupier_hand[0], decision);*/
         switch(decision) {
             // hit, ask for another card
             case 'x':
                 p = player_addCardToHand(p, active_hand, deck_draw(d));
                 break;
             case 's':  //split
-                printf("\e[0;31mSPLIT\e[0m\n");
+                /*printf("\e[0;31mSPLIT\e[0m\n");*/
                 index = player_splitHand(p, active_hand);
                 p = player_addCardToHand(p, active_hand, deck_draw(d));
                 p = player_addCardToHand(p, index, deck_draw(d));

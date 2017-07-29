@@ -43,21 +43,21 @@ int main(int argc, char** argv) {
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    /*table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS));
+    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS_matrix));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS));
+    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS_matrix));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS));
+    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS_matrix));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
-    }*/
+    }
 
     // initialize crupier
     Crupier *crupier = crupier_ini();
@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
             fprintf(stderr, "Error in restartTable.\n");
             return EXIT_FAILURE;
         }
-        table_printLastGame(stdout, table, k);
+        /*table_printLastGame(stdout, table, k);*/
         if (argc > 2){
             table_printCash(output, table);
         }
