@@ -47,10 +47,10 @@ int main(int argc, char **argv) {
 
     d = deck_removeCard(d, 10);
     assert("drawing a card updates running count",
-            deck_runningCount(d) == -1);
+            deck_runningCount(d) != E_INVALID_DECK);
 
     assert("can also retrieve real count",
-            round(deck_realCount(d)) == round(-1.0 / N_DECKS));
+            (deck_trueCount(d)) == E_INVALID_DECK);
 
     assert("deck has some cards after reinit",
             !deck_isEmpty(d));

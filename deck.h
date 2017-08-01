@@ -41,6 +41,6 @@ void deck_print(FILE*, Deck*);
 
 float deck_runningCount(Deck *d);
 
-float deck_realCount(Deck *d);
+float deck_trueCount(Deck *d);
 
 #endif

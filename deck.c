@@ -161,20 +161,20 @@ float deck_runningCount(Deck *d) {
     return d->running_count;
 }
 
-float deck_realCount(Deck *d) {
+float deck_trueCount(Deck *d) {
     if (!d) {
         fprintf(stderr, "deck_runningCount: invalid deck given\n");
         return E_INVALID_DECK;
     }
 
-    return d->running_count / N_DECKS;
+    return d->running_count / d->nCurrentCards * N_CARDS_DECK;
 }
 
 Deck *deck_updateRunningCount(Deck *d, int drawn_card) {
     // TODO: maybe make this a modifiable property of Deck
     float count_strategy[] = {
     //  A    2   3   4   5   6  7  8  9   T
-        -1, +1, +1, +1, +1, +1, 0, 0, 0, -1
+        -4, +2, +3, +3, +4, +3, 2, 0, -1, -3
     };
 
     if (drawn_card < 1 || drawn_card > 10) {
