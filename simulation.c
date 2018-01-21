@@ -38,12 +38,12 @@ int main(int argc, char** argv) {
 
     // initialize players
     // set the first player to use a random strategy
-    table = table_addPlayer(table, player_ini(counting_bet, play_basic_17S_DAS_matrix));
+    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS_matrix));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;
     }
-    table = table_addPlayer(table, player_ini(counting_bet, play_basic_17S_DAS_matrix));
+    table = table_addPlayer(table, player_ini(boring_bet, play_basic_17S_DAS_matrix));
     if(!table){
         fprintf(stderr, "main: ERROR in table_addPlayer.\n");
         return EXIT_FAILURE;

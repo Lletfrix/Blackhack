@@ -8,7 +8,7 @@ SIM_OBJECTS=$(COMMON_OBJS) simulation.o
 RPG_OBJECTS=$(COMMON_OBJS) real_player_game.o
 GMP_OBJECTS=$(COMMON_OBJS) godmode_play.o
 MMO_OBJECTS=$(COMMON_OBJS) manual_mode.o
-BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o manual_bet.o counting_bet.o
+BET_STRATEGIES=never_bets.o boring_bet.o double_if_win.o double_if_lose.o manual_bet.o
 PLAY_STRATEGIES=play_do_nothing.o play_like_crupier.o play_random.o play_manual.o play_basic_17S_DAS_matrix.o
 
 .PHONY: all
@@ -75,9 +75,6 @@ double_if_lose.o: bet_strategies/double_if_lose.c
 
 manual_bet.o: bet_strategies/manual_bet.c
 	$(CC) $(CFLAGS) -c bet_strategies/manual_bet.c
-
-counting_bet.o: bet_strategies/counting_bet.c
-	$(CC) $(CFLAGS) -c bet_strategies/counting_bet.c
 
 # play strategies
 do_nothing.o: play_strategies/play_do_nothing.c

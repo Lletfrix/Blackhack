@@ -13,5 +13,3 @@ Player *double_if_win(Player *, Table *);
 Player *boring_bet(Player*, Table*);
 
 Player *manual_bet(Player *, Table *);
-
-Player *counting_bet(Player *, Table*);
